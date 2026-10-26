@@ -94,7 +94,7 @@ links:
     target: "/home/toxic/pens/estate/products/estate-ops/delend-working-dirty"
     pens_proximity: true
   - name: delendai
-    target: /home/toxic/pens/olympus/products/ergane/hephaistos/plugins/api/bin/delendai.ts
+    target: /home/toxic/pens/olympus/products/ergasterion/hephaistos/plugins/api/bin/delendai.ts
     broken: true
     pens_proximity: true
   - name: "ego-browser"
