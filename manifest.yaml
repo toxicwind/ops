@@ -161,11 +161,11 @@ links:
   - name: ~/.local/bin/pattern-forge
     target: /home/toxic/pens/barn/forge/bin/forge.ts
   - name: ~/.local/bin/corral
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
   - name: ~/.local/bin/hyper
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
   - name: ~/.local/bin/taskforge
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
   - name: ~/.local/bin/tau-pin
     target: /home/toxic/pens/olympus/products/tau/scripts/tau-pin
   - name: ~/.local/bin/tok

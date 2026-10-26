@@ -43,7 +43,7 @@ links:
     target: "/home/toxic/pens/estate/products/estate-ops/cmdlog.ts"
     pens_proximity: true
   - name: corral
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
     pens_proximity: true
   - name: "delend-branch-audit-for-main"
     target: "/home/toxic/pens/estate/products/estate-ops/delend-branch-audit-for-main"
@@ -52,10 +52,10 @@ links:
     target: "/home/toxic/pens/estate/products/estate-ops/delend-code-race"
     pens_proximity: true
   - name: "delend-code-race-line"
-    target: "/home/toxic/pens/barn/corral/delendai/plugins/code-race/bin/race-line.ts"
+    target: "/home/toxic/pens/olympus/products/ergane/delendai/plugins/code-race/bin/race-line.ts"
     pens_proximity: true
   - name: "delend-code-race-rs"
-    target: "/home/toxic/pens/barn/corral/delendai/plugins/code-race/crates/code-race/target/release/delend-code-race"
+    target: "/home/toxic/pens/olympus/products/ergane/delendai/plugins/code-race/crates/code-race/target/release/delend-code-race"
     pens_proximity: true
   - name: "delend-experimental"
     target: "/home/toxic/pens/estate/products/estate-ops/delend-experimental"
@@ -143,7 +143,7 @@ links:
     target: "/home/toxic/pens/ranch/hatch/kite-cli/scripts/hero_gen.py"
     pens_proximity: true
   - name: hyper
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
     pens_proximity: true
   - name: hypruse
     target: /home/toxic/.local/share/uv/tools/hypruse/bin/hypruse
@@ -251,7 +251,7 @@ links:
     target: "/home/toxic/pens/geode/skills/scripts/syntax-guard.ts"
     pens_proximity: true
   - name: taskforge
-    target: /home/toxic/pens/barn/corral/src/cli/index.ts
+    target: /home/toxic/pens/olympus/products/ergane/src/cli/index.ts
     pens_proximity: true
   - name: "tau-pin"
     target: "/home/toxic/pens/olympus/products/tau/scripts/tau-pin"
