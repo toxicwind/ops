@@ -83,6 +83,28 @@ if (cmd === "git" && rest[0] === "add") {
   } catch { /* fall through to exec */ }
 }
 
+// ── gate: disable auto-escalation in CI or when EXPLICIT_DISABLE_ESCALATION=1 ──
+const canEscalate = process.env.EVAL_SHIM_NO_ESCALATE !== "1" && !process.env.CI
+
 // ── fast path: exec the command unchanged ──
 const r = spawnSync(cmd, rest, { stdio: "inherit", env: process.env })
+if (r.status === 0 || !canEscalate) process.exit(r.status ?? 1)
+
+// ── agentic escalation (corral/delendai): unknown failure -> delegate a repair ──
+// After the known repairs (lock / unborn / credential) don't fire, escalate so an
+// autonomous agent diagnoses + fixes, then retry ONCE. Never loops here (single retry).
+process.stderr.write(`[eval-shim] escalating to corral agent for repair: ${cmd} ${rest.join(" ").slice(0,120)}\n`)
+const escDir = process.env.EVAL_SHIM_CWD || process.cwd()
+const escTask = `A command failed in ${escDir}. Command: ${cmd} ${rest.join(" ").slice(0,150)}. Diagnose the root cause, apply the minimal fix in ${escDir}, and report. Do NOT reset or force-push anything; forward-only.`
+const esc = spawnSync("/home/toxic/.local/bin/corral", [escTask, "--skip-questions", "--cwd", escDir], {
+  stdio: "ignore", env: process.env, timeout: 120_000, cwd: escDir,
+})
+if (esc.status === 0) {
+  // retry the ORIGINAL command once after the agent fixed it
+  process.stderr.write("[eval-shim] corral repair done; retrying original command once\n")
+  const ret = spawnSync(cmd, rest, { stdio: "inherit", env: process.env })
+  process.exit(ret.status ?? 1)
+}
+// agent failed (or timed out): leave the original exit code, report clearly
+process.stderr.write(`[eval-shim] corral escalation FAILED (rc=${esc.status}); returning original exit\n`)
 process.exit(r.status ?? 1)
