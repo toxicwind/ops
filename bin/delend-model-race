@@ -3,5 +3,5 @@
  * delend-model-race — MODULAR PROFILE RUNNER.
  * Thin shim over the @delendai/model-race plugin (DelendAI first-class plugin).
  */
-import { main } from "/home/toxic/pens/olympus/products/ergane/delendai/plugins/model-race/src/index.ts";
+import { main } from "/home/toxic/pens/olympus/products/ergane/hephaistos/plugins/model-race/src/index.ts";
 if (import.meta.main) process.exit(main(process.argv.slice(2)));

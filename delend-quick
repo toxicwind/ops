@@ -3,7 +3,7 @@
  * delend-quick — Universal zero-friction work-ref checkpoint & push helper.
  * Thin shim over the @delendai/work-refs plugin (DelendAI first-class plugin).
  */
-import { quickMain } from "/home/toxic/pens/olympus/products/ergane/delendai/plugins/work-refs/src/index.ts";
+import { quickMain } from "/home/toxic/pens/olympus/products/ergane/hephaistos/plugins/work-refs/src/index.ts";
 if (import.meta.main) {
   process.exit(await quickMain(process.argv.slice(2)));
 }

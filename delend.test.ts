@@ -24,7 +24,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const BIN = "/home/toxic/estate/bin";
-const PLUGINS = "/home/toxic/pens/olympus/products/ergane/delendai/plugins";
+const PLUGINS = "/home/toxic/pens/olympus/products/ergane/hephaistos/plugins";
 
 // ---- helper: run a CLI as a child process, return {rc, stdout, stderr} ----
 function cli(
@@ -538,7 +538,7 @@ describe("delend-oracle", () => {
     writeFileSync(
       harness,
       `
-      const m = await import("/home/toxic/pens/olympus/products/ergane/delendai/plugins/oracle-market/src/index.ts");
+      const m = await import("/home/toxic/pens/olympus/products/ergane/hephaistos/plugins/oracle-market/src/index.ts");
       ${code}
     `,
     );
@@ -617,7 +617,7 @@ describe("delend-oracle", () => {
     writeFileSync(
       harness,
       `
-      const { readLedger, summarizeAwarded } = await import("/home/toxic/pens/olympus/products/ergane/delendai/plugins/oracle-market/src/index.ts");
+      const { readLedger, summarizeAwarded } = await import("/home/toxic/pens/olympus/products/ergane/hephaistos/plugins/oracle-market/src/index.ts");
       const r = readLedger(0);
       const out = JSON.stringify({ newOffset: r.newOffset, lastOpen: r.lastOpen?.task_id, lastAssigned: r.lastAssigned?.task_id, lastDecision: r.lastDecision?.from, events: r.events.map((e:any)=>e.event) });
       console.log(out);
