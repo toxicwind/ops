@@ -1,6 +1,6 @@
 # <PEN_NAME>
 
-One of the pens family (`pens/{barn,olympus,ranch,geode,estate}`). Holds a
+One of the pens family (`pens/{barn,olympus,ranch,<PEN_NAME>}`). Holds a
 curated collection of products. Submodule-LESS: peer products are standalone
 checkouts, referenced-not-owned.
 
@@ -14,21 +14,12 @@ checkouts, referenced-not-owned.
 ## Tooling
 
 - **bin surface**: entrypoints symlinked into `~/.local/bin` (see
-  `pens/barn/estate-ops/bin/manifest.yaml`), verified by `bin-verify.sh`.
-- **scaffold**: `bin/make-pen.ts` instantiates a new pen from this template.
-- **README generator**: `bin/readme-gen.ts` regenerates each pen's README
-  from that pen's actual product set, so a README can never go stale.
+  `pens/estate/products/estate-ops/bin/manifest.yaml`).
+- **SSOT config**: import via `pens/estate/products/estate-ops/ssot-scaffold.sh`.
+- **add a new pens repo**: copy this scaffold → `pens/<name>/`
+  (`scaffold/apply.sh <name>`), replace `<PEN_NAME>` placeholders, commit.
 
-## Apply
+## Naming
 
-```bash
-bun ./bin/make-pen.ts --pen <name> --title "<Title>" --blurb "<one line>"
-```
-
-`--force` rewrites the pen's **metadata only**. It never deletes `products/`,
-`docs/`, or anything else — there is no code path in this script that removes
-a pen.
-
-## License
-
-MIT
+- Greek codename lineage (tau, kappa, skopos, hodos, keryx, ...) joins
+  `olympus`; ops tooling joins `barn`; fleet/model components join `ranch`.

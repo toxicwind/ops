@@ -134,13 +134,13 @@ ${o.pen}/
 ## Tooling
 
 - **bin surface**: entrypoints symlinked into \`~/.local/bin\`, pinned by
-  \`pens/barn/estate-ops/bin/manifest.yaml\` and verified by
-  \`pens/barn/estate-ops/bin/bin-verify.sh\`. A broken link is a FAIL, never a WARN.
+  \`pens/estate/products/estate-ops/bin/manifest.yaml\` and verified by
+  \`pens/estate/products/estate-ops/bin/bin-verify.sh\`. A broken link is a FAIL, never a WARN.
 - **README**: generated from the pen's own product set by
-  \`pens/barn/estate-ops/scaffold/bin/readme-gen.ts\`; regenerate with
+  \`pens/estate/products/estate-ops/scaffold/bin/readme-gen.ts\`; regenerate with
   \`bun run readme\`.
 - **manifest**: regenerate with
-  \`pens/barn/estate-ops/bin/manifest-gen.py\`.
+  \`pens/estate/products/estate-ops/bin/manifest-gen.py\`.
 
 ## Conventions
 

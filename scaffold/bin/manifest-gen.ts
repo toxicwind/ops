@@ -10,7 +10,7 @@
  * ----------------------------
  * The manifest was hand-maintained and drifted: it carried sovereign-era
  * `dir: bin` entries (resolving to `/home/toxic/bin`) while the actual scripts
- * lived under `pens/barn/estate-ops/`, and its link names carried a
+ * lived under `pens/estate/products/estate-ops/`, and its link names carried a
  * `~/.local/bin/` prefix that double-resolved. 26 FAILs followed.
  *
  * Generating it from the filesystem means the manifest cannot describe a
@@ -31,7 +31,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const PENS_ROOT = resolve(here, "../../../.."); // pens/
 const LOCAL_BIN = "/home/toxic/.local/bin";
-const MANIFEST = join(PENS_ROOT, "barn/estate-ops/bin/manifest.yaml");
+const MANIFEST = join(PENS_ROOT, "estate/products/estate-ops/bin/manifest.yaml");
 
 /** Products that must never be linked publicly or described in detail. */
 const CONFIDENTIAL = new Set(["danburite", "theta"]);
