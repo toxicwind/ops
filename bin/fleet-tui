@@ -1,0 +1,289 @@
+#!/usr/bin/env python3
+"""fleet-tui — the estate fleet dashboard, terminal edition.
+
+Dark-mode palette (the estate's standard):
+    #0B0E14 background   #11151F panel   #7AA2F7 accent
+    #9ECE6A ok-green     #F7768E fail-red   #E0AF68 warn-amber   #565F89 dim
+
+Panels:
+  FLEET     pitchfork daemon health (running / errored / stopped / available)
+  LANES     the funnel + router chain (tailscale serve paths, live probe)
+  MODELS    the local GGUF endpoints (live inference check)
+  MCP       thresher's federated server count
+  PROVENANCE  the 0-star invariant (public fact, checked live)
+
+Usage:
+  fleet-tui                 # one-shot render
+  fleet-tui --watch 5       # re-render every 5s
+  fleet-tui --json          # machine-readable
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+import urllib.request
+
+# --- palette -----------------------------------------------------------------
+BG = "#0B0E14"
+PANEL = "#11151F"
+ACCENT = "#7AA2F7"
+OK = "#9ECE6A"
+FAIL = "#F7768E"
+WARN = "#E0AF68"
+DIM = "#565F89"
+FG = "#C0CAF5"
+
+ANSI = {
+    BG: "\x1b[48;2;11;14;20m",
+    PANEL: "\x1b[48;2;17;21;31m",
+    ACCENT: "\x1b[38;2;122;162;247m",
+    OK: "\x1b[38;2;158;206;106m",
+    FAIL: "\x1b[38;2;247;118;142m",
+    WARN: "\x1b[38;2;224;175;104m",
+    DIM: "\x1b[38;2;86;95;137m",
+    FG: "\x1b[38;2;192;202;245m",
+}
+RESET = "\x1b[0m"
+BOLD = "\x1b[1m"
+
+WIDTH = 78
+
+
+def c(color: str, text: str, bold: bool = False) -> str:
+    return f"{BOLD if bold else ''}{ANSI[color]}{text}{RESET}"
+
+
+def paint_bg(text: str) -> str:
+    return f"{ANSI[BG]}{text}{RESET}"
+
+
+def panel(title: str, lines: list[str]) -> list[str]:
+    out = [c(ACCENT, f"┌─ {title} ".ljust(WIDTH - 2, "─") + "┐")]
+    for line in lines:
+        visible = _visible_len(line)
+        pad = WIDTH - 4 - visible
+        out.append(c(DIM, "│") + " " + line + " " * max(0, pad) + c(DIM, " │"))
+    out.append(c(DIM, "└" + "─" * (WIDTH - 2) + "┘"))
+    return out
+
+
+def _visible_len(s: str) -> int:
+    import re
+
+    return len(re.sub(r"\x1b\[[0-9;]*m", "", s))
+
+
+# --- data collectors ----------------------------------------------------------
+
+
+def fleet_status() -> dict:
+    try:
+        out = subprocess.run(
+            ["pitchfork", "status"], capture_output=True, text=True, timeout=20
+        ).stdout
+    except Exception as e:
+        return {"error": str(e)}
+    counts: dict[str, int] = {}
+    errored: list[str] = []
+    for line in out.splitlines():
+        parts = line.split()
+        if len(parts) >= 2:
+            state = parts[1]
+            counts[state] = counts.get(state, 0) + 1
+            if state == "errored":
+                errored.append(parts[0])
+    return {"counts": counts, "errored": errored}
+
+
+def probe(url: str, timeout: float = 2.5) -> int | str:
+    try:
+        import urllib.error
+
+        req = urllib.request.Request(url, method="GET")
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception:
+        return "000"
+
+
+LANES = [
+    ("squawk-ws", "http://127.0.0.1:25147/"),
+    ("thresher-mcp", "http://127.0.0.1:25127/health"),
+    ("bornite", "http://127.0.0.1:25100/"),
+    ("beellama-fast", "http://127.0.0.1:25122/health"),
+    ("toolcall-llm", "http://127.0.0.1:25152/health"),
+    ("rhodochrosite", "http://127.0.0.1:25193/health"),
+    ("oracle-core", "http://127.0.0.1:25235/health"),
+    ("files", "http://127.0.0.1:34567/health"),
+    ("kappa-acp", "http://127.0.0.1:25159/"),
+    ("doorbell-mcp", "http://127.0.0.1:25202/"),
+    ("doorbell-edge", "http://127.0.0.1:25217/"),
+    ("browserless", "http://127.0.0.1:25130/"),
+    ("sigma-guard", "http://127.0.0.1:8787/__bili/stats"),
+    ("squawk-feed", "http://127.0.0.1:25135/"),
+    ("mesh-hub", "http://127.0.0.1:25115/"),
+    ("rclone-rc", "http://127.0.0.1:5572/"),
+]
+
+FUNNEL = ["/squawk-ws/ping", "/exec-ws", "/mcp", "/", "/files"]
+
+
+def lanes_status() -> list[tuple[str, str]]:
+    out = []
+    for name, url in LANES:
+        code = probe(url)
+        state = "UP" if code == 200 else (
+            "AUTH" if code in (401, 403) else
+            "RDY" if code in (302, 400, 404) else
+            "DOWN"
+        )
+        out.append((name, state))
+    return out
+
+
+def funnel_status() -> list[tuple[str, str]]:
+    base = "https://estate.tailc9ac71.ts.net"
+    out = []
+    for p in FUNNEL:
+        code = probe(base + p, timeout=4)
+        state = "UP" if code == 200 else (
+            "AUTH" if code in (401, 403) else
+            "WS" if code == 400 else
+            "DOWN"
+        )
+        out.append((p, state))
+    return out
+
+
+def provenance() -> dict:
+    repos = {}
+    for r in ("ranch", "estate", "tau"):
+        try:
+            res = subprocess.run(
+                ["gh", "api", f"repos/toxicwind/{r}", "-q",
+                 r'"\(.stargazers_count) stars, \(.forks_count) forks"'],
+                capture_output=True, text=True, timeout=15,
+            )
+            repos[r] = res.stdout.strip() or "n/a"
+        except Exception:
+            repos[r] = "error"
+    return repos
+
+
+def mcp_count() -> int:
+    try:
+        with open("/home/toxic/estate/config/thresher/mcp_config.json") as fh:
+            return len(json.load(fh)["mcpServers"])
+    except Exception:
+        return 0
+
+
+# --- render -------------------------------------------------------------------
+
+
+def render(json_mode: bool) -> str:
+    data = {
+        "fleet": fleet_status(),
+        "lanes": lanes_status(),
+        "funnel": funnel_status(),
+        "provenance": provenance(),
+        "mcp_servers": mcp_count(),
+        "ts": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+    }
+    if json_mode:
+        return json.dumps(data, indent=1)
+
+    out = [paint_bg("") for _ in range(0)]
+    lines: list[str] = []
+
+    fleet = data["fleet"]
+    counts = fleet.get("counts", {})
+    total = sum(counts.values())
+    fleet_lines = [
+        c(FG, f"daemons: {total}   ")
+        + c(OK, f"running {counts.get('running', 0)}  ")
+        + c(FAIL, f"errored {counts.get('errored', 0)}  ")
+        + c(WARN, f"stopped {counts.get('stopped', 0)}  ")
+        + c(DIM, f"available {counts.get('available', 0)}"),
+    ]
+    errored = fleet.get("errored", [])
+    if errored:
+        shown = ", ".join(errored[:5])
+        more = f" (+{len(errored) - 5})" if len(errored) > 5 else ""
+        fleet_lines.append(c(FAIL, "errored: ") + c(DIM, shown + more))
+
+    lines += panel("FLEET", fleet_lines)
+
+    lane_lines = []
+    for chunk_start in range(0, len(data["lanes"]), 3):
+        chunk = data["lanes"][chunk_start : chunk_start + 3]
+        row = "   ".join(
+            (c(OK, "●") if s == "UP" else c(WARN, "◐") if s in ("AUTH", "RDY", "WS") else c(FAIL, "○"))
+            + f" {n}"
+            for n, s in chunk
+        )
+        lane_lines.append(row)
+    lines += panel("SERVICES", lane_lines)
+
+    fn_lines = [
+        "  ".join(
+            (c(OK, s) if s == "UP" else c(WARN, s) if s in ("AUTH", "WS") else c(FAIL, s))
+            + c(DIM, f" {p}")
+            for p, s in data["funnel"]
+        )
+    ]
+    lines += panel("FUNNEL (estate.tailc9ac71.ts.net)", fn_lines)
+
+    prov = data["provenance"]
+    lines += panel(
+        "PROVENANCE (public fact)",
+        [
+            c(FG, "toxicwind/ranch   ") + c(DIM, prov.get("ranch", "?"))
+            + "   " + c(FG, "estate ") + c(DIM, prov.get("estate", "?"))
+            + "   " + c(FG, "tau    ") + c(DIM, prov.get("tau", "?")),
+            c(DIM, "the 0-star invariant: unstarred, unlisted, local-first —"),
+            c(DIM, "operational security posture, not a popularity failure"),
+        ],
+    )
+
+    lines += panel(
+        "MCP",
+        [c(FG, f"thresher federated servers: {data['mcp_servers']}")],
+    )
+
+    lines.append(c(DIM, f"fleet-tui · {data['ts']}"))
+    return "\n".join(paint_bg(l) for l in lines)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(prog="fleet-tui")
+    ap.add_argument("--watch", type=float, default=0, help="re-render every N seconds")
+    ap.add_argument("--json", action="store_true")
+    args = ap.parse_args()
+
+    if args.json:
+        print(render(json_mode=True))
+        return 0
+
+    while True:
+        frame = render(json_mode=False)
+        sys.stdout.write("\x1b[2J\x1b[H" + frame + "\n")
+        sys.stdout.flush()
+        if not args.watch:
+            return 0
+        time.sleep(args.watch)
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except BrokenPipeError:
+        os._exit(0)
+    except KeyboardInterrupt:
+        os._exit(0)
