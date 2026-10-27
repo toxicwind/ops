@@ -1,0 +1,275 @@
+#!/usr/bin/env python3
+"""fleet-audit-mcp — expose the estate's live audit surfaces as MCP tools.
+
+Wraps the two estate-ops audit tools so an MCP client (tau, kappa, or any
+thresher federated client) can ask the estate about itself:
+
+  fleet_health   daemon counts + the errored list (pitchfork status)
+  lane_probe     live HTTP probe of the estate's service lanes
+  probe_dns      direct-DNS resolution against a public resolver
+  sweep_ports    banner-grab a list of host:port targets
+  dork_matrix    expand one provenance query into a 32-query matrix
+  magic_sniff    content-sniff files (a '.txt' that is really an MP3)
+
+Run: fleet-audit-mcp   (stdio JSON-RPC, the MCP wire)
+"""
+from __future__ import annotations
+
+import importlib.machinery
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+OPS_BIN = "/home/toxic/pens/estate/products/estate-ops/bin"
+
+
+def _load(filename: str):
+    path = os.path.join(OPS_BIN, filename)
+    spec = importlib.util.spec_from_loader(
+        filename, importlib.machinery.SourceFileLoader(filename, path)
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+probe = _load("estate-probe")
+
+
+def fleet_health(_: dict) -> str:
+    out = subprocess.run(["pitchfork", "status"], capture_output=True, text=True, timeout=20)
+    counts: dict[str, int] = {}
+    errored: list[str] = []
+    for line in out.stdout.splitlines():
+        parts = line.split()
+        if len(parts) >= 2:
+            counts[parts[1]] = counts.get(parts[1], 0) + 1
+            if parts[1] == "errored":
+                errored.append(parts[0])
+    return json.dumps(
+        {"counts": counts, "errored": errored, "ok": not errored},
+        indent=1,
+    )
+
+
+LANES = [
+    ("squawk-ws", "http://127.0.0.1:25147/"),
+    ("thresher-mcp", "http://127.0.0.1:25127/health"),
+    ("bornite", "http://127.0.0.1:25100/"),
+    ("beellama-fast", "http://127.0.0.1:25122/health"),
+    ("toolcall-llm", "http://127.0.0.1:25152/health"),
+    ("rhodochrosite", "http://127.0.0.1:25193/health"),
+    ("oracle-core", "http://127.0.0.1:25235/health"),
+    ("files", "http://127.0.0.1:34567/health"),
+    ("kappa-acp", "http://127.0.0.1:25159/"),
+    ("doorbell-mcp", "http://127.0.0.1:25202/"),
+    ("browserless", "http://127.0.0.1:25130/"),
+    ("sigma-guard", "http://127.0.0.1:8787/__bili/stats"),
+]
+
+
+def lane_probe(_: dict) -> str:
+    import urllib.error
+    import urllib.request
+
+    out = {}
+    for name, url in LANES:
+        try:
+            req = urllib.request.Request(url, method="GET")
+            with urllib.request.urlopen(req, timeout=2.5) as r:
+                out[name] = r.status
+        except urllib.error.HTTPError as e:
+            out[name] = e.code
+        except Exception:
+            out[name] = 0
+    up = sum(1 for v in out.values() if v == 200)
+    auth = sum(1 for v in out.values() if v in (401, 403))
+    rdy = sum(1 for v in out.values() if v in (302, 400, 404))
+    return json.dumps(
+        {"lanes": out, "summary": {"up": up, "auth": auth, "ready": rdy, "down": len(out) - up - auth - rdy}},
+        indent=1,
+    )
+
+
+def probe_dns(args: dict) -> str:
+    name = args.get("name") or "github.com"
+    server = args.get("server") or "8.8.8.8"
+    try:
+        res = probe._dns_query(name, server, timeout=5.0)
+        return json.dumps(res, indent=1)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+
+def sweep_ports(args: dict) -> str:
+    targets = args.get("targets") or ["127.0.0.1:%d" % p for p in (25120, 25127, 25193)]
+    import io
+
+    buf = io.StringIO()
+    old = sys.stdout
+    sys.stdout = buf
+    try:
+        probe.dns_sweep(targets)
+    finally:
+        sys.stdout = old
+    return buf.getvalue()
+
+
+def dork_matrix(args: dict) -> str:
+    base = args.get("base") or "toxicwind ranch"
+    dates = args.get("dates") or list(probe.DORK_DATES)
+    return json.dumps(probe.dork_matrix(base, dates), indent=1)
+
+
+def magic_sniff(args: dict) -> str:
+    paths = args.get("paths") or []
+    if not paths:
+        return json.dumps({"error": "paths required"})
+    import io
+
+    buf = io.StringIO()
+    old = sys.stdout
+    sys.stdout = buf
+    try:
+        rc = probe.magic_scan(paths)
+    finally:
+        sys.stdout = old
+    return json.dumps({"report": buf.getvalue(), "mismatch": rc})
+
+
+TOOLS = [
+    {
+        "name": "fleet_health",
+        "description": "Pitchfork daemon health: counts by state plus the errored list. Live, not cached.",
+        "inputSchema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "lane_probe",
+        "description": "HTTP-probe every estate service lane (squawk-ws, thresher, bornite, models, router, oracle, files, kappa, doorbell, browserless, sigma-guard) and summarize up/auth/ready/down.",
+        "inputSchema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "probe_dns",
+        "description": "Resolve a name against a DIRECT resolver (8.8.8.8) over a raw UDP socket — a stale or hijacked /etc/resolv.conf cannot hide a problem.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"name": {"type": "string"}, "server": {"type": "string"}},
+        },
+    },
+    {
+        "name": "sweep_ports",
+        "description": "Banner-grab a list of host:port targets (default: the estate's own listeners).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"targets": {"type": "array", "items": {"type": "string"}}},
+        },
+    },
+    {
+        "name": "dork_matrix",
+        "description": "Expand one provenance query into a 32-query matrix (8 advanced templates x 4 date windows), every entry distinct.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"base": {"type": "string"}, "dates": {"type": "array", "items": {"type": "string"}}},
+        },
+    },
+    {
+        "name": "magic_sniff",
+        "description": "Content-sniff files by magic bytes; reports a '.txt' that is really an MP3 (or any extension/content mismatch).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"paths": {"type": "array", "items": {"type": "string"}}},
+            "required": ["paths"],
+        },
+    },
+]
+
+HANDLERS = {
+    "fleet_health": fleet_health,
+    "lane_probe": lane_probe,
+    "probe_dns": probe_dns,
+    "sweep_ports": sweep_ports,
+    "dork_matrix": dork_matrix,
+    "magic_sniff": magic_sniff,
+}
+
+
+def send(msg: dict) -> None:
+    sys.stdout.write(json.dumps(msg) + "\n")
+    sys.stdout.flush()
+
+
+def handle(msg: dict) -> None:
+    method = msg.get("method")
+    rid = msg.get("id")
+    params = msg.get("params") or {}
+    if method == "initialize":
+        send({
+            "jsonrpc": "2.0", "id": rid,
+            "result": {
+                "protocolVersion": "2024-11-05",
+                "capabilities": {"tools": {"listChanged": False}},
+                "serverInfo": {"name": "fleet-audit", "version": "1.0.0"},
+            },
+        })
+    elif method == "notifications/initialized":
+        pass
+    elif method == "ping":
+        send({"jsonrpc": "2.0", "id": rid, "result": {}})
+    elif method == "tools/list":
+        send({"jsonrpc": "2.0", "id": rid, "result": {"tools": TOOLS}})
+    elif method == "tools/call":
+        name = params.get("name") or ""
+        fn = HANDLERS.get(name)
+        if fn is None:
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": f"unknown tool {name}"}], "isError": True}})
+            return
+        try:
+            text = fn(params.get("arguments") or {})
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": text}], "isError": False}})
+        except Exception as e:
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": f"{type(e).__name__}: {e}"}], "isError": True}})
+    elif rid is not None:
+        send({"jsonrpc": "2.0", "id": rid,
+              "error": {"code": -32601, "message": f"method {method} not supported"}})
+
+
+def main() -> int:
+    buffer = ""
+    queue: list = []
+
+    def on_line(line: str) -> None:
+        line = line.strip()
+        if not line:
+            return
+        try:
+            queue.append(json.loads(line))
+        except Exception as e:
+            sys.stderr.write(f"[fleet-audit] bad input: {e}\n")
+
+    # Sequential handling keeps response order aligned with request order.
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            return 0
+        on_line(line)
+        while queue:
+            msg = queue.pop(0)
+            try:
+                handle(msg)
+            except Exception as e:
+                sys.stderr.write(f"[fleet-audit] handler error: {e}\n")
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except BrokenPipeError:
+        os._exit(0)
+    except KeyboardInterrupt:
+        os._exit(0)
