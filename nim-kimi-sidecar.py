@@ -1,3 +1,4 @@
+import subprocess
 #!/usr/bin/env python3
 """nim-kimi-sidecar: cold-aware NVIDIA NIM proxy for moonshotai/kimi-k3.
 
@@ -50,7 +51,24 @@ def log(msg):
     print("[nim-kimi] %s" % msg, file=sys.stderr, flush=True)
 
 def load_key():
-    k = os.environ.get("NVIDIA_API_KEY")
+    # SSOT first (rule 3): keyring. The estate key is NIM_API_KEY (same
+    # integrate.api.nvidia.com service); NVIDIA_API_KEY was the legacy name.
+    try:
+        r = subprocess.run(
+            ["secretsmith", "env", "NIM_API_KEY", "NVIDIA_API_KEY"],
+            capture_output=True, text=True, timeout=10,
+        )
+        out = r.stdout if r.returncode == 0 else ""
+        for line in out.splitlines():
+            stripped = line.strip()
+            if "=" in stripped and not stripped.startswith("#"):
+                v = stripped.split("=", 1)[1].strip().strip('"').strip("'")
+                if v:
+                    log("keyring NIM_API_KEY -> NVIDIA_API_KEY via secretsmith")
+                    return v
+    except Exception as e:
+        log("keyring lookup failed: %s" % e)
+    k = os.environ.get("NVIDIA_API_KEY") or os.environ.get("NIM_API_KEY")
     if k:
         return k
     try:
@@ -59,7 +77,7 @@ def load_key():
                 line = line.strip()
                 if line.startswith("export "):
                     line = line[7:].strip()
-                if line.startswith("NVIDIA_API_KEY="):
+                if line.startswith("NVIDIA_API_KEY=") or line.startswith("NIM_API_KEY="):
                     return line.split("=", 1)[1].strip().strip('"').strip("'")
     except Exception as e:
         log("secrets read failed: %s" % e)
