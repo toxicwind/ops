@@ -268,7 +268,7 @@ links:
     target: "/home/toxic/pens/estate/products/estate-ops/saturation-watchdog"
     pens_proximity: true
   - name: secretsmith
-    target: /home/toxic/pens/barn/secretsmith/bin/secretsmith
+    target: /home/toxic/pens/olympus/products/kryptos/bin/secretsmith
     pens_proximity: true
   - name: "set-audio"
     target: "/home/toxic/pens/estate/products/estate-ops/set-audio"
