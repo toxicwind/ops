@@ -4,7 +4,7 @@
 # exit code, and goes unhealthy (thus pages) when it fails.
 # Runs `src/index.ts --all --precheck --parquet` inside the maximal audit tree.
 set -uo pipefail
-ESTATE="${ESTATE_ROOT:-/home/toxic/estate}"
+ESTATE="${ESTATE_ROOT:-/home/toxic/pens/estate}"
 MAX="${MAXIMAL_AUDIT_DIR:-/home/toxic/pens/barn/src/maximal-estate-agentic-audit}"
 OUT="${MAXIMAL_AUDIT_OUTPUT:-$ESTATE/var/log/maximal-audit}"
 mkdir -p "$OUT"
