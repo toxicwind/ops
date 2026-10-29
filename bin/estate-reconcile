@@ -36,7 +36,7 @@ _log()  { printf '%s %s\n' "$(date -Iseconds)" "$*" >> "$LOG_DIR/estate-reconcil
 _out()  { printf '%s\n' "$*"; }
 
 # yote-side squawk publish, hodos-protected seq allocation (borrowed from
-# ops/openfang-health/openfang-health.sh's proven pattern).
+# ops/rig-health/rig-health.sh's proven pattern).
 #
 # DEDUPE (2026-09-30, slate): the 9/25 flood (~70 posts in ~90s) was publisher
 # sickness — identical alerts re-posted on every watch-loop pass while drift
@@ -146,7 +146,7 @@ _field() { printf '%s' "${BIN["$1/$2"]:-}"; }
 
 _SHA_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/estate-reconcile-sha.cache"
 # _sha: content hash with mtime+size cache for large files (>100MB).
-# (2026-10-03: estate-reconcile watch re-hashed the 881MB openfang on every
+# (2026-10-03: estate-reconcile watch re-hashed the 881MB rig on every
 # inotify event, pinning a CPU. Large files now hash once until mtime/size change.)
 _sha() {
   local f="$1" size mtime h key cached

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * openfang-join — admit a fleet (squawk) agent into OpenFang as a first-class agent.
+ * rig-join — admit a fleet (squawk) agent into rig as a first-class agent.
  *
  * Hyper-race synthesis of three proven approaches (2026-09-30):
  *   A. template-render  — render agent.toml from the fleet persona (fast path)
@@ -13,16 +13,16 @@
  * What it does:
  *   1. renders agent.toml + system.md (template or clone)
  *   2. runs the validation gate (TOML parse, required fields, name uniqueness
- *      across estate/agents/ + ~/.openfang/agents/ + live API, persona,
+ *      across estate/agents/ + ~/.rig/agents/ + live API, persona,
  *      sanity) — any failure REFUSES the join
  *   3. writes canonical estate/agents/<name>/ (git-tracked) + live copy
- *      ~/.openfang/agents/<name>/ (atomically)
- *   4. spawns: `openfang agent spawn` primary, POST /api/agents fallback
+ *      ~/.rig/agents/<name>/ (atomically)
+ *   4. spawns: `rig agent spawn` primary, POST /api/agents fallback
  *   5. verifies Running via the API (bounded gate)
  *   6. prints the agent card (identity bundle)
  *
  * Usage:
- *   openfang-join --name <name> --species <s> --personality <p> \
+ *   rig-join --name <name> --species <s> --personality <p> \
  *       --lane <lane> --task <task> --sigil <emoji> [--desc <d>]
  *       [--from <existing-agent>] [--model <m>] [--provider <p>]
  *       [--dry-run] [--rejoin] [--commit] [--push]
@@ -37,12 +37,12 @@ import { $ } from "bun";
 
 // ---------- constants ----------
 const HOME = "/home/toxic";
-const OPENFANG = `${HOME}/.local/bin/openfang`;
+const OPENFANG = `${HOME}/.local/bin/rig`;
 const OPENFANG_API = "http://127.0.0.1:25196";
 const ESTATE = `${HOME}/estate`;
 const ESTATE_AGENTS = `${ESTATE}/agents`;
-const LIVE_AGENTS = `${HOME}/.openfang/agents`;
-const WORKSPACES = `${HOME}/.openfang/workspaces`;
+const LIVE_AGENTS = `${HOME}/.rig/agents`;
+const WORKSPACES = `${HOME}/.rig/workspaces`;
 
 const DEFAULTS = {
   provider: "herd",
@@ -76,7 +76,7 @@ function parseArgs(): Record<string, string | boolean> {
 }
 const args = parseArgs();
 if (args["help"]) {
-  console.log("usage: openfang-join --name N --species S --personality P --lane L --task T --sigil E [--desc D] [--from AGENT] [--model M] [--provider P] [--dry-run] [--rejoin] [--commit] [--push]");
+  console.log("usage: rig-join --name N --species S --personality P --lane L --task T --sigil E [--desc D] [--from AGENT] [--model M] [--provider P] [--dry-run] [--rejoin] [--commit] [--push]");
   process.exit(0);
 }
 const name = String(args.name ?? "");
@@ -95,7 +95,7 @@ if (args["model"]) DEFAULTS.model = String(args["model"]);
 if (args["provider"]) DEFAULTS.provider = String(args["provider"]);
 
 if (!name || !species || !personality || !lane || !task || !sigil) {
-  console.error("usage: openfang-join --name N --species S --personality P --lane L --task T --sigil E [--desc D] [--from AGENT] [--model M] [--provider P] [--dry-run] [--rejoin] [--commit] [--push]");
+  console.error("usage: rig-join --name N --species S --personality P --lane L --task T --sigil E [--desc D] [--from AGENT] [--model M] [--provider P] [--dry-run] [--rejoin] [--commit] [--push]");
   process.exit(2);
 }
 
@@ -130,7 +130,7 @@ function titleCase(s: string): string {
   return s.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
-// ---------- identity (fleet -> openfang mapping, spec §4) ----------
+// ---------- identity (fleet -> rig mapping, spec §4) ----------
 const displayName = titleCase(name);
 const role = `${species}, ${personality} — ${lane}/${task}`;
 const description = descArg || `${lane}: ${task} (${species}, ${personality})`;
@@ -278,7 +278,7 @@ async function validate(toml: string): Promise<Verdict[]> {
   const sov = dirNames(ESTATE_AGENTS), live = dirNames(LIVE_AGENTS), api = await liveAgentNames();
   const collisions: string[] = [];
   if (sov.has(name)) collisions.push(`estate/agents/${name}`);
-  if (live.has(name)) collisions.push(`~/.openfang/agents/${name}`);
+  if (live.has(name)) collisions.push(`~/.rig/agents/${name}`);
   if (api.has(name)) collisions.push(`live API (id ${api.get(name)})`);
   if (rejoin && collisions.length) {
     out.push({ id: "V3", label: "name unique (--rejoin: will clear)", ok: true,
@@ -295,7 +295,7 @@ async function validate(toml: string): Promise<Verdict[]> {
   const wsOk = typeof parsed.workspace === "string" && parsed.workspace.startsWith(WORKSPACES + "/");
   out.push({ id: "V5", label: "sanity", ok: nameOk && wsOk,
     detail: nameOk && wsOk ? "name shape ok, workspace rooted ok"
-      : [!nameOk && `bad name '${name}'`, !wsOk && "workspace not under ~/.openfang/workspaces/"].filter(Boolean).join("; ") });
+      : [!nameOk && `bad name '${name}'`, !wsOk && "workspace not under ~/.rig/workspaces/"].filter(Boolean).join("; ") });
   return out;
 }
 
@@ -356,7 +356,7 @@ function atomicWrite(path: string, content: string): void {
 
 // ---------- main ----------
 async function main() {
-  console.log(`=== openfang-join: '${name}' (${fromAgent ? `clone of ${fromAgent}` : "template"}) ${dryRun ? "(DRY RUN)" : "(LIVE)"} ===\n`);
+  console.log(`=== rig-join: '${name}' (${fromAgent ? `clone of ${fromAgent}` : "template"}) ${dryRun ? "(DRY RUN)" : "(LIVE)"} ===\n`);
 
   if (rejoin && !dryRun) {
     console.log("--- --rejoin: clearing existing entries ---");
@@ -412,7 +412,7 @@ async function main() {
 
   if (doCommit || doPush) {
     console.log("\n--- committing canonical manifest ---");
-    const res = await $`git -C ${ESTATE} add agents/${name}/agent.toml agents/${name}/system.md && git -C ${ESTATE} commit -m ${`openfang-join: admit fleet agent '${name}' (${lane}/${task})`}`.text();
+    const res = await $`git -C ${ESTATE} add agents/${name}/agent.toml agents/${name}/system.md && git -C ${ESTATE} commit -m ${`rig-join: admit fleet agent '${name}' (${lane}/${task})`}`.text();
     console.log(res.text().slice(0, 300));
     if (doPush) {
       console.log("--- pushing (fetch-first, no force) ---");
