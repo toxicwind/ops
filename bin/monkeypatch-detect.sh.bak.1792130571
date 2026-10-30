@@ -18,8 +18,8 @@
 #   --quiet  only print findings (skip section headers when clean)
 #   --json   machine-readable output (one JSON object per line)
 #
-# Durable home: /home/toxic/sovereign/projects/ops/bin/monkeypatch-detect.sh
-# (sovereign-projects, canonical main). Safe to run anytime, read-only:
+# Durable home: /home/toxic/estate/projects/ops/bin/monkeypatch-detect.sh
+# (estate-projects, canonical main). Safe to run anytime, read-only:
 # it never modifies, kills, or restarts anything.
 
 set -u
@@ -53,7 +53,7 @@ emit() { # emit <category> <what> <where> <home>
 section() { (( QUIET )) || (( JSON )) || printf '\n=== %s ===\n' "$1"; }
 
 HOME_DIR="${HOME:-/home/toxic}"
-SOV="${SOVEREIGN_DIR:-/home/toxic/sovereign}"
+SOV="${SOVEREIGN_DIR:-/home/toxic/estate}"
 
 # ---------------------------------------------------------------- 1. /tmp production scripts
 section "/tmp scripts doing production jobs"
@@ -76,10 +76,10 @@ if [ -d /tmp ]; then
     crontab -l 2>/dev/null | grep -qF "$f" && refs="$refs crontab"
     if [ -n "$refs" ]; then
       emit "tmp-production-script" "script in /tmp referenced by:$refs (load-bearing, dies on reboot)" "$f" \
-        "move into owning repo (sovereign-projects or the service's repo), reference the repo path from config, commit"
+        "move into owning repo (estate-projects or the service's repo), reference the repo path from config, commit"
     else
       emit "tmp-scratch-script" "non-trivial script living in /tmp (>300B, recently touched)" "$f" \
-        "if one-off: delete after use; if reused: move into sovereign-projects (projects/ops/bin or the owning project), commit"
+        "if one-off: delete after use; if reused: move into estate-projects (projects/ops/bin or the owning project), commit"
     fi
   done < <(find /tmp -maxdepth 2 \( -name '*.sh' -o -name '*.py' -o -name '*.js' -o -name '*.ts' \) -newermt '7 days ago' -type f 2>/dev/null)
   # stale backups of live configs sitting in /tmp = the fix happened, the evidence didn't land
@@ -181,7 +181,7 @@ if [ -d "$HOME_DIR/node_modules" ]; then
       [ "$d" -lt 300 ] && continue
     fi
     emit "node_modules-patch" "file inside node_modules modified in last 14d (dies on npm reinstall)" "$f" \
-      "clean revert (npm pack / reinstall the package); if it was a real fix, patch the owning repo or vendor a fork; document the incident in sovereign-projects"
+      "clean revert (npm pack / reinstall the package); if it was a real fix, patch the owning repo or vendor a fork; document the incident in estate-projects"
   done < <(find "$HOME_DIR"/node_modules "$HOME_DIR"/*/node_modules -maxdepth 4 -type f -newermt '14 days ago' \
     ! -name '*.log' ! -path '*/.cache/*' 2>/dev/null | head -200)
   # .bak/.orig sitting next to node_modules sources = a patch happened here
@@ -207,13 +207,13 @@ while IFS= read -r l; do
         "point at a durable path inside a repo or /home/toxic/<service>/, commit the target, recreate the link from a setup script" ;;
   esac
 done < <(find "$HOME_DIR" -maxdepth 3 -type l 2>/dev/null | grep -v -E '^\/(proc|sys|dev)' | head -40)
-# symlinks inside the sovereign repo that escape the repo = invisible dependency
+# symlinks inside the estate repo that escape the repo = invisible dependency
 if [ -d "$SOV" ]; then
   while IFS= read -r l; do
     tgt=$(readlink -f "$l" 2>/dev/null)
     case "$tgt" in
       "$SOV"/*) : ;;
-      *) emit "repo-escape-symlink" "symlink inside sovereign repo points outside ($tgt)" "$l" \
+      *) emit "repo-escape-symlink" "symlink inside estate repo points outside ($tgt)" "$l" \
            "vendor the target into the repo or replace with a committed setup step" ;;
     esac
   done < <(find "$SOV" -type l -not -path '*/node_modules/*' -not -path '*/.git/*' 2>/dev/null | head -20)

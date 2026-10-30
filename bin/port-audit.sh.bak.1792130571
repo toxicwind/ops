@@ -9,7 +9,7 @@
 #        - herd.yaml dynamic slots  (llama-server processes from startPort)
 #        - tailscale serve backends (tailscale serve status)
 #        - known system services    (static table below)
-#   3. Scans sovereign logs + journal for EADDRINUSE / "address already in use".
+#   3. Scans estate logs + journal for EADDRINUSE / "address already in use".
 #   4. Flags: DUPLICATE live claims, DEAD config claims (no listener),
 #      ROGUE listeners (no config source), DANGLING tailscale backends,
 #      DUP-CLAIM in the SSOT itself, and hardcoded ports missing from the SSOT.
@@ -25,11 +25,11 @@
 # Exit: 0 = clean, 1 = findings, 2 = could not take a snapshot.
 #
 # READ-ONLY. Never kills, restarts, binds, or otherwise touches anything.
-# Runs on yote; SOV overrides the sovereign tree root.
+# Runs on yote; SOV overrides the estate tree root.
 
 set -uo pipefail
 
-SOV="${SOV:-/home/toxic/sovereign}"
+SOV="${SOV:-/home/toxic/estate}"
 SSOT="$SOV/config/ports.env"
 PITCHFORK="$SOV/pitchfork.toml"
 HERD_YAML="$SOV/config/herd.yaml"
@@ -157,7 +157,7 @@ for port in "${!PORT_PROCS[@]}"; do
 done
 
 # ------------------------------------------------------------ system ports ---
-# Static documentation of non-sovereign listeners. uid/root services that
+# Static documentation of non-estate listeners. uid/root services that
 # ss -p cannot attribute without sudo are resolved here by convention.
 declare -A SYSTEM=(
   [22]="sshd" [2222]="sshd-alt" [53]="dns" [443]="tailscaled-funnel"

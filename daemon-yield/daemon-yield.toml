@@ -1,0 +1,16 @@
+# ranch/ops — project-owned daemon manifest for daemon-yield.
+# NOT ENABLED. This unit is checkpointed only; Raccoon enables it after
+# verifying the hard exits (bounded proof in PROOF.md). Do not set
+# boot_start/auto until the exits are verified.
+#
+# The wrapper routes yield/no-op turns to emergent jobs. Stop, pause, and
+# audit requests terminate the loop immediately — they are never rerouted.
+# The wrapper never modifies the hatch client; it supervises invocation.
+
+[daemons.daemon-yield]
+run = "exec /usr/bin/python3 /home/toxic/estate/ranch/ops/daemon-yield/daemon-yield.py --agent-cmd /home/toxic/estate/ranch/ops/daemon-yield/turn.sh --state-dir /home/toxic/.local/state/daemon-yield --queue-dir /home/toxic/estate/ranch/ops/daemon-yield/queue --claimed-dir /home/toxic/estate/ranch/ops/daemon-yield/claimed --relay-dir /home/toxic/estate/ranch/ops/daemon-yield/relay --turn-timeout 600"
+dir = "/home/toxic/estate/ranch/ops/daemon-yield"
+mise = false
+retry = true
+boot_start = false
+auto = []
