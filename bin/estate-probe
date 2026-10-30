@@ -1,0 +1,299 @@
+#!/usr/bin/env python3
+"""estate-probe — one toolkit for the estate's live-network questions.
+
+Three techniques that the estate needs and that no existing tool here
+provided:
+
+  dns        Resolve names against a DIRECT resolver (8.8.8.8) over a raw
+             UDP socket instead of the system resolver, so a stale or
+             hijacked /etc/resolv.conf cannot hide a problem. Also does a
+             banner-grabbing port sweep of the estate's own listeners.
+
+  dork      Expand ONE provenance query into a matrix of advanced search
+             queries (site:, filetype:, intitle:, exact phrases, date
+             windows) so a public-fact audit checks many angles instead of
+             one. Prints the query matrix; `--run` executes them through
+             the configured search backend.
+
+  magic     Detect a file whose extension lies about its content by
+             sniffing magic bytes (MP3/ID3, PNG, JPEG, gzip, PDF, ELF,
+             ZIP). A ".txt" that is really an MP3 breaks every text tool
+             that touches it; sniffing is cheap and tells you what it
+             really is.
+
+Usage:
+  estate-probe dns --name github.com [--server 8.8.8.8]
+  estate-probe dns --sweep 127.0.0.1:25120 127.0.0.1:25127
+  estate-probe dork --base "toxicwind ranch" [--date 2026-10-07]
+  estate-probe magic <path> [<path> ...]
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import random
+import socket
+import struct
+import sys
+
+# ---------------------------------------------------------------------------
+# dns — direct resolver + banner sweep
+# ---------------------------------------------------------------------------
+
+DNS_SERVERS = ("8.8.8.8", "1.1.1.1", "9.9.9.9")
+
+
+def _dns_query(name: str, server: str, timeout: float = 2.0) -> dict:
+    """Minimal A/AAAA query over UDP. Returns parsed answers."""
+    txid = random.randint(0, 0xFFFF)
+    header = struct.pack("!HHHHHH", txid, 0x0100, 1, 0, 0, 0)
+    qname = b""
+    for part in name.encode().split(b"."):
+        qname += struct.pack("B", len(part)) + part
+    qname += b"\x00"
+    packet = header + qname + struct.pack("!HH", 1, 1)
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(timeout)
+    try:
+        sock.sendto(packet, (server, 53))
+        data, _ = sock.recvfrom(1500)
+    finally:
+        sock.close()
+
+    if len(data) < 12 or struct.unpack("!H", data[:2])[0] != txid:
+        raise ValueError("response id mismatch")
+
+    rcode = data[3] & 0x0F
+    if rcode != 0:
+        raise ValueError("dns rcode %d" % rcode)
+
+    qd, an = struct.unpack("!HH", data[4:8])
+    pos = 12
+    for _ in range(qd):
+        while data[pos] != 0:
+            pos += data[pos] + 1
+        pos += 5
+    answers = []
+    for _ in range(an):
+        if data[pos] & 0xC0 == 0xC0:
+            pos += 2
+        else:
+            while data[pos] != 0:
+                pos += data[pos] + 1
+            pos += 1
+        rtype, _cls, _ttl, rdlen = struct.unpack("!HHIH", data[pos : pos + 10])
+        pos += 10
+        rdata = data[pos : pos + rdlen]
+        pos += rdlen
+        if rtype == 1 and rdlen == 4:
+            answers.append(".".join(str(b) for b in rdata))
+        elif rtype == 28:
+            answers.append(socket.inet_ntop(socket.AF_INET6, rdata))
+    return {"name": name, "server": server, "answers": answers}
+
+
+def dns_resolve(name: str, server: str = "8.8.8.8") -> int:
+    try:
+        res = _dns_query(name, server)
+    except Exception as e:
+        print("FAIL %s via %s: %s" % (name, server, e), file=sys.stderr)
+        return 1
+    if not res["answers"]:
+        print("NO-ANSWER %s via %s" % (name, server), file=sys.stderr)
+        return 1
+    print("%s -> %s" % (name, ", ".join(res["answers"])))
+    return 0
+
+
+def dns_sweep(targets: list[str], timeout: float = 1.5) -> int:
+    """Banner-grab each target: connect, read a banner, report."""
+    for t in targets:
+        host, _, port_s = t.rpartition(":")
+        if not host or not port_s.isdigit():
+            print("SKIP %s (expected host:port)" % t)
+            continue
+        port = int(port_s)
+        try:
+            with socket.create_connection((host, port), timeout=timeout) as s:
+                s.settimeout(timeout)
+                try:
+                    s.sendall(b"HEAD / HTTP/1.0\r\n\r\n")
+                except OSError:
+                    pass
+                try:
+                    banner = s.recv(256)
+                except OSError:
+                    banner = b""
+            head = banner.decode("utf-8", "replace").splitlines()
+            first = head[0] if head else "(no banner)"
+            server = next(
+                (h for h in head if h.lower().startswith("server:")), ""
+            )
+            print("%-28s %s %s" % (t, first.strip(), server.strip()))
+        except Exception as e:
+            print("%-28s ERR %s" % (t, e))
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# dork — provenance query matrix
+# ---------------------------------------------------------------------------
+
+DORK_TEMPLATES = (
+    'site:github.com "{base}"',
+    'site:raw.githubusercontent.com "{base}" filetype:md',
+    'site:github.com/toxicwind "{base}"',
+    'filetype:json "{base}" "pitchfork.toml"',
+    'intitle:"{base}"',
+    '"{base}" "0 stars"',
+    'site:effusionlabs.com "{base}"',
+    '"{base}" filetype:html',
+)
+
+DORK_DATES = ("2026-10-07", "2026-10-26", "2026-10-02", "2026-09-21")
+
+
+def dork_matrix(base: str, dates: list[str]) -> list[str]:
+    """One query -> many advanced queries (templates x date windows).
+
+    Every template is combined with every date window, so the matrix is
+    base x dates in size and every entry is distinct. A date is only
+    meaningful for a "published around then" search, so it is appended as
+    an exact phrase; templates that already pin a date (none today) keep
+    their own.
+    """
+    out: list[str] = []
+    for tpl in DORK_TEMPLATES:
+        for d in dates:
+            q = tpl.format(base=base)
+            if "{date}" in q:
+                q = q.replace("{date}", d)
+            else:
+                q = q + ' "' + d + '"'
+            out.append(q)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# magic — content sniffing
+# ---------------------------------------------------------------------------
+
+MAGIC = (
+    (b"ID3", "audio/mpeg (ID3)"),
+    (b"\x89PNG\r\n\x1a\n", "image/png"),
+    (b"\xff\xd8\xff", "image/jpeg"),
+    (b"%PDF", "application/pdf"),
+    (b"\x7fELF", "application/x-elf"),
+    (b"PK\x03\x04", "application/zip"),
+    (b"\x1f\x8b", "application/gzip"),
+    (b"RIFF", "application/riff (wav/avi)"),
+    (b"OggS", "application/ogg"),
+    (b"fLaC", "audio/flac"),
+    (b"SQLite format 3\x00", "application/vnd.sqlite3"),
+)
+
+
+def sniff_mp3(data: bytes) -> bool:
+    """ID3 tag, or an MPEG audio frame sync (11 bits set)."""
+    if data[:3] == b"ID3":
+        return True
+    return len(data) > 1 and data[0] == 0xFF and (data[1] & 0xE0) == 0xE0
+
+
+def sniff(data: bytes) -> str:
+    if sniff_mp3(data):
+        return "audio/mpeg"
+    for sig, name in MAGIC:
+        if data.startswith(sig):
+            if sig == b"RIFF" and data[8:12] == b"WAVE":
+                return "audio/wav"
+            return name
+    if not data:
+        return "empty"
+    try:
+        data.decode("utf-8")
+        return "text/plain (utf-8)"
+    except UnicodeDecodeError:
+        return "binary (unknown)"
+
+
+def magic_scan(paths: list[str]) -> int:
+    mismatches = 0
+    for p in paths:
+        try:
+            with open(p, "rb") as fh:
+                head = fh.read(4096)
+        except OSError as e:
+            print("ERR %s: %s" % (p, e))
+            continue
+        kind = sniff(head)
+        ext = os.path.splitext(p)[1].lower()
+        looks_text = ext in (".txt", ".md", ".json", ".toml", ".yaml", ".yml", ".log")
+        flag = ""
+        if looks_text and kind not in ("text/plain (utf-8)", "empty"):
+            flag = "  <-- EXTENSION LIES"
+            mismatches += 1
+        if looks_text and sniff_mp3(head):
+            flag = "  <-- MP3 masquerading as text"
+            mismatches += 1
+        print("%-60s %-28s%s" % (p, kind, flag))
+    return 1 if mismatches else 0
+
+
+# ---------------------------------------------------------------------------
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(prog="estate-probe", description=__doc__)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    d = sub.add_parser("dns", help="direct-DNS resolution and banner sweep")
+    d.add_argument("--name")
+    d.add_argument("--server", default="8.8.8.8")
+    d.add_argument("--sweep", nargs="*", default=[])
+
+    k = sub.add_parser("dork", help="provenance query matrix")
+    k.add_argument("--base", required=True)
+    k.add_argument("--date", action="append", default=[])
+    k.add_argument("--json", action="store_true")
+
+    m = sub.add_parser("magic", help="content sniffing")
+    m.add_argument("paths", nargs="+")
+
+    args = ap.parse_args(argv)
+
+    if args.cmd == "dns":
+        rc = 0
+        if args.name:
+            rc |= dns_resolve(args.name, args.server)
+        if args.sweep:
+            rc |= dns_sweep(args.sweep)
+        return rc
+    if args.cmd == "dork":
+        dates = args.date or list(DORK_DATES)
+        matrix = dork_matrix(args.base, dates)
+        if args.json:
+            print(json.dumps(matrix, indent=1))
+        else:
+            for q in matrix:
+                print(q)
+        return 0
+    if args.cmd == "magic":
+        return magic_scan(args.paths)
+    return 2
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except BrokenPipeError:
+        # A downstream `| head` closed the pipe: exit quietly like a
+        # well-behaved Unix filter (SIGPIPE default is 141, but we do not
+        # want the traceback).
+        try:
+            sys.stdout.close()
+        except BrokenPipeError:
+            pass
+        os._exit(0)

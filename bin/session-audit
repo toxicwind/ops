@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# session-audit — deep session audit → dataframe (kleio deep-audit).
+# Wrapper: runs kleio's helper/deep-audit.ts over ALL sessions and emits
+# TSV/JSON dataframe + findings to the given out dir (default /tmp/kleio-deep).
+set -e
+OUT="${1:-/tmp/kleio-deep}"
+exec bun /home/toxic/pens/olympus/products/kleio/helper/deep-audit.ts --out "$OUT" "$@"
