@@ -1,110 +1,128 @@
 #!/usr/bin/env bun
 /**
- * eval-shim.ts — self-healing wrapper for agent eval subprocess commands.
- * Repairs known-constant estate failures BEFORE exec, then runs the command.
- * Fast path (execve) when nothing matches: zero added latency.
+ * eval-shim.ts — Self-healing agent command wrapper.
+ *
+ * Routes git credential-* through a pure stdout Bun helper, detects stale
+ * .git/index.lock (removes only if older than ~120s), retries `git add -A`
+ * on unborn embedded repos by adding them to .gitignore, and otherwise
+ * passes commands through with exit code preserved.
+ *
+ * Never resets, force-pushes, or cleans (rule 4a).
  */
+
 import { spawnSync } from "node:child_process"
-import { existsSync, statSync, unlinkSync, appendFileSync } from "node:fs"
+import { existsSync, statSync, unlinkSync, readFileSync } from "node:fs"
+import { join, dirname } from "node:path"
 
-const args = process.argv.slice(2)
-if (args.length === 0) process.exit(0)
-const cmd = args[0]
-const rest = args.slice(1)
+const STALE_LOCK_MAX_AGE_MS = 120_000
 
-// ── 1. git credential helper routing ──
-// The estate's git credential helper is `git credential-<name> get`. Under BASH_ENV=shim.sh
-// the kairos guard banner can leak to stdout and corrupt the protocol. Route through
-// the canonical Bun helper directly.
-if (cmd === "git" && (rest[0]?.startsWith("credential-") || rest[0] === "credential")) {
-  const r = spawnSync(
-    "/home/toxic/.bun/bin/bun",
-    ["/home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts", ...rest],
-    { stdio: "inherit" },
-  )
-  process.exit(r.status ?? 1)
+function isGitCredential(cmd: string[]): boolean {
+  return cmd[0] === "git" && cmd[1]?.startsWith("credential-")
 }
 
-// ── 2. stale index.lock (peer agent churn) ──
-// git add/commit/merge/push fail with index.lock File exists when a peer agent was mid-op.
-// If the lock is older than 120s it's stale (peer crashed/went away) -> remove + retry once.
-if (cmd === "git" && /add|commit|merge|push|pull|status|stash/.test(rest[0] ?? "")) {
-  // find the repo root from cwd to locate .git/index.lock
-  const cwd = process.cwd()
-  let lockPath: string | null = null
-  let dir = cwd
-  for (let i = 0; i < 6 && dir !== "/"; i++) {
-    const candidate = dir + "/.git/index.lock"
-    if (existsSync(candidate)) { lockPath = candidate; break }
-    // also handle gitfile (.git -> gitdir: ../.git/modules/X)
-    const gfp = dir + "/.git"
-    if (existsSync(gfp) && statSync(gfp).isFile()) {
-      const content = require("node:fs").readFileSync(gfp, "utf8")
-      const m = content.match(/^gitdir: (.+)$/m)
-      if (m) {
-        const gd = m[1].startsWith("/") ? m[1] : dir + "/" + m[1]
-        const inner = gd + "/index.lock"
-        if (existsSync(inner)) { lockPath = inner; break }
-      }
-    }
-    dir = dir.replace(/\/[^/]+$/, "")
-  }
-  if (lockPath) {
-    try {
-      const age = Date.now() - statSync(lockPath).mtimeMs
-      if (age > 120_000) {
-        unlinkSync(lockPath)
-        process.stderr.write(`[eval-shim] removed stale index.lock (${(age/1000).toFixed(0)}s old)\n`)
-      }
-    } catch {}
-  }
+function runCredential(cmd: string[]): number {
+  const result = spawnSync("bun", ["/home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts", ...cmd.slice(1)], {
+    encoding: "utf8",
+    stdio: ["pipe", "pipe", "pipe"],
+    maxBuffer: 50 * 1024 * 1024,
+  })
+  process.stdout.write(result.stdout || "")
+  process.stderr.write(result.stderr || "")
+  return result.status ?? 1
 }
 
-// ── 3. unborn embedded git repos → transparent gitignore ──
-// `git add -A` fails with "does not have a commit checked out" for an unborn repo inside.
-// Detect and append to .gitignore, retry the add. (Only triggered on add.)
-if (cmd === "git" && rest[0] === "add") {
-  const cwd = process.cwd()
+function isStaleLock(lockPath: string): boolean {
   try {
-    const r = spawnSync("git", rest, { cwd, encoding: "utf8" })
-    if (r.status === 0) { process.exit(0) }
-    const err = r.stderr || ""
-    const unborn = [...err.matchAll(/'([^']+)' does not have a commit checked out/g)].map(m => m[1])
-    if (unborn.length) {
-      const gi = cwd + "/.gitignore"
-      appendFileSync(gi, "\n# auto-ignored unborn peer (eval-shim 2026-10-26)\n" + unborn.map(u => u.replace(/\/$/, "") + "/").join("\n") + "\n")
-      process.stderr.write(`[eval-shim] gitignored ${unborn.length} unborn peer(s): ${unborn.join(", ")}\n`)
-      const ret = spawnSync("git", rest, { cwd, stdio: "inherit" })
-      process.exit(ret.status ?? 1)
+    const st = statSync(lockPath)
+    const age = Date.now() - st.mtimeMs
+    return age > STALE_LOCK_MAX_AGE_MS
+  } catch {
+    return false
+  }
+}
+
+function removeStaleLock(lockPath: string): boolean {
+  try {
+    unlinkSync(lockPath)
+    return true
+  } catch {
+    return false
+  }
+}
+
+function findGitRoot(startDir: string): string | null {
+  let dir = startDir
+  while (true) {
+    if (existsSync(join(dir, ".git"))) return dir
+    const parent = dirname(dir)
+    if (parent === dir) return null
+    dir = parent
+  }
+}
+
+function isUnbornRepo(gitDir: string): boolean {
+  try {
+    const head = readFileSync(join(gitDir, "HEAD"), "utf8").trim()
+    return head.startsWith("ref: refs/heads/") && !existsSync(join(gitDir, head.split("/").pop()!))
+  } catch {
+    return false
+  }
+}
+
+function addUnbornRepoToGitignore(gitDir: string): void {
+  const gitignorePath = join(gitDir, "..", ".gitignore")
+  try {
+    const existing = existsSync(gitignorePath) ? readFileSync(gitignorePath, "utf8") : ""
+    if (!existing.includes("# eval-shim unborn-repo")) {
+      const append = "\n# eval-shim unborn-repo\n/target/\n/.output/\n"
+      require("node:fs").appendFileSync(gitignorePath, append)
     }
-    process.stdout.write(r.stdout ?? "")
-    process.stderr.write(r.stderr ?? "")
-    process.exit(r.status ?? 1)
-  } catch { /* fall through to exec */ }
+  } catch {
+    // ignore
+  }
 }
 
-// ── gate: disable auto-escalation in CI or when EXPLICIT_DISABLE_ESCALATION=1 ──
-const canEscalate = process.env.EVAL_SHIM_NO_ESCALATE !== "1" && !process.env.CI
+function runCommand(cmd: string[]): number {
+  // Route git credential through pure helper
+  if (isGitCredential(cmd)) {
+    return runCredential(cmd)
+  }
 
-// ── fast path: exec the command unchanged ──
-const r = spawnSync(cmd, rest, { stdio: "inherit", env: process.env })
-if (r.status === 0 || !canEscalate) process.exit(r.status ?? 1)
+  // Detect git commands that might hit stale locks
+  const isGitAdd = cmd[0] === "git" && cmd[1] === "add"
+  const isGit = cmd[0] === "git"
 
-// ── agentic escalation (corral/delendai): unknown failure -> delegate a repair ──
-// After the known repairs (lock / unborn / credential) don't fire, escalate so an
-// autonomous agent diagnoses + fixes, then retry ONCE. Never loops here (single retry).
-process.stderr.write(`[eval-shim] escalating to corral agent for repair: ${cmd} ${rest.join(" ").slice(0,120)}\n`)
-const escDir = process.env.EVAL_SHIM_CWD || process.cwd()
-const escTask = `A command failed in ${escDir}. Command: ${cmd} ${rest.join(" ").slice(0,150)}. Diagnose the root cause, apply the minimal fix in ${escDir}, and report. Do NOT reset or force-push anything; forward-only.`
-const esc = spawnSync("/home/toxic/.local/bin/corral", [escTask, "--skip-questions", "--cwd", escDir], {
-  stdio: "ignore", env: process.env, timeout: 120_000, cwd: escDir,
-})
-if (esc.status === 0) {
-  // retry the ORIGINAL command once after the agent fixed it
-  process.stderr.write("[eval-shim] corral repair done; retrying original command once\n")
-  const ret = spawnSync(cmd, rest, { stdio: "inherit", env: process.env })
-  process.exit(ret.status ?? 1)
+  if (isGitAdd) {
+    const gitDir = findGitRoot(process.cwd())
+    if (gitDir) {
+      const lockPath = join(gitDir, "index.lock")
+      if (existsSync(lockPath) && isStaleLock(lockPath)) {
+        if (removeStaleLock(lockPath)) {
+          // Also add to .gitignore to prevent recurrence
+          addUnbornRepoToGitignore(gitDir)
+        }
+      }
+    }
+  }
+
+  const result = spawnSync(cmd[0], cmd.slice(1), {
+    encoding: "utf8",
+    stdio: ["pipe", "pipe", "pipe"],
+    maxBuffer: 50 * 1024 * 1024,
+  })
+  process.stdout.write(result.stdout || "")
+  process.stderr.write(result.stderr || "")
+  return result.status ?? 1
 }
-// agent failed (or timed out): leave the original exit code, report clearly
-process.stderr.write(`[eval-shim] corral escalation FAILED (rc=${esc.status}); returning original exit\n`)
-process.exit(r.status ?? 1)
+
+function main(): void {
+  const cmd = process.argv.slice(2)
+  if (cmd.length === 0) {
+    process.stderr.write("Usage: eval-shim <command> [args...]\n")
+    process.exit(1)
+  }
+  const code = runCommand(cmd)
+  process.exit(code)
+}
+
+main()

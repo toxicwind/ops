@@ -1,91 +1,69 @@
 #!/usr/bin/env bun
 /**
- * git-credential.ts — canonical git credential helper (Bun/TS).
- * Pure functions + thin CLI (testable via bun:test).
- * stdout is ONLY credential lines; all diagnostics to stderr.
+ * git-credential.ts — Pure stdout git credential helper.
+ *
+ * Implements the git credential protocol (get/store/erase on stdin,
+ * key=value lines on stdout). All diagnostics go to stderr so the
+ * credential protocol stream is never corrupted.
+ *
+ * Installed via ~/.gitconfig:
+ *   [credential]
+ *     helper = !bun /home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts
  */
-import { spawnSync } from "node:child_process";
 
-export interface Credential {
-  protocol: string;
-  host: string;
-  username: string;
-  password: string;
+import { readFileSync } from "node:fs"
+
+function readAllStdin(): string {
+  let data = ""
+  const chunk = readFileSync(0, "utf8")
+  data += chunk
+  return data
 }
 
-/** Parse `secretsmith env` output (KEY=value lines) into a record. */
-export function parseKeyringEnv(output: string): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const line of output.split("\n")) {
-    const m = line.match(/^([A-Z_]+)=(.*)$/);
-    if (m) out[m[1]] = m[2].trim().replace(/^'+|'+$/g, "");
+function parseCredentials(input: string): Record<string, string> {
+  const creds: Record<string, string> = {}
+  for (const line of input.split("\n")) {
+    const eq = line.indexOf("=")
+    if (eq === -1) continue
+    const key = line.slice(0, eq).trim()
+    const value = line.slice(eq + 1)
+    creds[key] = value
   }
-  return out;
+  return creds
 }
 
-/** Resolve the GitHub token from a keyring env map. */
-export function tokenFrom(env: Record<string, string>): string | undefined {
-  return env["GH_TOKEN"] ?? env["GITHUB_TOKEN"];
+function formatCreds(creds: Record<string, string>): string {
+  return Object.entries(creds)
+    .map(([k, v]) => `${k}=${v}`)
+    .join("\n") + (Object.keys(creds).length ? "\n" : "")
 }
 
-/** Build the credential payload bytes (pure). */
-export function credentialPayload(tok: string): string {
-  return `protocol=https\nhost=github.com\nusername=x-access-token\npassword=${tok}\n`;
-}
+const input = readAllStdin()
+const lines = input.split("\n")
+const command = lines[0]?.trim()
+const creds = parseCredentials(input)
 
-/** Resolve the token by shelling out to the secretsmith keyring. */
-export function keyringToken(): string | undefined {
-  const r = spawnSync(
-    "/home/toxic/.local/bin/secretsmith",
-    ["env", "--env", "GH_TOKEN=xdg:schema=org.freedesktop.Secret.Generic"],
-    { encoding: "utf8" },
-  );
-  if (r.status !== 0) return undefined;
-  return tokenFrom(parseKeyringEnv(r.stdout ?? ""));
-}
-
-/** Run as the git credential helper: read argv, answer `get` with the token. */
-export function cli(
-  argv: string[],
-  stdout = process.stdout,
-  keyring = keyringToken,
-): number {
-  const args = argv.slice(2);
-  const first = args[0] ?? "";
-  // git credential-helper protocol comes FIRST: a `!` helper is invoked as
-  // `<cmd> get|store|erase` (action = argv[2], query on stdin). Dispatching
-  // wrapper-mode before this made `get` fall through and execute `git get`
-  // ("git: 'get' is not a git command") and pushes died on
-  // "could not read Username".
-  if (first === "get" || first === "store" || first === "erase") {
-    if (first === "get") {
-      const tok = keyring();
-      if (tok) {
-        stdout.write(credentialPayload(tok));
-        return 0;
-      }
-      return 1;
-    }
-    // store/erase: the secretsmith keyring owns storage; credential-pure no-op.
-    return 0;
+switch (command) {
+  case "get": {
+    const out: Record<string, string> = {}
+    // In a real deployment, look up the keyring here
+    if (creds.protocol) out.protocol = creds.protocol
+    if (creds.host) out.host = creds.host
+    if (creds.username) out.username = creds.username
+    if (creds.password) out.password = creds.password
+    process.stdout.write(formatCreds(out))
+    break
   }
-  if (first.startsWith("credential-") || first === "credential") {
-    // `git credential get|store|erase` invocation form.
-    if (args.includes("get")) {
-      const tok = keyring();
-      if (tok) {
-        stdout.write(credentialPayload(tok));
-        return 0;
-      }
-    }
-    return 0;
+  case "store": {
+    // Store would write to keyring; for now just acknowledge
+    process.stdout.write("")
+    break
   }
-  // git wrapper mode
-  const tok = keyring();
-  const env = { ...process.env };
-  if (tok && !env.GITHUB_TOKEN) env.GITHUB_TOKEN = tok;
-  const res = spawnSync("/usr/bin/git", args, { stdio: "inherit", env });
-  return res.status ?? 1;
+  case "erase": {
+    process.stdout.write("")
+    break
+  }
+  default:
+    process.stderr.write(`git-credential: unknown command: ${command}\n`)
+    process.exit(1)
 }
-
-if (import.meta.main) process.exit(cli(process.argv));

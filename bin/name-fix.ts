@@ -19,8 +19,8 @@
 import { $ } from "bun";
 import { checkName } from "./name-check.ts";
 
-const ESTATE = "/home/toxic/estate";
-const RENAME_TS = `${ESTATE}/skills/rename-roundup/rename.ts`;
+const ESTATE = "/home/toxic/pens/estate";
+const RENAME_TS = "/home/toxic/pens/ranch/products/rename-roundup/rename.ts";
 
 interface CaseVariants {
 	lower: string;
