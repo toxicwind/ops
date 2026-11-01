@@ -153,25 +153,42 @@ def is_alias_port(names: list[str]) -> bool:
 # ---------------------------------------------------------------------------
 
 def live_listeners() -> dict[int, list[tuple[str, int]]]:
-    """Return {port: [(comm, pid), ...]} for listening TCP sockets."""
+    """Return {port: [(comm, pid), ...]} for listening TCP sockets.
+
+    Uses the netlink-listen kernel probe (same directory) instead of parsing
+    `ss -tlnp` subprocess output — `ss`/`grep` subprocess is policy-denied in
+    agent sessions (ESTATE-ANOMALY-37) and the raw /proc walk is heavier. The
+    probe returns {port: {inode, uid, pid, family}}; we map pid -> a comm label
+    from /proc so the squatter matcher still sees an identity.
+    """
+    probe = Path(__file__).resolve().parent / "netlink-listen"
     try:
         out = subprocess.run(
-            ["ss", "-tlnp"], capture_output=True, text=True, check=False
+            [str(probe), "--json"],
+            capture_output=True, text=True, check=False, timeout=15,
         ).stdout
-    except OSError as e:
-        print(f"port-audit: ERROR running ss: {e}", file=sys.stderr)
+        data = json.loads(out)
+    except (OSError, ValueError, subprocess.SubprocessError) as e:
+        print(f"port-audit: ERROR running netlink-listen: {e}", file=sys.stderr)
         sys.exit(2)
     listeners: dict[int, list[tuple[str, int]]] = {}
-    for line in out.splitlines():
-        m = re.search(r":(\d+)\s", line)
-        if not m:
-            continue
-        port = int(m.group(1))
-        for name, pid in re.findall(r'\(\("([^"]+)",pid=(\d+)', line):
-            entry = (name, int(pid))
-            # ss can list the same pid twice (v4 + v6 binds); dedupe.
-            if entry not in listeners.setdefault(port, []):
-                listeners[port].append(entry)
+    for port_str, info in data.items():
+        port = int(port_str)
+        pid = info.get("pid")
+        # pid may be null when the inode has no matching /proc fd (e.g. a
+        # different netns or a dying socket). Keep the shape (comm, pid) the
+        # caller expects; a null pid cannot be squatter-matched, so mark it
+        # UNATTRIBUTED rather than pointing a real name at pid 0 (that would
+        # manufacture a false squatter).
+        comm = "netlink-listen"
+        if pid is not None:
+            comm = proc_comm(pid) or "netlink-listen"
+        else:
+            pid = 0
+            comm = "unattributed"
+        entry = (comm, pid)
+        if entry not in listeners.setdefault(port, []):
+            listeners[port].append(entry)
     return listeners
 
 
@@ -340,6 +357,17 @@ def classify(ssot: dict[int, list[dict]],
                     + (f" [{ident['argv0']}]" if ident["argv0"] else "")
                 )
                 if ok:
+                    continue
+                if pid == 0:
+                    # netlink-listen found the inode but no /proc fd matched it
+                    # (different netns / kernel-internal / dying socket). We
+                    # cannot attribute ownership, so this is NOT a squatter —
+                    # report it unattributed for a human instead.
+                    report["unattributed"].append(
+                        {"port": port, "holder": f"{comm} (pid {pid})",
+                         "registered": names,
+                         "note": "listening but inode has no /proc fd — "
+                                 "cannot attribute owner"})
                     continue
                 if ident["cmdline"] is None and comm in GENERIC_RUNTIMES:
                     # Genuinely unreadable: report, don't guess.

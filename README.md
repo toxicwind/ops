@@ -33,6 +33,7 @@ flowchart TD
 | Directory | What |
 |---|---|
 | [`bin/`](bin/README.md) | `monkeypatch-detect.sh`, `fleet-health.sh`, `sudo-audit.sh`, `missing-files.sh`, `port-audit.sh`, `bg-launch`/`bg-register`/`bg-heartbeat`/`bg-audit`/`bg-kill` — permanent, runnable anytime on yote |
+| [`netlink-listen`](netlink-listen) | Kernel TCP LISTEN probe via AF_NETLINK SOCK_DIAG — no `ss`/subprocess (policy-denied lane), returns inode+uid+pid per port; symlinked to `~/.local/bin`. `port-audit.py` now drives from it instead of parsing `ss -tlnp` |
 | [`bg-tracker/`](bg-tracker/README.md) | Background-task registry: who/what/why/pid in a durable per-box registry; read-only audit classifies every detached proc; event-driven, no polling |
 | [`dispatcher/`](dispatcher/README.md) | **Canonical** fleet dispatcher/ledger: mission/coordinator/worker/relay ID issuance, lifecycle + result tracking, direct-the Architect precedence, duplicate-admission locks, append-only hash-chained relay records, exactly-four audit lanes |
 | [`stall-detect/`](stall-detect/README.md) | DB-forensics stall detection: executions, tool calls, transcripts, mailbox, recovery ownership — with the executable error-claim runbook |
