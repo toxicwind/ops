@@ -17,7 +17,7 @@ export interface NameCheckResult {
 	free: boolean;
 }
 
-const ESTATE = "/home/toxic/estate";
+const ESTATE = "/home/toxic/pens/estate";
 
 async function grepLines(file: string, pattern: string): Promise<string[]> {
 	try {

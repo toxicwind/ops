@@ -132,8 +132,8 @@ done
 if [ ${#TARGETS[@]} -eq 0 ]; then
   # Default roots per box.
   if [ -d /home/toxic/estate ]; then
-    TARGETS=(/home/toxic/estate/skills /home/toxic/estate/ranch
-             /home/toxic/estate/var/scratch /home/toxic/maximal-sweep)
+    TARGETS=(/home/toxic/pens/estate/skills /home/toxic/pens/estate/ranch
+             /home/toxic/pens/estate/var/scratch /home/toxic/maximal-sweep)
   elif [ -d /home/hatch/workspace ]; then
     TARGETS=(/home/hatch/workspace/cron.d /home/hatch/workspace/skills
              /home/hatch/workspace/sweeps /home/hatch/workspace/goals

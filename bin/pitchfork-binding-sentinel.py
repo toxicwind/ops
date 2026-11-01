@@ -64,7 +64,7 @@ TERM_WAIT_S = int(os.environ.get("PFB_TERM_WAIT_S", "300"))
 WATCHED = {
     "estate/oracle-market": {
         "signature": "oracle_loop.py",
-        "lock": "/home/toxic/estate/ranch/squawk/oracle/oracle.lock",
+        "lock": "/home/toxic/pens/estate/ranch/squawk/oracle/oracle.lock",
     },
 }
 # Test-only override: a fabricated WATCHED map (JSON) so a test can

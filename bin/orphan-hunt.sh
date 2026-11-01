@@ -125,7 +125,7 @@ if [ "$BOX" = yote ]; then
   v "pitchfork supervisor pid: ${SUP_PID:-none}"
   if [ -n "$SUP_PID" ]; then
     # every _PORT in ports.env: who holds it, and is the holder under pitchfork?
-    grep -oE "^[A-Z0-9_]+_PORT=[0-9]+" /home/toxic/estate/config/ports.env 2>/dev/null | while IFS='=' read -r k p; do
+    grep -oE "^[A-Z0-9_]+_PORT=[0-9]+" /home/toxic/pens/estate/config/ports.env 2>/dev/null | while IFS='=' read -r k p; do
       holder=$(ss -ltnp 2>/dev/null | grep -m1 ":$p " | grep -oE "pid=[0-9]+" | head -1 | cut -d= -f2)
       [ -z "$holder" ] && continue
       # walk up: is pitchfork supervisor an ancestor?

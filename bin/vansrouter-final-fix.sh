@@ -269,8 +269,8 @@ sleep 1
 [ -n "$STALE" ] && kill -KILL "$STALE" 2>/dev/null || true
 
 pitchfork clean --daemon estate/tau 2>&1 | tail -2 || true
-if [ -x /home/toxic/estate/bin/pitchfork-restart ]; then
-  /home/toxic/estate/bin/pitchfork-restart estate/tau 2>&1 | tail -8 || true
+if [ -x /home/toxic/pens/estate/bin/pitchfork-restart ]; then
+  /home/toxic/pens/estate/bin/pitchfork-restart estate/tau 2>&1 | tail -8 || true
 else
   pitchfork restart estate/tau 2>&1 | tail -8 || true
 fi
@@ -333,4 +333,4 @@ JSEOF
 hdr "DONE"
 echo "  extension : $EXT"
 echo "  backup    : $EXT.bak.*"
-echo "  rerun     : bash /home/toxic/estate/bin/vansrouter-final-fix.sh"
+echo "  rerun     : bash /home/toxic/pens/estate/bin/vansrouter-final-fix.sh"

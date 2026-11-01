@@ -18,7 +18,7 @@
 #   --quiet  only print findings (skip section headers when clean)
 #   --json   machine-readable output (one JSON object per line)
 #
-# Durable home: /home/toxic/estate/ranch/ops/bin/monkeypatch-detect.sh
+# Durable home: /home/toxic/pens/estate/ranch/ops/bin/monkeypatch-detect.sh
 # (estate-scripts-projects, canonical main). Safe to run anytime, read-only:
 # it never modifies, kills, or restarts anything.
 

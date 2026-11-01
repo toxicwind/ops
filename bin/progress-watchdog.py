@@ -68,7 +68,7 @@ TRIAGE_WINDOW_S = 900     # an intake_request must get its own
 
 out = {"ts": time.time(), "errors": []}
 channel = Path(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] != "--selftest" \
-    else Path("/home/toxic/estate/hatch/agents/ember/squawk-root/bid-market")
+    else Path("/home/toxic/pens/estate/hatch/agents/ember/squawk-root/bid-market")
 
 
 def sh(cmd, timeout=15):

@@ -171,11 +171,11 @@ import os, re, socket, subprocess, sys, urllib.request
 pf_bin = sys.argv[1]
 ports = {}
 try:
-    for line in open("/home/toxic/estate/config/ports.env"):
+    for line in open("/home/toxic/pens/estate/config/ports.env"):
         m = re.match(r"([A-Z0-9_]+_PORT)\s*=\s*(\d+)", line.strip())
         if m: ports[m.group(1)] = int(m.group(2))
 except OSError: pass
-toml = open("/home/toxic/estate/pitchfork.toml").read()
+toml = open("/home/toxic/pens/estate/pitchfork.toml").read()
 def pf_status(name):
     try:
         out = subprocess.run([pf_bin, "status", name], capture_output=True, text=True, timeout=15).stdout

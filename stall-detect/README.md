@@ -97,7 +97,7 @@ The shared catalog (`hatch/bin/error_claims.py`, `ERROR_CLAIM_CATALOG`) holds th
 - **stall-slayer (this lane):** DB forensics + safe resume paths.
 - **stale-hunter:** live process behavior. Received handoff: yote ralph-dashboard uvicorn PID 1781869 spinning one thread at ~67% CPU inside `os.walk` → `app/projects/discovery.py:32` `discover_project_paths`, zero client traffic on :8420 — suspect overly broad `PROJECT_DIRS` root causing repeated full-tree rescans. Root-caused via py-spy 2026-09-20; live diagnosis + fix is theirs.
 
-Related: `docs/fleet-knowledgebase.md` §2 (Active crews) · `projects/ops/bin/runner-audit.sh` (runner lane, OS-level) · `hatch/bin/error_claims.py` (shared error-claim catalog) · `hatch/bin/agent-reaper --classify-errors` (harvest→classify) · master README `/home/toxic/estate/README.md`.
+Related: `docs/fleet-knowledgebase.md` §2 (Active crews) · `projects/ops/bin/runner-audit.sh` (runner lane, OS-level) · `hatch/bin/error_claims.py` (shared error-claim catalog) · `hatch/bin/agent-reaper --classify-errors` (harvest→classify) · master README `/home/toxic/pens/estate/README.md`.
 
 ## Contribute
 

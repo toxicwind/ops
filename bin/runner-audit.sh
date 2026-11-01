@@ -126,7 +126,7 @@ header "yote: oracle-market loop (oracle crew's live work — report only, never
 header "yote: scheduler hygiene"
 HYG="$("$YOTE_CONN" exec '
 echo "crontab:$(command -v crontab >/dev/null 2>&1 && echo present || echo absent)"
-echo "sweepd_procs:$(pgrep -xf "/bin/bash /home/toxic/estate/tools/fleet-ops/fleet-watchdog/sweepd.sh" | wc -l)"
+echo "sweepd_procs:$(pgrep -xf "/bin/bash /home/toxic/pens/estate/tools/fleet-ops/fleet-watchdog/sweepd.sh" | wc -l)"
 echo "tmux:$(tmux ls 2>/dev/null | wc -l)"
 ' 2>/dev/null)"
 crontab_st="$(echo "$HYG" | awk -F: '/^crontab:/{print $2}')"

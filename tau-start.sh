@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PITCH=/home/toxic/estate/pitchfork.toml
+PITCH=/home/toxic/pens/estate/pitchfork.toml
 CHUTE=/home/toxic/pens/barn/chute/chute.mjs
 OMP=/home/toxic/tau/packages/coding-agent/dist/tau
 EXT=/home/toxic/.tau/extensions/vansrouter.ts

@@ -74,7 +74,7 @@ No polling daemon ships with this. If you want push-on-change, add a systemd pat
 ```ini
 # /etc/systemd/system/bg-tracker.path
 [Path]
-PathChanged=/home/toxic/estate/ranch/ops/bg-tracker/state
+PathChanged=/home/toxic/pens/estate/ranch/ops/bg-tracker/state
 [Install]
 WantedBy=multi-user.target
 ```

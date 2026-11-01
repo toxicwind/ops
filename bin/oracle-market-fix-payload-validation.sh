@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BIN=/home/toxic/estate/agents/oracle-market/bin
+BIN=/home/toxic/pens/estate/agents/oracle-market/bin
 BIDDER=$BIN/bidder.py
 POSTTASK=$BIN/post_task.py
 

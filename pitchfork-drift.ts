@@ -18,8 +18,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const MONO = "/home/toxic/estate/pitchfork.toml";
-const FRAG_DIR = "/home/toxic/estate/pitchfork.d";
+const MONO = "/home/toxic/pens/estate/pitchfork.toml";
+const FRAG_DIR = "/home/toxic/pens/estate/pitchfork.d";
 
 /** Collect daemon names under `[daemons.<name>]` / `[daemons.<name>...]`. */
 function daemonsIn(text: string): Set<string> {

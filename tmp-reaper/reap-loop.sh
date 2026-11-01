@@ -4,6 +4,6 @@
 set -uo pipefail
 INTERVAL="${1:-3600}"
 while true; do
-  /home/toxic/estate/bin/tmp-reaper/reap.sh 24
+  /home/toxic/pens/estate/bin/tmp-reaper/reap.sh 24
   sleep "$INTERVAL"
 done

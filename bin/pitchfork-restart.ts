@@ -25,7 +25,7 @@ import {
 
 /** Default estate dispatch shim; PITCHFORK_BIN overrides it (matches bash). */
 function pfBin(env: Record<string, string | undefined>): string {
-  return env.PITCHFORK_BIN?.trim() || "/home/toxic/estate/bin/pitchfork";
+  return env.PITCHFORK_BIN?.trim() || "/home/toxic/pens/estate/bin/pitchfork";
 }
 
 function log(msg: string): void {

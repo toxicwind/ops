@@ -21,7 +21,7 @@
 
 set -u
 
-ROOT="/home/toxic/estate"
+ROOT="/home/toxic/pens/estate"
 APPLY_DIR=""
 JSON=0
 LIVE_DAYS=7

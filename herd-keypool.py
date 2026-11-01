@@ -17,7 +17,7 @@ ROOT = os.path.dirname(HERE)
 
 _SEARCH = [
     ROOT,
-    os.path.expanduser("/home/toxic/estate"),
+    os.path.expanduser("/home/toxic/pens/estate"),
     os.getcwd(),
 ]
 
@@ -36,7 +36,7 @@ if main is None:
     sys.stderr.write(
         "herd-keypool: FATAL: cannot import keypool.__main__.main\n"
         + "".join(f"  [{b}] {e}\n" for b, e in _errors)
-        + "Hint: verify /home/toxic/estate/keypool/__main__.py exists and is readable,\n"
+        + "Hint: verify /home/toxic/pens/estate/keypool/__main__.py exists and is readable,\n"
         + "      Manual intervention required: the warden is alert-only, restores are disabled.\n"
     )
     raise SystemExit(3)
