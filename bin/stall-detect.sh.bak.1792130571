@@ -53,11 +53,11 @@ phase1() {
     if [ -x "$YOTE_CONN" ]; then
       "$YOTE_CONN" exec '
         echo "    \"tmux\": "; tmux ls 2>&1 | head -5 | python3 -c "import sys,json; print(json.dumps([l.strip() for l in sys.stdin]))"; echo ","
-        echo "    \"oracle_lock_holder\": "; fuser -v /home/toxic/sovereign/agents/oracle-market/oracle.lock 2>&1 | tail -2 | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()[:200]))"; echo ","
+        echo "    \"oracle_lock_holder\": "; fuser -v /home/toxic/estate/agents/oracle-market/oracle.lock 2>&1 | tail -2 | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()[:200]))"; echo ","
         echo "    \"oracle_last_settled_age_s\": "; python3 - <<PY 2>/dev/null || echo null
 import json, glob, time
 best = None
-for f in glob.glob("/home/toxic/sovereign/agents/oracle-market/ledger/*.jsonl"):
+for f in glob.glob("/home/toxic/estate/agents/oracle-market/ledger/*.jsonl"):
     try:
         for line in open(f):
             try: d = json.loads(line)

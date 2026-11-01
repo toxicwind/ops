@@ -8,7 +8,7 @@
 # and recommends ARCHIVE vs LEAVE.
 #
 # Usage:
-#   stale-hunter.sh [ROOT]              report only (default /home/toxic/sovereign)
+#   stale-hunter.sh [ROOT]              report only (default /home/toxic/estate)
 #   stale-hunter.sh --json [ROOT]       one JSON object per line on stdout
 #   stale-hunter.sh --apply DIR [ROOT]  report AND mv ARCHIVE-verdict dirs into DIR
 #                                       (never rm; archive preserves relative paths)
@@ -21,7 +21,7 @@
 
 set -u
 
-ROOT="/home/toxic/sovereign"
+ROOT="/home/toxic/estate"
 APPLY_DIR=""
 JSON=0
 LIVE_DAYS=7

@@ -8,7 +8,7 @@
 #   ./watchdog-audit.sh --verbose  # show every probe
 # Exit 0 = all watchdogs real. Exit 1 = at least one FAKE/DOWN finding.
 #
-# Permanent home: sovereign-projects/projects/ops/bin/
+# Permanent home: estate-projects/projects/ops/bin/
 # First run: 2026-09-20 (watchdog-hunter) — caught kimi-auto-canary-judge idle
 # loop (removed), kimi-auto-shim pitchfork desync (fixed via pitchfork-restart),
 # 11 auto-start pitchfork daemons down, 10 stale yote pidfiles (cleaned).
@@ -25,7 +25,7 @@ down() { say "DOWN: $*"; FAIL=1; }
 warn() { say "WARN: $*"; }
 
 BOX=unknown
-[ -d /home/toxic/sovereign ] && BOX=yote
+[ -d /home/toxic/estate ] && BOX=yote
 [ -d /home/hatch/workspace/cron.d ] && BOX=hatch
 say "=== watchdog-audit on $BOX ($(date -u +%FT%TZ)) ==="
 
@@ -164,18 +164,18 @@ if [ "$BOX" = yote ]; then
     bad "pitchfork supervisor NOT running — no supervision at all"
   else
     v "pitchfork supervisor pid $SUP_PID"
-    cd /home/toxic/sovereign 2>/dev/null || true
+    cd /home/toxic/estate 2>/dev/null || true
     PYOUT=$(mktemp)
     if python3 - "$PF" >"$PYOUT" <<'PYEOF'
 import os, re, socket, subprocess, sys, urllib.request
 pf_bin = sys.argv[1]
 ports = {}
 try:
-    for line in open("/home/toxic/sovereign/config/ports.env"):
+    for line in open("/home/toxic/estate/config/ports.env"):
         m = re.match(r"([A-Z0-9_]+_PORT)\s*=\s*(\d+)", line.strip())
         if m: ports[m.group(1)] = int(m.group(2))
 except OSError: pass
-toml = open("/home/toxic/sovereign/pitchfork.toml").read()
+toml = open("/home/toxic/estate/pitchfork.toml").read()
 def pf_status(name):
     try:
         out = subprocess.run([pf_bin, "status", name], capture_output=True, text=True, timeout=15).stdout

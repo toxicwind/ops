@@ -3,8 +3,8 @@
 # check alive/claim/reality per runner, report broken/dead/duplicates in a
 # table. Exit 0 = all healthy, exit 1 = findings.
 #
-# Durable home: sovereign/projects/ops/bin/runner-audit.sh (canonical repo
-# toxicwind/sovereign-projects). Run on demand; never as a polling daemon.
+# Durable home: estate/projects/ops/bin/runner-audit.sh (canonical repo
+# toxicwind/estate-projects). Run on demand; never as a polling daemon.
 #
 # Design: hatch checks run locally; yote checks go through the yote-conn
 # bridge (read-only probes only — this script NEVER restarts, kills, or
@@ -126,7 +126,7 @@ header "yote: oracle-market loop (oracle crew's live work — report only, never
 header "yote: scheduler hygiene"
 HYG="$("$YOTE_CONN" exec '
 echo "crontab:$(command -v crontab >/dev/null 2>&1 && echo present || echo absent)"
-echo "sweepd_procs:$(pgrep -xf "/bin/bash /home/toxic/sovereign/tools/fleet-ops/fleet-watchdog/sweepd.sh" | wc -l)"
+echo "sweepd_procs:$(pgrep -xf "/bin/bash /home/toxic/estate/tools/fleet-ops/fleet-watchdog/sweepd.sh" | wc -l)"
 echo "tmux:$(tmux ls 2>/dev/null | wc -l)"
 ' 2>/dev/null)"
 crontab_st="$(echo "$HYG" | awk -F: '/^crontab:/{print $2}')"
@@ -144,7 +144,7 @@ echo
 echo "== verified distinct pairs (not duplicates) =="
 printf '  %-28s %-28s %s\n' "progress-watchdog (hatch 3m)" "fleet-watchdog-sweepd (yote 60s)" "supervisor vs presence heartbeat"
 printf '  %-28s %-28s %s\n' "bridge-watchdog (hatch 5m)" "yote-connector-watch (hatch 5m)" "yote WS vs cell listener :18301"
-printf '  %-28s %-28s %s\n' "progress-watchdog (hatch)" "sovereign/market-watchdog" "fleet supervisor vs inotify bidder-only restart"
+printf '  %-28s %-28s %s\n' "progress-watchdog (hatch)" "estate/market-watchdog" "fleet supervisor vs inotify bidder-only restart"
 
 # ---------------------------------------------------------------- summary
 echo

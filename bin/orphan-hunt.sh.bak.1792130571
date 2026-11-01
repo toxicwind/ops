@@ -12,7 +12,7 @@
 # exception-free rule: /tmp is Trench's lane; this script lists but does not
 # triage /tmp contents.
 #
-# Permanent home: sovereign-projects/projects/ops/bin/
+# Permanent home: estate-projects/projects/ops/bin/
 # First run: 2026-09-20 (watchdog-hunter) — cleaned 10 stale yote pidfiles,
 # 1 stale hatch race-optimizer.pid; adopted tau-lab tmux (owner unknown, idle).
 set -u
@@ -26,7 +26,7 @@ found(){ say "$1: $2 -- suggest: $3"; FAIL=1; }
 ok()  { [ "$VERBOSE" = 1 ] && say "OK: $*"; }
 
 BOX=unknown
-[ -d /home/toxic/sovereign ] && BOX=yote
+[ -d /home/toxic/estate ] && BOX=yote
 [ -d /home/hatch/workspace/cron.d ] && BOX=hatch
 say "=== orphan-hunt on $BOX ($(date -u +%FT%TZ)) ==="
 
@@ -125,7 +125,7 @@ if [ "$BOX" = yote ]; then
   v "pitchfork supervisor pid: ${SUP_PID:-none}"
   if [ -n "$SUP_PID" ]; then
     # every _PORT in ports.env: who holds it, and is the holder under pitchfork?
-    grep -oE "^[A-Z0-9_]+_PORT=[0-9]+" /home/toxic/sovereign/config/ports.env 2>/dev/null | while IFS='=' read -r k p; do
+    grep -oE "^[A-Z0-9_]+_PORT=[0-9]+" /home/toxic/estate/config/ports.env 2>/dev/null | while IFS='=' read -r k p; do
       holder=$(ss -ltnp 2>/dev/null | grep -m1 ":$p " | grep -oE "pid=[0-9]+" | head -1 | cut -d= -f2)
       [ -z "$holder" ] && continue
       # walk up: is pitchfork supervisor an ancestor?
@@ -146,13 +146,13 @@ if [ "$BOX" = yote ]; then
     PF=/home/toxic/.local/share/mise/installs/pitchfork/2.16.0/pitchfork
     [ -x "$PF" ] || PF=$(command -v pitchfork 2>/dev/null)
     if [ -n "$PF" ]; then
-      cd /home/toxic/sovereign 2>/dev/null || true
+      cd /home/toxic/estate 2>/dev/null || true
       grep -oE "^\[daemons\.[a-z0-9-]+\]" pitchfork.toml 2>/dev/null | sed 's/\[daemons\.//;s/\]//' | while read -r d; do
         body=$(awk "/^\[daemons\.$d\]/{f=1} f&&/^\[daemons\./&&!/^\[daemons\.$d\]/{exit} f" pitchfork.toml)
         echo "$body" | grep -q '"start"' || continue
         st=$("$PF" status "$d" 2>/dev/null | grep -m1 "Status:" | awk '{print $2}')
         if [ "$st" != "running" ]; then
-          found "DOWN-EXPECTED" "pitchfork/$d status=$st but auto=[start]" "ADOPT: bin/pitchfork-restart sovereign/$d (if wanted) or remove auto=start (if retired)"
+          found "DOWN-EXPECTED" "pitchfork/$d status=$st but auto=[start]" "ADOPT: bin/pitchfork-restart estate/$d (if wanted) or remove auto=start (if retired)"
         fi
       done
     fi
