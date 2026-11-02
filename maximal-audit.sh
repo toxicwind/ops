@@ -15,6 +15,12 @@ if ! command -v bun >/dev/null 2>&1; then
 fi
 set -u
 echo "[maximal-audit] $(date -Is) — auditing all estate projects"
+# Estate single-truth lease canary (anomaly #48/#85): the bare /home/toxic/estate
+# path must NOT exist. Any writer regressing onto it fails the audit (pages).
+if [ -e /home/toxic/estate ]; then
+  echo "[maximal-audit] FAIL — LEASE VIOLATION: /home/toxic/estate exists (ghost path) — repoint the writer to pens/estate/var/state or archive it" >&2
+  exit 1
+fi
 cd "$MAX" || { echo "[maximal-audit] cd failed: $MAX" >&2; exit 1; }
 LOG="$OUT/latest.log"
 if bun run start --all --precheck --parquet "$OUT/repo-audit.parquet" >"$LOG" 2>&1; then
