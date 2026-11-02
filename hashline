@@ -77,7 +77,13 @@ def emit(root: Path, out: Path) -> tuple[dict, str]:
     return stats, final
 
 def parse(manifest: Path):
-    data = manifest.read_bytes()
+    try:
+        data = manifest.read_bytes()
+    except OSError:
+        # Unreadable/missing manifest: yield nothing so every command falls
+        # through to its own graceful error branch ("no F record", exit != 0)
+        # instead of an uncaught FileNotFoundError traceback.
+        return
     for line in data.split(b"\n"):
         if not line or line[0:1] != RS: continue
         fields = line[1:].split(US)
