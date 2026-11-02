@@ -2,11 +2,11 @@
 set -euo pipefail
 
 CHUTE=/home/toxic/pens/barn/chute
-PITCH=/home/toxic/estate/pitchfork.toml
+PITCH=/home/toxic/pens/estate/pitchfork.toml
 OMP_NEW=/home/toxic/tau
 PORT=25111
 EXT=/home/toxic/.tau/extensions/vansrouter.ts
-BIN=/home/toxic/estate/bin
+BIN=/home/toxic/pens/estate/bin
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; R='\033[0;31m'; N='\033[0m'
 ok()   { echo -e "  ${G}✓${N} $1"; }

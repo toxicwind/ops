@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BIN=/home/toxic/estate/bin
+BIN=/home/toxic/pens/estate/bin
 STOCK=/home/toxic/tau
-PITCH=/home/toxic/estate/pitchfork.toml
+PITCH=/home/toxic/pens/estate/pitchfork.toml
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; N='\033[0m'
 ok()   { echo -e "  ${G}✓${N} $1"; }

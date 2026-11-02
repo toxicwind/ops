@@ -97,12 +97,12 @@ fi
 # --- 2. live configs ----------------------------------------------------------
 if [ "$DO_CONFIGS" = "1" ]; then
   log "scanning live configs..."
-  for c in /home/toxic/estate/config/herd.yaml \
-           /home/toxic/estate/pitchfork.toml \
-           /home/toxic/estate/config/ports.env \
-           /home/toxic/estate/config/keypools.yaml \
-           /home/toxic/estate/config/model_constraints.yaml \
-           /home/toxic/estate/config/herd.yaml; do
+  for c in /home/toxic/pens/estate/config/herd.yaml \
+           /home/toxic/pens/estate/pitchfork.toml \
+           /home/toxic/pens/estate/config/ports.env \
+           /home/toxic/pens/estate/config/keypools.yaml \
+           /home/toxic/pens/estate/config/model_constraints.yaml \
+           /home/toxic/pens/estate/config/herd.yaml; do
     [ -f "$c" ] || { log "  (config not present: $c)"; continue; }
     while IFS=: read -r lineno raw; do
       rline="$(sed -n "${lineno}p" "$c")"

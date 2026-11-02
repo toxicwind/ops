@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # model-audit.sh — sweep every provider, benchmark reachable models, rank.
-# Read-only. Writes results to /home/toxic/estate/bin/model-audit.out/
+# Read-only. Writes results to /home/toxic/pens/estate/bin/model-audit.out/
 
 set -euo pipefail
 
-OUT=/home/toxic/estate/bin/model-audit.out
+OUT=/home/toxic/pens/estate/bin/model-audit.out
 mkdir -p "$OUT"
 
 BEARER="$(grep -E '^API_KEY_SECRET=' /home/toxic/.config/vansrouter/env | cut -d= -f2-)"

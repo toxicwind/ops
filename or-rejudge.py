@@ -5,7 +5,7 @@ import asyncio, aiohttp, json, re
 from collections import Counter
 
 SECRETS = "/home/toxic/.secrets"
-VAR = "/home/toxic/estate/var"
+VAR = "/home/toxic/pens/estate/var"
 OUT_JSON = f"{VAR}/or-free-sweep3-results.json"
 OUT_MD = f"{VAR}/or-free-ranking.md"
 JUDGES = ["openrouter/free", "inclusionai/ling-3.0-flash-fin:free",

@@ -5,7 +5,7 @@
 import { spawnSync } from "child_process";
 import { existsSync } from "fs";
 
-const FFS_BIN = "/home/toxic/estate/bin/ffs";
+const FFS_BIN = "/home/toxic/pens/estate/bin/ffs";
 
 async function main(): Promise<number> {
   const args = process.argv.slice(2);

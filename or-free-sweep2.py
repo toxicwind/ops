@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Sweep OpenRouter models DIRECTLY with the FREE key (bypasses pool cooldowns).
 For each model: POST chat/completions, record http, latency, response quality.
-Output: JSONL to /home/toxic/estate/var/or-free-sweep2.jsonl"""
+Output: JSONL to /home/toxic/pens/estate/var/or-free-sweep2.jsonl"""
 import json, time, urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 
-OUT = "/home/toxic/estate/var/or-free-sweep2.jsonl"
+OUT = "/home/toxic/pens/estate/var/or-free-sweep2.jsonl"
 PROMPT = "Reply with exactly: PROBE-OK"
 
 def load_key():

@@ -23,7 +23,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const BIN = "/home/toxic/estate/bin";
+const BIN = "/home/toxic/pens/estate/bin";
 const PLUGINS = "/home/toxic/pens/olympus/products/ergasterion/hephaistos/plugins";
 
 // ---- helper: run a CLI as a child process, return {rc, stdout, stderr} ----

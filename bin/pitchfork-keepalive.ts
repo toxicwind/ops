@@ -77,7 +77,7 @@ async function main(): Promise<void> {
     attempt += 1;
     const started = Date.now();
     const proc = Bun.spawn(ARGV, {
-      cwd: process.env.ESTATE_ROOT ?? "/home/toxic/estate",
+      cwd: process.env.ESTATE_ROOT ?? "/home/toxic/pens/estate",
       stdout: "inherit",
       stderr: "inherit",
       stdin: "inherit",

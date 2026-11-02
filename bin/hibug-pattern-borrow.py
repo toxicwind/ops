@@ -135,7 +135,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("task", nargs="?")
     ap.add_argument("--task-file")
-    ap.add_argument("--roots", default="/home/toxic/estate/ranch/ops,/home/toxic/estate/ranch/emergent")
+    ap.add_argument("--roots", default="/home/toxic/pens/estate/ranch/ops,/home/toxic/pens/estate/ranch/emergent")
     ap.add_argument("--rephrase", default=os.path.join(HERE, "hibug-rephrase.ts"))
     ap.add_argument("--no-web", action="store_true")
     args = ap.parse_args()

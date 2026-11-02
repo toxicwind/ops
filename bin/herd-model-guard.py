@@ -20,7 +20,7 @@ chunk with flush — never buffered). Hot-reloads model_constraints.yaml when
 its mtime changes (stat per request — no polling loop, no timers).
 
 Audit: every rewrite appends one JSON line to
-  /home/toxic/estate/var/data/model-guard-audit.jsonl
+  /home/toxic/pens/estate/var/data/model-guard-audit.jsonl
 (override with MODEL_GUARD_AUDIT). Rotated at MODEL_GUARD_AUDIT_MAX_BYTES
 (default 10MB) -> <path>.1.
 
@@ -44,11 +44,11 @@ LISTEN = (
 UPSTREAM = os.environ.get("MODEL_GUARD_UPSTREAM", "http://127.0.0.1:25100")
 CONSTRAINTS_PATH = os.environ.get(
     "MODEL_CONSTRAINTS",
-    "/home/toxic/estate/config/model_constraints.yaml",
+    "/home/toxic/pens/estate/config/model_constraints.yaml",
 )
 AUDIT_PATH = os.environ.get(
     "MODEL_GUARD_AUDIT",
-    "/home/toxic/estate/var/data/model-guard-audit.jsonl",
+    "/home/toxic/pens/estate/var/data/model-guard-audit.jsonl",
 )
 AUDIT_MAX_BYTES = int(os.environ.get("MODEL_GUARD_AUDIT_MAX_BYTES", 10_000_000))
 

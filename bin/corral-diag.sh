@@ -11,7 +11,7 @@ SELF=$$
 SELF_PGID=$(ps -o pgid= -p $SELF | tr -d ' ')
 OUTDIR="/tmp/corral-diag-$(date +%Y%m%dT%H%M%S)"
 DURATION="${DURATION:-10}"
-OMP_BIN="/home/toxic/estate/projects/range/ranch/stockyard/tau/packages/coding-agent/dist/omp"
+OMP_BIN="/home/toxic/pens/estate/projects/range/ranch/stockyard/tau/packages/coding-agent/dist/omp"
 mkdir -p "$OUTDIR"
 
 log(){ printf '[%s] %s\n' "$(date +%T)" "$*" | tee -a "$OUTDIR/diag.log" >&2; }

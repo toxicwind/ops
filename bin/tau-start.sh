@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PITCH=/home/toxic/estate/pitchfork.toml
+PITCH=/home/toxic/pens/estate/pitchfork.toml
 CHUTE=/home/toxic/pens/barn/chute/chute.mjs
 OMP=/home/toxic/tau/packages/coding-agent/dist/tau
 EXT=/home/toxic/.tau/extensions/vansrouter.ts
@@ -74,7 +74,7 @@ block = [
     f'dir = "{tau_dir}"',
     "mise = false",
     "retry = true",
-    f'ready_cmd = "/home/toxic/estate/bin/tcp-probe {port}"',
+    f'ready_cmd = "/home/toxic/pens/estate/bin/tcp-probe {port}"',
     'health_port = { port = ' + port + ', interval = "30s", timeout = "5s", retries = 3 }',
     'depends = ["wrangler"]',
     # Keep this in sync with pitchfork.toml [daemons.tau] env. PI_AGENT_DIR,
@@ -184,4 +184,4 @@ JSEOF
 
 hdr "READY"
 echo "  tau listening on :$PORT"
-echo "  re-run: bash /home/toxic/estate/bin/tau-start.sh"
+echo "  re-run: bash /home/toxic/pens/estate/bin/tau-start.sh"

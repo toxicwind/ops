@@ -5,7 +5,7 @@ Reads the oracle ledger and prints stalled task candidates as JSON:
 tasks with a task_posted event, no later assigned/settled/expired/rejected
 event. The wrapper applies the stall-age horizon and boundary filters.
 
-Deployed to /home/toxic/estate/ranch/ops/daemon-yield/oracle-scan.py on
+Deployed to /home/toxic/pens/estate/ranch/ops/daemon-yield/oracle-scan.py on
 yote; the wrapper also carries this script inline (base64) as fallback.
 """
 
@@ -13,7 +13,7 @@ import json
 import time
 from collections import defaultdict
 
-LEDGER = "/home/toxic/estate/ranch/squawk/oracle/ledger/ledger.jsonl"
+LEDGER = "/home/toxic/pens/estate/ranch/squawk/oracle/ledger/ledger.jsonl"
 TERMINAL = {"assigned", "settled", "expired", "rejected", "task_settled"}
 
 

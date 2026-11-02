@@ -40,8 +40,8 @@ cat > /tmp/claim.json <<'EOF'
   "lane": "wave4-router-max",
   "claim": "restarted",
   "claimed_at": "2026-10-02T11:48:00Z",
-  "watch_dirs": ["/home/toxic/estate/tools/estate-scripts-router"],
-  "checkpoint_file": "/home/toxic/estate/checkpoints/wave4.json"
+  "watch_dirs": ["/home/toxic/pens/estate/tools/estate-scripts-router"],
+  "checkpoint_file": "/home/toxic/pens/estate/checkpoints/wave4.json"
 }
 EOF
 

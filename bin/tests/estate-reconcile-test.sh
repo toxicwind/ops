@@ -4,7 +4,7 @@
 # never touched. Squawk is disabled (no fleet dir under scratch SQUAWK_ROOT).
 set -u
 
-ER="${ER:-/home/toxic/estate/bin/estate-reconcile}"
+ER="${ER:-/home/toxic/pens/estate/bin/estate-reconcile}"
 PASS=0; FAIL=0
 ok()   { PASS=$((PASS+1)); echo "PASS: $1"; }
 bad()  { FAIL=$((FAIL+1)); echo "FAIL: $1"; }

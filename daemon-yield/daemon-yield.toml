@@ -8,8 +8,8 @@
 # The wrapper never modifies the hatch client; it supervises invocation.
 
 [daemons.daemon-yield]
-run = "exec /usr/bin/python3 /home/toxic/estate/ranch/ops/daemon-yield/daemon-yield.py --agent-cmd /home/toxic/estate/ranch/ops/daemon-yield/turn.sh --state-dir /home/toxic/.local/state/daemon-yield --queue-dir /home/toxic/estate/ranch/ops/daemon-yield/queue --claimed-dir /home/toxic/estate/ranch/ops/daemon-yield/claimed --relay-dir /home/toxic/estate/ranch/ops/daemon-yield/relay --turn-timeout 600"
-dir = "/home/toxic/estate/ranch/ops/daemon-yield"
+run = "exec /usr/bin/python3 /home/toxic/pens/estate/ranch/ops/daemon-yield/daemon-yield.py --agent-cmd /home/toxic/pens/estate/ranch/ops/daemon-yield/turn.sh --state-dir /home/toxic/.local/state/daemon-yield --queue-dir /home/toxic/pens/estate/ranch/ops/daemon-yield/queue --claimed-dir /home/toxic/pens/estate/ranch/ops/daemon-yield/claimed --relay-dir /home/toxic/pens/estate/ranch/ops/daemon-yield/relay --turn-timeout 600"
+dir = "/home/toxic/pens/estate/ranch/ops/daemon-yield"
 mise = false
 retry = true
 boot_start = false

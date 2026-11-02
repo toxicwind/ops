@@ -214,7 +214,7 @@ import json, time
 from collections import defaultdict
 events = defaultdict(list)
 try:
-    with open("/home/toxic/estate/ranch/squawk/oracle/ledger/ledger.jsonl") as f:
+    with open("/home/toxic/pens/estate/ranch/squawk/oracle/ledger/ledger.jsonl") as f:
         for line in f:
             try:
                 d = json.loads(line)
@@ -402,7 +402,7 @@ class Supervisor:
         older than the stall horizon. Read-only; never bids, never assigns."""
         if "oracle" in self.skipped_providers:
             return []
-        scan_path = "/home/toxic/estate/ranch/ops/daemon-yield/oracle-scan.py"
+        scan_path = "/home/toxic/pens/estate/ranch/ops/daemon-yield/oracle-scan.py"
         out = None
         try:
             if os.path.exists(ESTATE_MASTER):

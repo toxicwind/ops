@@ -5,7 +5,7 @@ VR=http://127.0.0.1:20128
 EXT=/home/toxic/.tau/extensions/vansrouter.ts
 CHUTE=/home/toxic/pens/barn/chute
 OMP=/home/toxic/tau/packages/coding-agent/dist/tau
-PITCH=/home/toxic/estate/pitchfork.toml
+PITCH=/home/toxic/pens/estate/pitchfork.toml
 PORT=25111
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; R='\033[0;31m'; N='\033[0m'
@@ -78,7 +78,7 @@ hdr "3. Read vansrouter source routes"
 VR_DIR=""
 for candidate in \
   /home/toxic/pens/ranch/vansrouter \
-  /home/toxic/estate/stack/services \
+  /home/toxic/pens/estate/stack/services \
   /home/toxic/pens/ranch/vansrouter \
   /home/toxic/vansrouter
 do
@@ -90,7 +90,7 @@ done
 
 if [ -z "$VR_DIR" ]; then
   echo "  vansrouter.sh contents:"
-  sed -n '1,60p' /home/toxic/estate/stack/services/vansrouter.sh 2>/dev/null || echo "  (missing)"
+  sed -n '1,60p' /home/toxic/pens/estate/stack/services/vansrouter.sh 2>/dev/null || echo "  (missing)"
 else
   ok "vansrouter dir: $VR_DIR"
   echo
@@ -102,7 +102,7 @@ fi
 # also check the sh for exec target
 echo
 echo "  vansrouter.sh exec line:"
-grep -nE '^(exec|node|bun|next)' /home/toxic/estate/stack/services/vansrouter.sh 2>/dev/null | head -10 || true
+grep -nE '^(exec|node|bun|next)' /home/toxic/pens/estate/stack/services/vansrouter.sh 2>/dev/null | head -10 || true
 
 # ─────────────────────────────────────────────────────────────────────
 hdr "4. Ask vansrouter what routes it knows (Next.js _next introspection)"

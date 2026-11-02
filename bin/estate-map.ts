@@ -30,7 +30,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, renameSync, statSyn
 import { join, dirname, resolve as resolvePath, basename } from "node:path";
 import { parse as parseYAML } from "yaml";
 
-const SOV = process.env.SOV ?? "/home/toxic/estate";
+const SOV = process.env.SOV ?? "/home/toxic/pens/estate";
 const HOME = process.env.HOME ?? "/home/toxic";
 const TAU_DIR = process.env.PI_CONFIG_DIR ?? join(HOME, ".tau");
 const OUT_JSON = join(SOV, "docs/estate-map.json");

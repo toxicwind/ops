@@ -5,7 +5,7 @@
 set -euo pipefail
 
 STASH=/home/toxic/build/ort-cuda-libs-1.21.0
-TARGET_BIN="${1:-/home/toxic/estate/projects/tau/engine/node_modules/fastembed/node_modules/onnxruntime-node/bin/napi-v3/linux/x64}"
+TARGET_BIN="${1:-/home/toxic/pens/estate/projects/tau/engine/node_modules/fastembed/node_modules/onnxruntime-node/bin/napi-v3/linux/x64}"
 
 for f in libonnxruntime.so.1.21.0 libonnxruntime_providers_cuda.so \
          libcudart.so.12 libcublas.so.12 libcublasLt.so.12 libcufft.so.11 libnvrtc.so.12; do
