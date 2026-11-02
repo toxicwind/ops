@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""estate-tools — small estate tool MCP (stdio JSON-RPC).
+
+The Estate Toolbox upstream planned in ESTATE_MASTER_CONSOLIDATION_PLAN.md.
+Today it exposes ONE tool:
+
+  estate_paper_search   race arXiv/alphaXiv legs for a query via the canonical
+                        paper-poller racer (pens/ranch/products/paper-poller/
+                        bin/race_papers.py) — the real pens path, never the
+                        retired /home/toxic/paper-poller ghost.
+
+Run: estate-tools   (stdio JSON-RPC, the MCP wire — same shape as fleet-audit)
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import sys
+
+RACE = "/home/toxic/pens/ranch/products/paper-poller/bin/race_papers.py"
+PY = "/usr/bin/python3"
+
+
+def estate_paper_search(args: dict) -> str:
+    query = (args.get("query") or "").strip()
+    if not query:
+        return json.dumps({"error": "query required"})
+    maxn = args.get("maxn") or 10
+    cmd = [PY, RACE, query, "--maxn", str(maxn)]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    except subprocess.TimeoutExpired:
+        return json.dumps({"error": "timeout after 120s", "query": query})
+    if proc.returncode != 0:
+        return json.dumps({
+            "error": f"race_papers exit {proc.returncode}",
+            "stderr": (proc.stderr or "")[:2000],
+        })
+    return proc.stdout[:20000] or "{}"
+
+
+TOOLS = [
+    {
+        "name": "estate_paper_search",
+        "description": (
+            "Race arXiv + alphaXiv legs for a scholarly query via the canonical "
+            "paper-poller racer (5-leg: arXiv/alphaXiv/HF/OpenAlex/S2). "
+            "Returns the winner set. Live execution, ~seconds."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string"},
+                "maxn": {"type": "integer", "minimum": 1, "maximum": 25},
+            },
+            "required": ["query"],
+        },
+    },
+]
+
+HANDLERS = {"estate_paper_search": estate_paper_search}
+
+
+def send(msg: dict) -> None:
+    sys.stdout.write(json.dumps(msg) + "\n")
+    sys.stdout.flush()
+
+
+def handle(msg: dict) -> None:
+    method = msg.get("method")
+    rid = msg.get("id")
+    params = msg.get("params") or {}
+    if method == "initialize":
+        send({
+            "jsonrpc": "2.0", "id": rid,
+            "result": {
+                "protocolVersion": "2024-11-05",
+                "capabilities": {"tools": {"listChanged": False}},
+                "serverInfo": {"name": "estate-tools", "version": "1.0.0"},
+            },
+        })
+    elif method == "notifications/initialized":
+        pass
+    elif method == "ping":
+        send({"jsonrpc": "2.0", "id": rid, "result": {}})
+    elif method == "tools/list":
+        send({"jsonrpc": "2.0", "id": rid, "result": {"tools": TOOLS}})
+    elif method == "tools/call":
+        name = params.get("name") or ""
+        fn = HANDLERS.get(name)
+        if fn is None:
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": f"unknown tool {name}"}], "isError": True}})
+            return
+        try:
+            text = fn(params.get("arguments") or {})
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": text}], "isError": False}})
+        except Exception as e:  # noqa: BLE001
+            send({"jsonrpc": "2.0", "id": rid,
+                  "result": {"content": [{"type": "text", "text": f"{type(e).__name__}: {e}"}], "isError": True}})
+    elif rid is not None:
+        send({"jsonrpc": "2.0", "id": rid,
+              "error": {"code": -32601, "message": f"method {method} not supported"}})
+
+
+def main() -> int:
+    buffer = ""
+    queue: list = []
+
+    def on_line(line: str) -> None:
+        line = line.strip()
+        if not line:
+            return
+        try:
+            queue.append(json.loads(line))
+        except Exception as e:
+            sys.stderr.write(f"[estate-tools] bad input: {e}\n")
+
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            return 0
+        on_line(line)
+        while queue:
+            msg = queue.pop(0)
+            try:
+                handle(msg)
+            except Exception as e:
+                sys.stderr.write(f"[estate-tools] handler error: {e}\n")
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (BrokenPipeError, KeyboardInterrupt):
+        os._exit(0)
