@@ -14,7 +14,7 @@
 
 set -uo pipefail
 
-KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/olympus/products/kairos}"
+KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/ergasterion/products/kairos}"
 CLI="$KAIROS_SRC/src/cli.ts"
 
 if [ ! -f "$CLI" ]; then
