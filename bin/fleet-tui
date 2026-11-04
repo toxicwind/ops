@@ -178,7 +178,7 @@ def provenance() -> dict:
 
 def mcp_count() -> int:
     try:
-        with open("/home/toxic/estate/config/thresher/mcp_config.json") as fh:
+        with open("/home/toxic/pens/barn/products/thresher/mcp_config.json") as fh:
             return len(json.load(fh)["mcpServers"])
     except Exception:
         return 0
