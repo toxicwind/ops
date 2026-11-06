@@ -12,12 +12,19 @@ Usage: kodi-handoff <src_ip> <dst_ip> [--play] [--dry-run] [--selftest <ip>]
 """
 import json, sys, time, urllib.request
 
+# Port SSOT (config/ports.env): hestia (246) moved JSON-RPC to 25270 on
+# 2026-11-05; athena (225, Android APK) stays on 8080.
+def box_port(host):
+    if "10.0.0.246" in host or host == "hestia":
+        return 25270
+    return 8080
+
 def rpc(host, method, params=None):
     req = {"jsonrpc": "2.0", "id": 1, "method": method}
     if params:
         req["params"] = params
     r = urllib.request.Request(
-        f"http://{host}:8080/jsonrpc",
+        f"http://{host}:{box_port(host)}/jsonrpc",
         data=json.dumps(req).encode(),
         headers={"Content-Type": "application/json"},
     )

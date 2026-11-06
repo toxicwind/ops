@@ -10,11 +10,11 @@
 #   - shell via bash -c: /bin/bash -c 'echo hi'
 #   - -- delimiter: run-fast -- bun run build
 #
-# Source: olympus/products/kairos (was ranch/kairos / ranch/two-sec; always runs latest code, never prebuilt).
+# Source: ergasterion/products/kairos (was ranch/kairos / ranch/two-sec; always runs latest code, never prebuilt).
 
 set -uo pipefail
 
-KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/olympus/products/kairos}"
+KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/ergasterion/products/kairos}"
 CLI="$KAIROS_SRC/src/cli.ts"
 
 if [ ! -f "$CLI" ]; then
@@ -23,6 +23,90 @@ if [ ! -f "$CLI" ]; then
 fi
 
 BUN_BIN="${BUN_BIN:-$HOME/.bun/bin/bun}"
+
+# --- help + guide (ffs pattern: --help = short usage, guide = full doc) ---
+show_help() {
+  cat <<'HELP'
+kairos — the 2-second deadline wrapper (every command, no exceptions)
+
+Usage:
+  kairos [--cwd DIR] [--env KEY=VALUE] [--deadline SECS] [--id NAME] [--max-time SECS] <cmd…>
+  kairos detach <cmd…>          run detached (survives the turn), prints an id
+  kairos attach <id>            re-attach to a detached run
+  kairos guide                  full guide (contract, race order, policy knob)
+
+Shim flags:
+  --cwd DIR        run in DIR
+  --env KEY=VALUE  extra env
+  --deadline SECS  hard deadline (default 2.0s; policy.json may widen)
+  --max-time SECS  breach trigger: at SECS the command is backgrounded and
+                   handed to hephaistos for the speculative race (KHSR)
+  --id NAME        name the session
+  --               everything after passes to the command verbatim
+
+Every command is wrapped: 2s deadline, full output persisted (never
+truncated), banned tools refused with a replacement. Breach = defect →
+race a faster pattern (ast-grep → bm25 → paper-finder → forge borrow →
+background), never retry the same slow command.
+HELP
+}
+
+show_guide() {
+  cat <<'GUIDE'
+kairos guide — the latency contract, in full
+
+## The rule
+Every command runs under kairos. 2.0s hard deadline (policy-widenable).
+A breach is a DEFECT, not a wait: race a faster pattern immediately.
+
+## The race order (on breach — never retry the same command)
+1. ast-grep      — structural rewrite of the command
+2. bm25          — estate search for a proven faster pattern
+3. paper-finder  — arxiv/alphaxiv technique lookup
+4. forge borrow  — code-patterns canonical CLI
+5. background    — run-fast detach; the turn stays responsive
+
+## KHSR — the speculative race (expanded contract)
+  --max-time 10 <cmd>   at 10s: save the session id, background the
+                        original, hand the id to hephaistos
+  hephaistos            3 lanes: code race + pattern borrow + paper finder;
+                        every candidate passes a cheap verify (small-sample
+                        benchmark, same output shape, strictly faster)
+                        before it may race
+  --deadline 90         bound: first-to-correct wins (original exit-0 or a
+                        verified candidate); at 90s with no winner,
+                        re-attach the original and log a speculation failure
+  post-hoc              every race writes a ledger row
+                        {shape, winner, speedup, verify_cost}; repeat-win
+                        shapes get pre-compiled rewrites, repeat-loss shapes
+                        get no-speculate marks (self-improving — conjugate
+                        compilation, arxiv 2026-10-20)
+
+## Never
+- never truncate output (no head/tail/wc-slicing, no 2>&1 merge, no
+  /dev/null) — full output persists to the run-fast session file
+- never retry the same slow command
+- never kill the original to force a candidate
+- never race a candidate that failed cheap verify
+- never speculate on interactive/stateful commands (stdin, TUI)
+
+## Policy knob
+/home/toxic/.two-sec/policy.json
+  { "deadlineS": 60, "disableBans": [...], "extraBans": [...] }
+Maximalize recipe: deadlineS 60 + disable truncation/2>&1//dev/null/sleep
+bans; KEEP the "| true" swallow ban (safety property).
+
+## Detach / attach
+  kairos detach <cmd>   → prints an id; the run survives the turn
+  kairos attach <id>    → re-attach; output streams to the session file
+
+## Approved-slow allowlist (no scold, longer deadline)
+git push/pull/fetch, bun/npm install/test, tsgo, ffs index
+
+## Banned tools (refused with a replacement)
+find → fd · cat → read tool · sed → ast-grep/edit tool
+GUIDE
+}
 
 # --- Parse shim-level flags ---
 RF_CWD=""
@@ -33,6 +117,10 @@ RF_ARGS=()
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    --help|-h)
+      show_help; exit 0 ;;
+    guide)
+      show_guide; exit 0 ;;
     --cwd)
       RF_CWD="$2"; shift 2 ;;
     --cwd=*)

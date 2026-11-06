@@ -34,4 +34,11 @@ if ! bash "$PENS/audit-links.sh" >/tmp/bin-contract-pens.log 2>&1; then
 else
   echo "pens/audit-links: $(grep -c '^ok' /tmp/bin-contract-pens.log) ok"
 fi
+# Pitchfork namespace guard (2026-11-05): every pen with a pitchfork.toml must
+# be a registered supervisor namespace. An unregistered pen is invisible to
+# pitchfork — its daemons can't be supervised (the agentic-moment outage).
+if ! bash "$PENS/estate/products/estate-ops/pens-namespace-guard.sh" 2>&1; then
+  echo "NAMESPACE FAIL — unregistered pen(s) above"
+  fails=1
+fi
 exit "$fails"

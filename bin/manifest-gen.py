@@ -134,10 +134,10 @@ def scan_local_bin():
                 "target": resolved,
                 "broken": not os.path.exists(full),
             })
-            # The link lives in ~/.local/bin (the ONE bin surface). Emit the
-            # path relative to $HOME so the verifier resolves it the same way
-            # regardless of what SOV is set to.
-            entries[-1]["name"] = "~/.local/bin/" + name
+            # Emit the BARE name — bin-verify.sh resolves it against
+            # $HOME/.local/bin itself (line 213: os.path.join(home, '.local/bin', name)).
+            # Emitting a prefixed name here caused a double-prefix FAIL storm
+            # ("symlink not found at /home/toxic/.local/bin/~/.local/bin/X").
         elif os.path.isfile(full) and not _should_exclude(name):
             kind = classify_file(full)
             sheb = first_shebang(full)

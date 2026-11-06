@@ -10,11 +10,11 @@
 #   - shell via bash -c: /bin/bash -c 'echo hi'
 #   - -- delimiter: run-fast -- bun run build
 #
-# Source: olympus/products/kairos (was ranch/kairos / ranch/two-sec; always runs latest code, never prebuilt).
+# Source: ergasterion/products/kairos (was ranch/kairos / ranch/two-sec; always runs latest code, never prebuilt).
 
 set -uo pipefail
 
-KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/olympus/products/kairos}"
+KAIROS_SRC="${KAIROS_DIR:-/home/toxic/pens/ergasterion/products/kairos}"
 CLI="$KAIROS_SRC/src/cli.ts"
 
 if [ ! -f "$CLI" ]; then

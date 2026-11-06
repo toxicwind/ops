@@ -1,0 +1,123 @@
+#!/usr/bin/env bun
+/**
+ * todo-mint — extract agent task phases from a tau session transcript.
+ *
+ * Reads a session JSONL (default: newest in ~/.tau/agent/sessions/-), pulls
+ * every user turn (role=user, incl. steering interjections), strips system
+ * noise, and emits a phased todo board:
+ *
+ *   bun todo-mint [session.jsonl] [--json | --md | --todo]
+ *
+ * --todo prints the `todo init` payload (JSON) so the agent can feed it
+ * straight to the todo tool — this is the "never lose the todo" guard.
+ *
+ * NO f-strings anywhere in this file (estate rule 2026-11-02).
+ */
+import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
+import { join } from "node:path";
+
+const SESSIONS = join(process.env.HOME || "/tmp", ".tau/agent/sessions/-");
+
+function newestSession(): string {
+  const files = readdirSync(SESSIONS)
+    .filter((f) => f.endsWith(".jsonl") && !f.includes("-tmp"))
+    .map((f) => ({ f, p: join(SESSIONS, f), m: statSync(join(SESSIONS, f)).mtimeMs }))
+    .sort((a, b) => b.m - a.m);
+  if (!files.length) throw new Error("no session files found");
+  return files[0].p;
+}
+
+interface UserTurn {
+  ts: number;
+  text: string;
+  steering: boolean;
+}
+
+function extractUserTurns(path: string): UserTurn[] {
+  const out: UserTurn[] = [];
+  const lines = readFileSync(path, "utf8").split("\n");
+  for (const raw of lines) {
+    if (!raw.trim() || !raw.includes('"role":"user"')) continue;
+    try {
+      const j = JSON.parse(raw);
+      const m = j.message;
+      if (!m || m.role !== "user") continue;
+      const parts: string[] = [];
+      for (const c of m.content ?? []) {
+        if (c.type === "text" && typeof c.text === "string") parts.push(c.text);
+      }
+      if (!parts.length) continue;
+      const text = parts.join("\n").trim();
+      if (!text) continue;
+      // skip pure system-injected envelopes (todo snapshots, tool results digests)
+      if (/^<system-|^### (Todo|Remaining)|Remaining items|^(task|assistant|tools?):/i.test(text)) continue;
+      out.push({ ts: j.timestamp ?? Date.now(), text, steering: !!m.steering });
+    } catch {
+      /** skip malformed line */
+    }
+  }
+  return out;
+}
+
+const NOISE = /^(okay dude|uhh|yep|yes|no|right|same|got it|that's? (right|correct|wrong)|lol|:\s*\)?|\.\.?\.?\s*$)/i;
+
+function clean(t: string): string {
+  return t
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0 && !l.startsWith("```"))
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function phaseOf(text: string): string {
+  const t = text.toLowerCase();
+  if (/code[-_ ]?race|kairos|run-fast|delend/.test(t)) return "kairos";
+  if (/hf|huggingface|embedding|model/.test(t)) return "hf";
+  if (/noo|cf |cloudflare|hijack|dns|zone/.test(t)) return "noo";
+  if (/bash|\.bashrc|env|shim|b_env/i.test(t)) return "bash";
+  if (/todo/.test(t)) return "todo";
+  if (/session|cancel|kill|collect/.test(t)) return "sessions";
+  if (/mcp|pens-index|forge/.test(t)) return "mcp";
+  if (/ffs|grep|rewrite|search/.test(t)) return "ffs";
+  return "misc";
+}
+
+const args = Bun.argv.slice(2);
+const isJson = args.includes("--json");
+const isMd = args.includes("--md");
+const isTodo = args.includes("--todo");
+const pathArg = args.find((a) => !a.startsWith("--"));
+
+const path = pathArg ?? newestSession();
+const turns = extractUserTurns(path);
+if (!turns.length) {
+  console.error("todo-mint: no user turns found in " + path);
+  process.exit(2);
+}
+
+const phases: Record<string, string[]> = {};
+for (const t of turns) {
+  const c = clean(t.text);
+  if (!c || NOISE.test(c)) continue;
+  const ph = phaseOf(c);
+  (phases[ph] ??= []).push(c);
+}
+
+if (isTodo) {
+  const list = Object.entries(phases).map(([ph, items]) => ({ phase: ph, items }));
+  console.log(JSON.stringify(list, null, 1));
+  process.exit(0);
+}
+if (isJson) {
+  console.log(JSON.stringify({ source: path, phases }, null, 2));
+  process.exit(0);
+}
+// default: md
+console.log("# todo-mint from " + path);
+for (const [ph, items] of Object.entries(phases)) {
+  console.log("\n## " + ph);
+  let n = 1;
+  for (const it of items) console.log(`${n++}. ` + it.slice(0, 160));
+}
