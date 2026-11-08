@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+# Configuration
+CAPTURE_DIR="${CAPTURE_DIR:-/home/toxic/tmp/capture}"
+CAPTURE_TTL_SECS="${CAPTURE_TTL_SECS:-86400}"
+
+# Usage check
+if [[ $# -eq 0 ]]; then
+    echo "Usage: capture <cmd...>" >&2
+    exit 1
+fi
+
+# Ensure directory exists
+mkdir -p "${CAPTURE_DIR}"
+
+# Generate unique timestamp
+TS=$(date +%s%N)
+TS_SEC="${TS:0:10}"
+
+# Define file paths
+CMD_HASH=$(echo "$@" | md5sum | cut -d' ' -f1)
+RAW_STDOUT="${CAPTURE_DIR}/stdout_${TS_SEC}_${CMD_HASH}_${TS}.txt"
+RAW_STDERR="${CAPTURE_DIR}/stderr_${TS_SEC}_${CMD_HASH}_${TS}.txt"
+TRACE_FILE="${CAPTURE_DIR}/trace_${TS_SEC}_${CMD_HASH}_${TS}.txt"
+REDACTED_FILE="${CAPTURE_DIR}/redacted_${TS_SEC}_${CMD_HASH}_${TS}.txt"
+
+# Execute command, capturing stdout and stderr separately
+"$@" >"${RAW_STDOUT}" 2>"${RAW_STDERR}"
+RC=$?
+
+# Calculate byte sizes
+STDOUT_BYTES=$(wc -c < "${RAW_STDOUT}")
+STDERR_BYTES=$(wc -c < "${RAW_STDERR}")
+# Trimming whitespace from wc output
+STDOUT_BYTES=$(echo "${STDOUT_BYTES}" | tr -d '[:space:]')
+STDERR_BYTES=$(echo "${STDERR_BYTES}" | tr -d '[:space:]')
+
+# Generate Redacted Copy (Shape-preserving, same line count)
+# Redact BOTH stdout and stderr into one redacted file, preserving line count.
+sed -E \
+    -e 's/github_pat_[A-Za-z0-9_\-]+/[REDACTED_GITHUB_PAT]/g' \
+    -e 's/sk-[A-Za-z0-9_\-]+/[REDACTED_STRIPE_KEY]/g' \
+    -e 's/nvapi-[A-Za-z0-9_\-]+/[REDACTED_NVIDIA_KEY]/g' \
+    -e 's/eyJ[A-Za-z0-9_-]+\.eyJ[A-Za-z0-9_-]+/[REDACTED_JWT]/g' \
+    -e 's/ghp_[A-Za-z0-9_]+/[REDACTED_GITHUB_TOKEN]/g' \
+    -e 's/ya29[A-Za-z0-9_-]+/[REDACTED_OAUTH]/g' \
+    "${RAW_STDOUT}" "${RAW_STDERR}" > "${REDACTED_FILE}"
+
+# Write Trace File
+{
+    echo "cmd: $*"
+    echo "exit_code: ${RC}"
+    echo "stdout_bytes: ${STDOUT_BYTES}"
+    echo "stderr_bytes: ${STDERR_BYTES}"
+    echo "timestamp: $(date -Iseconds)"
+    echo "raw_stdout: ${RAW_STDOUT}"
+    echo "raw_stderr: ${RAW_STDERR}"
+    echo "redacted: ${REDACTED_FILE}"
+} > "${TRACE_FILE}"
+
+# Prune old captures based on TTL
+TTL_MIN=$((CAPTURE_TTL_SECS / 60))
+if [[ ${TTL_MIN} -lt 1 ]]; then
+    TTL_MIN=1
+fi
+
+find "${CAPTURE_DIR}" -type f -mtime +0 -mmin +${TTL_MIN} \( -name "stdout_*" -o -name "stderr_*" -o -name "trace_*" -o -name "redacted_*" \) -delete 2>/dev/null || true
+
+# Print Paths
+echo "raw_stdout: ${RAW_STDOUT}"
+echo "raw_stderr: ${RAW_STDERR}"
+echo "redacted:   ${REDACTED_FILE}"
+echo "trace:      ${TRACE_FILE}"
+echo "exit_code:  ${RC}"
+
+# Exit with command's exit code
+exit ${RC}
