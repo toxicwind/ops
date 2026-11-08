@@ -1,0 +1,25 @@
+{
+  "name": "ops-estate",
+  "version": "0.0.1",
+  "module": "bin/exa-mcp-server.ts",
+  "type": "module",
+  "bin": {
+    "exa-mcp-server": "./bin/exa-mcp-server.ts",
+    "name-check": "./bin/name-check.ts",
+    "name-fix": "./bin/name-fix.ts"
+  },
+  "scripts": {
+    "dev": "bun --hot run bin/exa-mcp-server.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome check .",
+    "fmt": "biome format . --write"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "latest",
+    "@biomejs/biome": "latest"
+  },
+  "dependencies": {},
+  "private": true
+}

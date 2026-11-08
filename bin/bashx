@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# bashx — estate bash shim: prelude env for one-shot `bashx '<command>'` calls.
+#
+# Fixes the recurring "$REG / $VAR never resolves inside a fresh bash -c" trap:
+# every command run through bashx sources this prelude FIRST, so the shared
+# variables are always defined. One shim, no per-cell duplication.
+#
+#   bashx 'echo $REG'            # cargo registry src dir
+#   bashx 'ls $REG/proxmint-*/'
+#
+set -u
+
+# ---------- estate prelude: shared variables (keep sorted, add as needed) ----------
+export PENS="${PENS:-/home/toxic/pens}"
+export REG="${REG:-$(ls -d "${HOME}/.cargo/registry/src/index.crates.io-"*/ 2>/dev/null | head -1)}"
+export BUN="${BUN:-${HOME}/.bun/bin/bun}"
+export ADB_BIN="${ADB_BIN:-/usr/bin/adb}"
+export JDK21="${JDK21:-/usr/lib/jvm/java-21-openjdk}"
+export PITCHFORK="${PITCHFORK:-${HOME}/.local/bin/pitchfork}"
+export H_TV="${H_TV:-10.0.0.225:5555}"
+
+# ---------- tiny helpers used by estate scripts ----------
+# ISO timestamp for log lines (JSON-lines friendly)
+ts() { date -u +'%Y-%m-%dT%H:%M:%SZ'; }
+# run adb against the Hisense TV
+atv() { "${ADB_BIN}" -s "${H_TV}" "$@"; }
+# run adb shell against the Hisense TV
+atvs() { "${ADB_BIN}" -s "${H_TV}" shell "$@"; }
+
+# ---------- exec the requested command with the prelude in scope ----------
+if [ "$#" -eq 0 ]; then
+  echo "bashx: usage → bashx '<bash command>'" >&2
+  exit 2
+fi
+exec bash -c "$*"

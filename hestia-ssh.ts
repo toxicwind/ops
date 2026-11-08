@@ -16,23 +16,57 @@
  *   bun hestia-ssh.ts scp <local> <remote>      # copy a file to the box
  */
 import { spawnSync } from "node:child_process"
+import { existsSync, mkdirSync } from "node:fs"
+import { tmpdir } from "node:os"
+import { join } from "node:path"
 
 const HOST = process.env.HESTIA_HOST ?? "10.0.0.246"
 const PASS = process.env.HESTIA_PASS ?? "coreelec"
 const USER = process.env.HESTIA_USER ?? "root"
 
-function sshArgs(cmd: string): string[] {
-  return [
-    "-p", PASS,
-    "ssh", "-T", "-o", "StrictHostKeyChecking=no", "-o", "ConnectTimeout=8",
-    `${USER}@${HOST}`, cmd,
-  ]
+// SSH ControlMaster socket: one persistent multiplexed connection so every
+// hestiaExec reuses the open session instead of a fresh SSH handshake
+// (~100-300ms saved per call). This is the low-latency lane for shell exec.
+const CTRL_DIR = process.env.HESTIA_SSH_CTRL_DIR ?? join(tmpdir(), "hestia-ssh")
+const CTRL_SOCK = join(CTRL_DIR, `hestia-${USER}@${HOST}`)
+
+function ensureCtrlDir(): void {
+  if (!existsSync(CTRL_DIR)) mkdirSync(CTRL_DIR, { recursive: true, mode: 0o700 })
 }
 
-/** Run a command on hestia, return { status, stdout, stderr }. */
+const COMMON = [
+  "-o", "StrictHostKeyChecking=no",
+  "-o", "ConnectTimeout=8",
+  "-o", "ControlMaster=auto",
+  "-o", `ControlPath=${CTRL_SOCK}`,
+  "-o", "ControlPersist=10m",
+]
+
+function sshArgs(cmd: string): string[] {
+  return ["-p", PASS, "ssh", "-T", ...COMMON, `${USER}@${HOST}`, cmd]
+}
+
+/** Run a command on hestia via the multiplexed SSH session (low latency). */
 export function hestiaExec(cmd: string): { status: number; stdout: string; stderr: string } {
+  ensureCtrlDir()
   const res = spawnSync("sshpass", sshArgs(cmd), { encoding: "utf8" })
   return { status: res.status ?? 1, stdout: res.stdout ?? "", stderr: res.stderr ?? "" }
+}
+
+/** Open the persistent ControlMaster connection (warm it up). */
+export function hestiaConnect(): boolean {
+  ensureCtrlDir()
+  const res = spawnSync("sshpass", ["-p", PASS, "ssh", "-T", ...COMMON, "-O", "check", `${USER}@${HOST}`], { encoding: "utf8" })
+  if (res.status === 0) return true
+  // not open yet — open it
+  const open = spawnSync("sshpass", ["-p", PASS, "ssh", "-T", ...COMMON, "-N", `${USER}@${HOST}`], { encoding: "utf8", timeout: 8000 })
+  return open.status === 0
+}
+
+/** Close the persistent ControlMaster connection. */
+export function hestiaDisconnect(): boolean {
+  const res = spawnSync("sshpass", ["-p", PASS, "ssh", "-T", ...COMMON, "-O", "exit", `${USER}@${HOST}`], { encoding: "utf8" })
+  return res.status === 0
 }
 
 /** Read a remote file, capped at maxBytes (token-friendly for LLM context). */
@@ -42,21 +76,23 @@ export function hestiaRead(path: string, maxBytes = 60_000): string {
   return res.stdout.slice(0, maxBytes)
 }
 
-/** Copy a local file to a remote path on hestia. */
+/** Copy a local file to a remote path on hestia (reuses ControlMaster). */
 export function hestiaScp(local: string, remote: string): boolean {
+  ensureCtrlDir()
   const res = spawnSync(
     "sshpass",
-    ["-p", PASS, "scp", "-o", "StrictHostKeyChecking=no", local, `${USER}@${HOST}:${remote}`],
+    ["-p", PASS, "scp", ...COMMON, local, `${USER}@${HOST}:${remote}`],
     { encoding: "utf8" },
   )
   return res.status === 0
 }
 
-/** Pull a file FROM hestia to a local path (box -> PC). */
+/** Pull a file FROM hestia to a local path (box -> PC, reuses ControlMaster). */
 export function hestiaPull(remote: string, local: string): boolean {
+  ensureCtrlDir()
   const res = spawnSync(
     "sshpass",
-    ["-p", PASS, "scp", "-o", "StrictHostKeyChecking=no", `${USER}@${HOST}:${remote}`, local],
+    ["-p", PASS, "scp", ...COMMON, `${USER}@${HOST}:${remote}`, local],
     { encoding: "utf8" },
   )
   return res.status === 0
