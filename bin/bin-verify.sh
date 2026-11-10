@@ -4,9 +4,9 @@
 # Exits 0 when everything checks out, 1 with a clear FAIL list otherwise.
 # Lines: 'ok   <id>' / 'FAIL <id>: <reason>' / 'WARN <id>: <reason>'.
 set -uo pipefail
-SOV="${SOV:-/home/toxic/estate}"
+SOV="${SOV:-/home/toxic/pens/barn/products/estate-ops}"
 MANIFEST="${1:-$SOV/bin/manifest.yaml}"
-exec python3 - "$MANIFEST" "$SOV" <<'PYEOF'
+exec /home/toxic/.local/share/mise/installs/python/3/bin/python3 - "$MANIFEST" "$SOV" <<'PYEOF'
 import hashlib, os, shutil, subprocess, sys
 
 MANIFEST, SOV = sys.argv[1], sys.argv[2]
@@ -197,7 +197,7 @@ def main():
         elif name.startswith('/'):
             full = name
         else:
-            full = os.path.join(SOV, name)
+            full = os.path.join(os.path.expanduser("~"), name) if name.startswith("pens/") or name.startswith("/home/") else os.path.join(SOV, name)
         seen.add(os.path.normpath(full))
         if not os.path.islink(full):
             fails.append('links/%s: not a symlink (%s exists but does not point at %s)' % (name, full, target))
@@ -210,7 +210,7 @@ def main():
         name, d, kind = e['name'], e['dir'], e['kind']
         eid = '%s/%s' % (d, name)
         seen.add(os.path.normpath(os.path.join(d, name)))
-        path = os.path.join(d, name) if os.path.isabs(d) else os.path.join(SOV, d, name)
+        path = os.path.join(d, name) if os.path.isabs(d) else (os.path.join(os.path.expanduser("~"), d, name) if d.startswith("pens/") or d.startswith("/home/") else os.path.join(SOV, d, name))
         if kind == 'symlink':
             if os.path.islink(path) and os.path.exists(path):
                 oks.append(eid)

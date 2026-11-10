@@ -1,6 +1,6 @@
 # Product bin/ directories to scan for manifest entries
 # One relative path from $HOME per line
-pens/estate/products/estate-ops/bin
+pens/barn/products/estate-ops/bin
 pens/barn/forge/bin
 pens/barn/secretsmith/bin
 pens/barn/thresher/bin
