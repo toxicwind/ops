@@ -1,0 +1,51 @@
+{
+  "name": "estate-ops",
+  "version": "1.0.0",
+  "description": "Durable operations tooling for fleet management, audit, and maintenance.",
+  "main": "pitchfork.ts",
+  "type": "module",
+  "bin": {
+    "pitchfork": "./pitchfork.ts",
+    "estate-do": "./estate-do",
+    "estate-reconcile": "./estate-reconcile",
+    "estate-scan": "./estate-scan",
+    "daemon-yield": "./daemon-yield",
+    "audio-probe": "./audio-probe",
+    "auto-close-syntax": "./auto-close-syntax.ts",
+    "name-check": "./name-check.ts",
+    "name-fix": "./name-fix.ts",
+    "heredoc-fix": "./heredoc-fix.ts",
+    "ffs-bun": "./ffs-bun.ts",
+    "exa-mcp-server": "./exa-mcp-server.ts",
+    "fleet-join": "./fleet-join.ts",
+    "secretsmith-mcp": "./secretsmith-mcp.ts",
+    "sse-forward": "./sse-forward.ts",
+    "pitchfork-drift": "./pitchfork-drift.ts",
+    "pitchfork-keepalive": "./pitchfork-keepalive.ts",
+    "pitchfork-restart": "./pitchfork-restart.ts",
+    "pitchfork-restart-lib": "./pitchfork-restart-lib.ts",
+    "pitchfork-keepalive-lib": "./pitchfork-keepalive-lib.ts",
+    "pitchfork-lib": "./pitchfork-lib.ts",
+    "reconcile-agents": "./reconcile-agents.md.ts",
+    "cmdlog": "./cmdlog.ts",
+    "delendai-config-reconcile": "./delendai-config-reconcile.ts"
+  },
+  "scripts": {
+    "dev": "bun --hot run pitchfork.ts",
+    "start": "bun run pitchfork.ts",
+    "build": "bun build pitchfork.ts --outdir ./dist",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsgo --noEmit -p tsconfig.json",
+    "lint": "biome lint .",
+    "fmt": "biome format --write .",
+    "check": "bun run typecheck && bun run lint"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "latest",
+    "@biomejs/biome": "latest"
+  },
+  "dependencies": {},
+  "private": true
+}
