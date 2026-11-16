@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-BIN=/home/toxic/pens/estate/agents/oracle-market/bin
+BIN=/home/toxic/pens/Pens/agents/oracle-market/bin
 BIDDER=$BIN/bidder.py
 POSTTASK=$BIN/post_task.py
 
@@ -19,8 +19,8 @@ fail() { FAIL=$((FAIL+1)); bad "$1"; }
 hdr "1. Fix exec bits"
 
 for f in "$POSTTASK" "$BIDDER" \
-         /home/toxic/pens/estate/agents/oracle-market/bin/*.py \
-         /home/toxic/pens/estate/agents/oracle-market/bin/*.sh; do
+         /home/toxic/pens/Pens/agents/oracle-market/bin/*.py \
+         /home/toxic/pens/Pens/agents/oracle-market/bin/*.sh; do
   [ -f "$f" ] || continue
   # only chmod if the file has a shebang (safe: don't mark libraries executable)
   if head -1 "$f" | grep -q '^#!'; then
@@ -178,7 +178,7 @@ fi
 # ─────────────────────────────────────────────────────────────────────
 hdr "5. Running bidder still healthy"
 
-cd /home/toxic/estate
+cd /home/toxic/pens/Pens
 status="$(pitchfork list --json 2>/dev/null | jq -r '.[] | select(.id|test("bidder")) | "\(.id)=\(.status)"' 2>/dev/null)"
 echo "  $status" | sed 's/^/    /'
 if echo "$status" | grep -q 'bidder-forge=running'; then

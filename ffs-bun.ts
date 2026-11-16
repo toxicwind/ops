@@ -1,11 +1,11 @@
 #!/usr/bin/env bun
-// estate bin/ffs-bun.ts — Bun wrapper around the estate bin/ffs Go binary.
+// Pens bin/ffs-bun.ts — Bun wrapper around the Pens bin/ffs Go binary.
 // Replaces shell shims and enables Bun-native error handling + JSON piping.
 
 import { spawnSync } from "child_process";
 import { existsSync } from "fs";
 
-const FFS_BIN = "/home/toxic/pens/estate/products/estate-ops/ffs";
+const FFS_BIN = "/home/toxic/pens/Pens/products/Pens-ops/ffs";
 
 async function main(): Promise<number> {
   const args = process.argv.slice(2);
@@ -15,7 +15,7 @@ async function main(): Promise<number> {
     console.error("");
     console.error("Commands: find, glob, grep, multi-grep, read, outline, symbol, callers, callees, refs, flow, siblings, deps, impact, index, map, overview, mention, guide, help");
     console.error("");
-    console.error("All args forwarded to estate/bin/ffs Go binary.");
+    console.error("All args forwarded to Pens/bin/ffs Go binary.");
     return 1;
   }
 

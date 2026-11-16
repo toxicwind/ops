@@ -2,8 +2,8 @@
 
 set -uo pipefail
 
-# Re-scoped for estate reorg Phase 2b
-# Default manifest: pens/barn/estate-ops/bin/manifest.yaml
+# Re-scoped for Pens reorg Phase 2b
+# Default manifest: pens/barn/Pens-ops/bin/manifest.yaml
 # SOV = home (since bins span ~/.local/bin + pens/)
 SOV="${SOV:-/home/toxic}"
 # Manifest default: next to this script (portable across product moves), overridable via $1

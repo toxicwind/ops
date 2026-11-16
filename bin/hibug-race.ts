@@ -2,7 +2,7 @@
 /**
  * hibug-race.ts — race redundant approaches to one step, first-valid-wins.
  *
- * Estate doctrine: race redundant paths, fail fast with short ceilings,
+ * Pens doctrine: race redundant paths, fail fast with short ceilings,
  * never retry-spin, first valid result wins. Borrowed conventions from
  * local-race/bin/race.py (bounded output drains, immediate loser kill,
  * persistent winner note) re-implemented for Bun's concurrent spawn.

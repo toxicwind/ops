@@ -1,7 +1,7 @@
 # =============================================================================
-# estate bin manifest — canonical inventory of executable entry points.
-#   /home/toxic/pens/estate/products/estate-ops/manifest.yaml
-# Verified by /home/toxic/pens/estate/products/estate-ops/bin-verify.sh (exit != 0 on any FAIL).
+# Pens bin manifest — canonical inventory of executable entry points.
+#   /home/toxic/pens/Pens/products/Pens-ops/manifest.yaml
+# Verified by /home/toxic/pens/Pens/products/Pens-ops/bin-verify.sh (exit != 0 on any FAIL).
 #
 # What "bin" means here (2026-09-20):
 #   bin/                        canonical ops-tool dir. REORG phase 5 merged
@@ -11,14 +11,14 @@
 #   /home/toxic/.local/bin/tau  installed tau — collapse level 2, md5-pinned
 #                               to the repo copy (verifier fails on drift).
 #   (tau entries moved to archived: below)
-# NOTE: /home/toxic/pens/estate/tau/bin does NOT exist; `tau` is a symlink
+# NOTE: /home/toxic/pens/Pens/tau/bin does NOT exist; `tau` is a symlink
 #       -> projects/tau. There is no [[bin]] in tau's Cargo.toml files —
 #       the engine ships as a dist artifact (omp), not a cargo bin target.
 # =============================================================================
-schema: estate-bin-manifest/1
+schema: Pens-bin-manifest/1
 
 stale_paths:
-  - estate-merge-stash-20260914
+  - Pens-merge-stash-20260914
   - /home/toxic/projects/ik_llama.cpp-main
   - /home/toxic/workspace/tau-launcher-build
 
@@ -26,7 +26,7 @@ dirs:
   - bin
 
 bins:
-  # ---------------- estate/bin ----------------
+  # ---------------- Pens/bin ----------------
   - name: set-audio
     dir: bin
     kind: script
@@ -58,7 +58,7 @@ bins:
     run: [--help]
     expect: "Usage: hotfix"
     timeout: 20
-    notes: "estate hotfix registry CLI (bun)"
+    notes: "Pens hotfix registry CLI (bun)"
 
   - name: nvidia-fan-curve.py
     dir: bin
@@ -149,7 +149,7 @@ bins:
 # -----------------------------------------------------------------------------
 # links — product symlinks pinned to their pens/sovereign targets (AGENTS.md
 # Layout, 2026-10-23). A missing target is a FAIL. These live in ~/.local/bin
-# (PATH surface) and estate/bin (ops surface); the target is always a file in
+# (PATH surface) and Pens/bin (ops surface); the target is always a file in
 # pens/{barn,ranch,olympus} or sovereign/skills/scripts. The pens manifest
 # (/home/toxic/pens/MANIFEST.yaml, pens/audit-links.sh) verifies the same
 # targets from the product side.
@@ -174,7 +174,7 @@ links:
     target: /home/toxic/sovereign/skills/scripts/syntax-guard.ts
   - name: ~/.local/bin/vansrouter-bridged
     target: /home/toxic/sovereign/skills/scripts/vansrouter.sh
-  # -- estate/bin ops surface
+  # -- Pens/bin ops surface
   - name: bin/thresher-mcp-stdio
     target: /home/toxic/pens/barn/thresher/bin/thresher-mcp-stdio
   - name: bin/chute

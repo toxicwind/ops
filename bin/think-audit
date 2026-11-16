@@ -29,7 +29,7 @@ from dataclasses import dataclass, field
 SESSIONS_ROOT = os.path.expanduser(
     os.environ.get(
         "TAU_SESSIONS_ROOT",
-        "/home/toxic/estate/config/tau/agent/sessions",
+        "/home/toxic/pens/estate/config/tau/agent/sessions",
     )
 )
 TOK = os.path.expanduser(os.environ.get("TOK_BIN", "~/.local/bin/tok"))

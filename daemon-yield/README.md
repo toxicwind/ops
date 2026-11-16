@@ -1,6 +1,6 @@
 # daemon-yield — supervisor wrapper: idle turns become emergent jobs
 
-**Problem:** the estate daemon goes idle when its turn yields or no-ops.
+**Problem:** the Pens daemon goes idle when its turn yields or no-ops.
 **Fix (supervisor-level, not a client patch):** this wrapper sits around the
 daemon's agent invocation. A turn that ends in yield/no-op with no pending
 work triggers a job pull; the highest-value decidable job runs as architect
@@ -36,7 +36,7 @@ the same call.
 1. **oracle** — stalled tasks only: `task_posted` with no later
    assigned/settled/expired/rejected event, older than
    `--oracle-stall-hours` (default 24). Read-only scan of the ledger via
-   the estate-master yote route; the wrapper never bids or assigns — a
+   the Pens-master yote route; the wrapper never bids or assigns — a
    stalled task is a bidder-of-last-resort pickup, logged as such.
 2. **file-queue** — `queue/*.json`, atomically claimed into `claimed/`.
 3. **squawk** — open fleet questions, task-shaped and fresh only
@@ -61,8 +61,8 @@ A stop file (`state/stop`) or SIGTERM/SIGINT wakes any wait immediately.
 
 ## Routes (master connector)
 
-Built against the estate-master connector
-(`custom-connectors/custom.estate-master/`): yote exec with hostname gate
+Built against the Pens-master connector
+(`custom-connectors/custom.Pens-master/`): yote exec with hostname gate
 (`awrawr-pc`), thresher status, squawk read/send, gatehouse discovery,
 oracle intake, pitchfork status. The wrapper itself handles no keys —
 secretsmith is the connector's business, and key values never enter the

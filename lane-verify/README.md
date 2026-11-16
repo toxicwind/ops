@@ -1,7 +1,7 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
@@ -40,8 +40,8 @@ cat > /tmp/claim.json <<'EOF'
   "lane": "wave4-router-max",
   "claim": "restarted",
   "claimed_at": "2026-10-02T11:48:00Z",
-  "watch_dirs": ["/home/toxic/pens/estate/tools/estate-scripts-router"],
-  "checkpoint_file": "/home/toxic/pens/estate/checkpoints/wave4.json"
+  "watch_dirs": ["/home/toxic/pens/Pens/tools/Pens-scripts-router"],
+  "checkpoint_file": "/home/toxic/pens/Pens/checkpoints/wave4.json"
 }
 EOF
 
@@ -92,10 +92,10 @@ appended to the checkpoint file in the wave4 event schema.
   `worker heartbeat stall detection` (50.0), `llm judge evaluation
   harness` (13.9), `coding agent eval benchmark harness` (12.7).
 - Built by the wave4-emergent lane (paper-search × pattern-borrow
-  combined into a build the estate lacked).
+  combined into a build the Pens lacked).
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - Read-only against the box except `--append-checkpoint` writes to the
   checkpoint file you name. Never touches credentials, money, or network.

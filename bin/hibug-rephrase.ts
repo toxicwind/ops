@@ -1,15 +1,15 @@
 #!/usr/bin/env bun
 /**
- * hibug-rephrase.ts — classifier-safe rephrase for benign estate work.
+ * hibug-rephrase.ts — classifier-safe rephrase for benign Pens work.
  *
  * Shared by hibug-race.ts (import) and hibug-pattern-borrow.py (CLI).
- * This is false-positive REPAIR for legitimate estate work only: it rewrites
+ * This is false-positive REPAIR for legitimate Pens work only: it rewrites
  * HOW a task is phrased (behavioral language, authority named, adversarial
  * imperatives removed). It never changes WHAT the task does, never disables
  * a safeguard, and never repairs a task whose actual purpose is wrong —
  * those are blocked by the purpose gate and the task dies.
  *
- * Rules (from the estate's classifier-safe-docs playbook):
+ * Rules (from the Pens's classifier-safe-docs playbook):
  *  - Say what to DO, not what to DISREGARD (behavioral over adversarial).
  *  - Name the authority instead of asserting its absence:
  *    "under Chris's standing autonomous-operation order (2026-09-20)".

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PITCH=/home/toxic/pens/estate/pitchfork.toml
+PITCH=/home/toxic/pens/Pens/pitchfork.toml
 CHUTE=/home/toxic/pens/barn/chute/chute.mjs
 OMP=/home/toxic/tau/packages/coding-agent/dist/tau
 EXT=/home/toxic/.tau/extensions/vansrouter.ts
@@ -74,7 +74,7 @@ block = [
     f'dir = "{tau_dir}"',
     "mise = false",
     "retry = true",
-    f'ready_cmd = "/home/toxic/pens/estate/products/estate-ops/tcp-probe {port}"',
+    f'ready_cmd = "/home/toxic/pens/Pens/products/Pens-ops/tcp-probe {port}"',
     'health_port = { port = ' + port + ', interval = "30s", timeout = "5s", retries = 3 }',
     'depends = ["wrangler"]',
     # Keep this in sync with pitchfork.toml [daemons.tau] env. PI_AGENT_DIR,
@@ -82,7 +82,7 @@ block = [
     # has 0 source files reading any of them, so `thinkingmachines/inkling`
     # never took effect. PI_CODING_AGENT_DIR is the variable that actually
     # decides which config.yml settings.ts:601 reads.
-    'env = { PI_CONFIG_DIR = "/home/toxic/.tau", PI_CODING_AGENT_DIR = "/home/toxic/.tau/agent", PI_CODING_AGENT = "true", PI_OPENAI_STREAM_IDLE_TIMEOUT_MS = "120000", VANSROUTER_API_KEY = "local-estate" }',
+    'env = { PI_CONFIG_DIR = "/home/toxic/.tau", PI_CODING_AGENT_DIR = "/home/toxic/.tau/agent", PI_CODING_AGENT = "true", PI_OPENAI_STREAM_IDLE_TIMEOUT_MS = "120000", VANSROUTER_API_KEY = "local-Pens" }',
     'auto = ["start"]',
 ]
 
@@ -112,9 +112,9 @@ ok "port clear"
 # ─────────────────────────────────────────────────────────────────────
 hdr "5. Clean stale supervisor state + start"
 
-cd /home/toxic/estate
-pitchfork clean --daemon estate/tau 2>&1 | tail -2 || true
-pitchfork start estate/tau 2>&1 | tail -10 || true
+cd /home/toxic/pens/Pens
+pitchfork clean --daemon Pens/tau 2>&1 | tail -2 || true
+pitchfork start Pens/tau 2>&1 | tail -10 || true
 
 # ─────────────────────────────────────────────────────────────────────
 hdr "6. Wait for :$PORT to bind"
@@ -130,7 +130,7 @@ done
 ss -tlnp "( sport = :$PORT )" 2>/dev/null || { err "port never bound"; exit 1; }
 
 echo
-pitchfork list --json 2>&1 | jq -r '.[] | select(.id == "estate/tau") | "  status=\(.status) pid=\(.pid) port=\(.port|join(","))"' || true
+pitchfork list --json 2>&1 | jq -r '.[] | select(.id == "Pens/tau") | "  status=\(.status) pid=\(.pid) port=\(.port|join(","))"' || true
 
 # ─────────────────────────────────────────────────────────────────────
 hdr "7. End-to-end: initialize → session/new → session/prompt"
@@ -184,4 +184,4 @@ JSEOF
 
 hdr "READY"
 echo "  tau listening on :$PORT"
-echo "  re-run: bash /home/toxic/pens/estate/products/estate-ops/tau-start.sh"
+echo "  re-run: bash /home/toxic/pens/Pens/products/Pens-ops/tau-start.sh"

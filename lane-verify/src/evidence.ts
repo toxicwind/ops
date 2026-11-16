@@ -4,7 +4,7 @@
  * Every evidence item is something OBSERVED on the box (a file mtime, a
  * sha256, a git commit, a heartbeat timestamp) — never a status string
  * someone wrote. Verdicts cite evidence refs, not prose. This is the
- * deterministic half of the estate's "verify by observed effects only"
+ * deterministic half of the Pens's "verify by observed effects only"
  * rule, informed by "From Rubrics to Reliable Scores: Evidence-Grounded
  * Text Evaluation with LLM Judges" (arXiv:2601.08654, 2026): a score
  * without a cited evidence item is not a score.

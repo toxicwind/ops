@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
 /**
  * delendai-config-reconcile — audit + reconcile the per-repo `delendai.config.json`
- * fleet against the estate governance policy.
+ * fleet against the Pens governance policy.
  *
  * WHY: ~41 repos each carry a `delendai.config.json` (mostly JSONC w/ comments).
  * Their governance fields (development.profile, development.branches.integration,
  * validationMatrix.scopes) drift silently. This tool reports that drift against a
  * policy and optionally rewrites the volatile governance fields to match.
  *
- * Policy (estate doctrine): every requested delendai repo should declare
+ * Policy (Pens doctrine): every requested delendai repo should declare
  *   development.profile = "shared-checkout-merge"
  *   development.branches.integration = "main"
  *   validationMatrix.scopes."default" = [ { command: "git diff --check", expect: "" } ]

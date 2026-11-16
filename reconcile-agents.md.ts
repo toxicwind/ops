@@ -2,9 +2,9 @@
 /**
  * reconcile-agents.md — make AGENTS.md the MASTER across agents.
  *
- * Generic, drop into ANY estate/pens project. Verifies the project's
+ * Generic, drop into ANY Pens/pens project. Verifies the project's
  * AGENTS.md resolves consistently through BOTH agent load paths (tau walk-up,
- * kappa walk-up + config-dir prepend), and that the critical estate tooling
+ * kappa walk-up + config-dir prepend), and that the critical Pens tooling
  * (kairos 2s-rule hook, run-fast, delend-code-race) is present + functional.
  * Fail-loud but forward (monadic primitives; no 2>/dev/null).
  *
@@ -75,11 +75,11 @@ const CHECKS: Check[] = [
   },
   {
     id: "kairos-hook",
-    desc: "kairos 2s-rule hook resolves run-fast + delend-code-race from pens/estate/products/estate-ops",
+    desc: "kairos 2s-rule hook resolves run-fast + delend-code-race from pens/Pens/products/Pens-ops",
     run: () => {
       const cwdHome = process.env.HOME ?? "";
-      const rp = join(cwdHome, "pens/estate/products/estate-ops/run-fast");
-      const cr = join(cwdHome, "pens/estate/products/estate-ops/delend-code-race");
+      const rp = join(cwdHome, "pens/Pens/products/Pens-ops/run-fast");
+      const cr = join(cwdHome, "pens/Pens/products/Pens-ops/delend-code-race");
       const missing = [rp, cr].filter((p) => !existsSync(p));
       return missing.length === 0
         ? Ok(`kairos hook targets present: ${rp}\n  ${cr}`)
@@ -104,7 +104,7 @@ const CHECKS: Check[] = [
       const unsupported: string[] = [];
       for (const f of files) {
         const text = readFileSync(join(wfDir, f), "utf-8");
-        // Self-hosted label alone means the job only runs on the estate box,
+        // Self-hosted label alone means the job only runs on the Pens box,
         // NOT on GitHub-hosted runners → not GHA-compilable (gated by design).
         if (
           /runs-on:\s*\$?\{{2}[^}]*?tau-kata|\bruns-on:\s*[a-z-]*kata\b|\bself-hosted\b/.test(

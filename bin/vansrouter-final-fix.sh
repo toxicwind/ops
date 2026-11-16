@@ -22,7 +22,7 @@ echo "  --- valid model (oc/jev-1.13-free) ---"
 curl -s -o /tmp/vr-valid.txt -w "  HTTP %{http_code} (%{size_download}b)\n" \
   -X POST "$VR/v1/chat/completions" \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer local-estate' \
+  -H 'Authorization: Bearer local-Pens' \
   -d '{"model":"oc/jev-1.13-free","messages":[{"role":"user","content":"hi"}],"max_tokens":1}' \
   --max-time 15
 echo "  body head:"; head -c 400 /tmp/vr-valid.txt | tr -d '\0'; echo
@@ -32,7 +32,7 @@ echo "  --- doubled model (nvidia/nvidia/nemotron-3-super-120b-a12b) ---"
 curl -s -o /tmp/vr-double.txt -w "  HTTP %{http_code} (%{size_download}b)\n" \
   -X POST "$VR/v1/chat/completions" \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer local-estate' \
+  -H 'Authorization: Bearer local-Pens' \
   -d '{"model":"nvidia/nvidia/nemotron-3-super-120b-a12b","messages":[{"role":"user","content":"hi"}],"max_tokens":1}' \
   --max-time 15
 echo "  body head:"; head -c 400 /tmp/vr-double.txt | tr -d '\0'; echo
@@ -42,7 +42,7 @@ echo "  --- stripped model (nvidia/nemotron-3-super-120b-a12b) ---"
 curl -s -o /tmp/vr-strip.txt -w "  HTTP %{http_code} (%{size_download}b)\n" \
   -X POST "$VR/v1/chat/completions" \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer local-estate' \
+  -H 'Authorization: Bearer local-Pens' \
   -d '{"model":"nvidia/nemotron-3-super-120b-a12b","messages":[{"role":"user","content":"hi"}],"max_tokens":1}' \
   --max-time 15
 echo "  body head:"; head -c 400 /tmp/vr-strip.txt | tr -d '\0'; echo
@@ -116,7 +116,7 @@ function resolveApiKey(): string {
       }
     } catch {}
   }
-  return "local-estate";
+  return "local-Pens";
 }
 
 // Collapse accidental double prefixes like nvidia/nvidia/foo -> nvidia/foo
@@ -261,18 +261,18 @@ fi
 # ─────────────────────────────────────────────────────────────────────
 hdr "7. Restart tau"
 
-cd /home/toxic/estate
+cd /home/toxic/pens/Pens
 
 STALE="$(ss -tlnpH '( sport = :'"$TAU_PORT"' )' 2>/dev/null | grep -oP 'pid=\K[0-9]+' | head -1 || true)"
 [ -n "$STALE" ] && kill -TERM "$STALE" 2>/dev/null || true
 sleep 1
 [ -n "$STALE" ] && kill -KILL "$STALE" 2>/dev/null || true
 
-pitchfork clean --daemon estate/tau 2>&1 | tail -2 || true
-if [ -x /home/toxic/pens/estate/bin/pitchfork-restart ]; then
-  /home/toxic/pens/estate/bin/pitchfork-restart estate/tau 2>&1 | tail -8 || true
+pitchfork clean --daemon Pens/tau 2>&1 | tail -2 || true
+if [ -x /home/toxic/pens/Pens/bin/pitchfork-restart ]; then
+  /home/toxic/pens/Pens/bin/pitchfork-restart Pens/tau 2>&1 | tail -8 || true
 else
-  pitchfork restart estate/tau 2>&1 | tail -8 || true
+  pitchfork restart Pens/tau 2>&1 | tail -8 || true
 fi
 sleep 3
 
@@ -333,4 +333,4 @@ JSEOF
 hdr "DONE"
 echo "  extension : $EXT"
 echo "  backup    : $EXT.bak.*"
-echo "  rerun     : bash /home/toxic/pens/estate/bin/vansrouter-final-fix.sh"
+echo "  rerun     : bash /home/toxic/pens/Pens/bin/vansrouter-final-fix.sh"

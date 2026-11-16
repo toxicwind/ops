@@ -15,7 +15,7 @@
 # refusal names names: holder PIDs + cmdlines + the SSOT's expected owner.
 #
 # Use in pitchfork.toml run lines:
-#   run = "exec /home/toxic/estate/bin/claim-port 25126 <real command...>"
+#   run = "exec /home/toxic/pens/estate/bin/claim-port 25126 <real command...>"
 #
 # PROTECTED PORTS — the live bridge and squawk are never guarded and never
 # exec'd through this path; they have their own supervised start paths:
@@ -37,7 +37,7 @@ PORT="${1:?usage: claim-port <port> <command...>}"; shift
 [[ "$PORT" =~ ^[0-9]+$ ]] || { echo "[claim-port] invalid port: $PORT" >&2; exit 2; }
 (( $# >= 1 )) || { echo "[claim-port] no command given" >&2; exit 2; }
 
-SSOT="/home/toxic/estate/config/ports.env"
+SSOT="/home/toxic/pens/estate/config/ports.env"
 
 is_protected_port() {
   case "$1" in

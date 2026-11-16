@@ -1,10 +1,10 @@
 /**
- * pitchfork-keepalive.ts — Bun-native supervisor keepalive for the estate
+ * pitchfork-keepalive.ts — Bun-native supervisor keepalive for the Pens
  * pitchfork control plane. Replaces the systemd unit
  * (~/.config/systemd/user/pitchfork.service) which previously owned
  * `pitchfork supervisor run --boot` + Restart=on-failure.
  *
- * Why: the estate is moving to a NO-systemd lifecycle. This program owns the
+ * Why: the Pens is moving to a NO-systemd lifecycle. This program owns the
  * ONE thing systemd uniquely provided for the supervisor itself: crash-restart
  * with backoff, and durable boot (--boot re-registers every boot_start/auto
  * daemon). It is FaultProc-style: run the real `pitchfork supervisor run
@@ -77,7 +77,7 @@ async function main(): Promise<void> {
     attempt += 1;
     const started = Date.now();
     const proc = Bun.spawn(ARGV, {
-      cwd: process.env.ESTATE_ROOT ?? "/home/toxic/pens/estate",
+      cwd: process.env.ESTATE_ROOT ?? "/home/toxic/pens/Pens",
       stdout: "inherit",
       stderr: "inherit",
       stdin: "inherit",

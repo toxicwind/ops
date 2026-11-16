@@ -11,9 +11,9 @@
 
 set -uo pipefail
 
-SOV="${SOV:-/home/toxic/estate}"
+SOV="${SOV:-/home/toxic/pens/estate}"
 GEN="${GEN:-/home/toxic/pens/estate/products/estate-ops/bin/manifest-gen.py}"
-VERIFY="${VERIFY:-/home/toxic/estate/bin/bin-verify.sh}"
+VERIFY="${VERIFY:-/home/toxic/pens/estate/bin/bin-verify.sh}"
 MANIFEST="${MANIFEST:-/home/toxic/pens/estate/products/estate-ops/bin/manifest.yaml}"
 
 echo "[estate-ops] manifest-git-hook: regenerating manifest..." >&2

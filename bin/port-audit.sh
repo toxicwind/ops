@@ -9,11 +9,11 @@
 #        - herd.yaml dynamic slots  (llama-server processes from startPort)
 #        - tailscale serve backends (tailscale serve status)
 #        - known system services    (static table below)
-#   3. Scans estate-scripts logs + journal for EADDRINUSE / "address already in use".
+#   3. Scans Pens-scripts logs + journal for EADDRINUSE / "address already in use".
 #   4. Flags: DUPLICATE live claims, DEAD config claims (no listener),
 #      ROGUE listeners (no config source), DANGLING tailscale backends,
 #      DUP-CLAIM in the SSOT itself, and hardcoded ports missing from the SSOT.
-#   5. Enforces the estate port policy (Chris 2026-09-20): EVERY service port
+#   5. Enforces the Pens port policy (Chris 2026-09-20): EVERY service port
 #      must live in 25000-35000. Violations are flagged, never auto-fixed.
 #      Known system/infra ports outside the range are flagged separately as
 #      POLICY-VIOLATION-SYSTEM so they are decided, not silently exempted.
@@ -25,11 +25,11 @@
 # Exit: 0 = clean, 1 = findings, 2 = could not take a snapshot.
 #
 # READ-ONLY. Never kills, restarts, binds, or otherwise touches anything.
-# Runs on yote; SOV overrides the estate-scripts tree root.
+# Runs on yote; SOV overrides the Pens-scripts tree root.
 
 set -uo pipefail
 
-SOV="${SOV:-/home/toxic/estate}"
+SOV="${SOV:-/home/toxic/pens/Pens}"
 SSOT="$SOV/config/ports.env"
 PITCHFORK="$SOV/pitchfork.toml"
 HERD_YAML="$SOV/config/herd.yaml"
@@ -48,7 +48,7 @@ say() { (( QUIET )) || printf '%s\n' "$*"; }
 warn_missing() { say "[warn] $*"; }
 
 # ---------------------------------------------------------------- policy ------
-# Estate port policy (Chris 2026-09-20): EVERY service port lives in 25000-35000.
+# Pens port policy (Chris 2026-09-20): EVERY service port lives in 25000-35000.
 POLICY_MIN=25000
 POLICY_MAX=35000
 in_policy() { (( $1 >= POLICY_MIN && $1 <= POLICY_MAX )); }
@@ -157,7 +157,7 @@ for port in "${!PORT_PROCS[@]}"; do
 done
 
 # ------------------------------------------------------------ system ports ---
-# Static documentation of non-estate-scripts listeners. uid/root services that
+# Static documentation of non-Pens-scripts listeners. uid/root services that
 # ss -p cannot attribute without sudo are resolved here by convention.
 declare -A SYSTEM=(
   [22]="sshd" [2222]="sshd-alt" [53]="dns" [443]="tailscaled-funnel"
@@ -166,7 +166,7 @@ declare -A SYSTEM=(
   [60955]="tailscaled" [42445]="containerd" [57889]="bpftune"
   [5037]="adb" [20241]="cloudflared"
   # sccache :4226 — upstream-hardcoded localhost build-cache port (no flag/env in
-  # this sccache version); not an estate service. Documented decision, still
+  # this sccache version); not an Pens service. Documented decision, still
   # flagged POLICY-VIOLATION-SYSTEM every run (decided, never silently exempted).
   [4226]="sccache-build-cache"
   [58050]="bubbleupnp-server" [58051]="bubbleupnp-server"

@@ -6,7 +6,7 @@ import { readFileSync, existsSync } from "node:fs";
 // unbounded file even when its stdout PREVIEW is capped (so the agent never
 // misses output), and exit with the child's real exit code.
 describe("cmdlog anti-truncation", () => {
-  const BIN = "/home/toxic/pens/estate/products/estate-ops/cmdlog.ts";
+  const BIN = "/home/toxic/pens/Pens/products/Pens-ops/cmdlog.ts";
 
   test("persists >1000 lines to the file while previewing only a few", () => {
     const lines = 1500;

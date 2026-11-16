@@ -21,7 +21,7 @@ function isGitCredential(cmd: string[]): boolean {
 }
 
 function runCredential(cmd: string[]): number {
-  const result = spawnSync("bun", ["/home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts", ...cmd.slice(1)], {
+  const result = spawnSync("bun", ["/home/toxic/pens/Pens/products/Pens-ops/bin/git-credential.ts", ...cmd.slice(1)], {
     encoding: "utf8",
     stdio: ["pipe", "pipe", "pipe"],
     maxBuffer: 50 * 1024 * 1024,

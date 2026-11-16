@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# hesitance-scan.sh — estate hesitance-rot detector (permanent).
+# hesitance-scan.sh — Pens hesitance-rot detector (permanent).
 #
-# The canonical hesitance guard for Chris's fleet (ordered: estate-scripts
+# The canonical hesitance guard for Chris's fleet (ordered: Pens-scripts
 # projects/ops/bin, filename claimed fleet seq 11264). Consolidated 2026-09-20
 # from the pack-fix hunt's hesitance-lint: one tool, one home, no duplication.
 #
@@ -30,7 +30,7 @@
 #   hesitance-scan.sh --fleet [N]       # also scan last N fleet messages (needs squawk CLI)
 #   hesitance-scan.sh --quiet           # only summary + exit code
 #
-# Hunt catalog: estate-scripts projects/pack-fix/hesitance-patterns.md
+# Hunt catalog: Pens-scripts projects/pack-fix/hesitance-patterns.md
 # Standing rule (Chris, 2026-09-20): default is autonomous action —
 # "do it, report done; only surface what genuinely needs Chris:
 # money, credentials, irreversible external sends."
@@ -131,9 +131,9 @@ done
 
 if [ ${#TARGETS[@]} -eq 0 ]; then
   # Default roots per box.
-  if [ -d /home/toxic/estate ]; then
-    TARGETS=(/home/toxic/pens/estate/skills /home/toxic/pens/estate/ranch
-             /home/toxic/pens/estate/var/scratch /home/toxic/maximal-sweep)
+  if [ -d /home/toxic/pens/Pens ]; then
+    TARGETS=(/home/toxic/pens/Pens/skills /home/toxic/pens/Pens/ranch
+             /home/toxic/pens/Pens/var/scratch /home/toxic/maximal-sweep)
   elif [ -d /home/hatch/workspace ]; then
     TARGETS=(/home/hatch/workspace/cron.d /home/hatch/workspace/skills
              /home/hatch/workspace/sweeps /home/hatch/workspace/goals

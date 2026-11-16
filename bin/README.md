@@ -1,13 +1,13 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
 # ops/bin — permanent operations scripts
 
-**The script is the deliverable; a one-off run is just proof.** Runnable by anyone, anytime, on yote (CachyOS). Every script here does one estate-wide audit, read-only unless named otherwise.
+**The script is the deliverable; a one-off run is just proof.** Runnable by anyone, anytime, on yote (CachyOS). Every script here does one Pens-wide audit, read-only unless named otherwise.
 
 ## Why should I care?
 
@@ -20,10 +20,10 @@
 
 | Script | What |
 |---|---|
-| `sudo-audit.sh` | Verifies the pack's action posture: passwordless sudo scope, key paths + permissions, shared-tree ownership (`/home/toxic/estate`, `/home/toxic/.tau`), pitchfork/systemd daemon management without interactive auth. Reports blockers; exit 1 if any. `--json` for machine output. |
+| `sudo-audit.sh` | Verifies the pack's action posture: passwordless sudo scope, key paths + permissions, shared-tree ownership (`/home/toxic/pens/Pens`, `/home/toxic/.tau`), pitchfork/systemd daemon management without interactive auth. Reports blockers; exit 1 if any. `--json` for machine output. |
 | `missing-files.sh` | Finds files the system REFERENCES but that don't exist: greps systemd units (`Exec*`/`EnvironmentFile`/`WorkingDirectory`), live configs (`herd.yaml`, `pitchfork.toml`, `ports.env`, …), and docs (`*.md`) for paths, then checks each exists. Prints `MISSING <path>` with the referencing file, line number, and line. `--units` / `--configs` / `--docs` / `--quiet`. |
 | `port-audit.sh` | Audits yote fixed-port sprawl: snapshots live TCP listeners via `ss`, cross-references `config/ports.env` (SSOT), `pitchfork.toml` ready_http claims, and the Tailscale Serve backend map; flags duplicate holders, rogue listeners, dead claims, dangling backends (502s), duplicate SSOT names, and EADDRINUSE bind failures. Exit 1 on any finding. `--json` for machine output. |
-| `monkeypatch-detect.sh` | Hunts non-durable fixes across the estate: /tmp scripts doing production jobs, shell exports that belong in real config, hand-started daemons with no unit, patched files outside any repo, symlinks into /tmp. Read-only. Exit 1 on findings. |
+| `monkeypatch-detect.sh` | Hunts non-durable fixes across the Pens: /tmp scripts doing production jobs, shell exports that belong in real config, hand-started daemons with no unit, patched files outside any repo, symlinks into /tmp. Read-only. Exit 1 on findings. |
 | `fleet-health.sh` | One-shot fleet channel health audit: stuck/silent/dead agents, erroring loops, watchdog template-spam. Read-only. Exit 1 on findings. `[--hours 24]`. |
 | `bg-launch` / `bg-register` / `bg-heartbeat` / `bg-audit` / `bg-kill` | The [bg-tracker](../bg-tracker/README.md) suite — launch, register, heartbeat, audit (read-only), kill by registry id with PID-reuse guard. |
 
@@ -53,12 +53,12 @@ projects/ops/bin/fleet-health.sh --hours 24
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - The audit scripts are strictly read-only — they never modify, kill, or restart anything.
 
 ## Related docs
 
-- Estate map, crews, repo index, standing rules: [`docs/fleet-knowledgebase.md`](../../../docs/fleet-knowledgebase.md)
+- Pens map, crews, repo index, standing rules: [`docs/fleet-knowledgebase.md`](../../../docs/fleet-knowledgebase.md)
 - Hardware audit schema (consumed by `hw-audit.service`): [`docs/HARDWARE_AUDIT_20260914.md`](../../../docs/HARDWARE_AUDIT_20260914.md)
 - hw-audit masters: [`../../yote/ops/hw-audit/`](../../yote/ops/hw-audit/)
 - Master README: [`../../../README.md`](../../../README.md)

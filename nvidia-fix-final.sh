@@ -38,9 +38,9 @@ else
 fi
 
 hdr "3. Restart vansrouter"
-cd /home/toxic/estate
-pitchfork clean --daemon estate/vansrouter 2>&1 | tail -1 || true
-pitchfork restart estate/vansrouter 2>&1 | tail -5 || true
+cd /home/toxic/pens/Pens
+pitchfork clean --daemon Pens/vansrouter 2>&1 | tail -1 || true
+pitchfork restart Pens/vansrouter 2>&1 | tail -5 || true
 sleep 4
 
 ss -tlnH "( sport = :20128 )" | grep -q LISTEN && ok "bound" || { bad "not bound"; exit 1; }
@@ -64,7 +64,7 @@ else
   echo "  resp: $resp" | head -c 400
   echo
   echo "  log:"
-  pitchfork logs estate/vansrouter --raw -n 30 --no-pager 2>&1 | \
+  pitchfork logs Pens/vansrouter --raw -n 30 --no-pager 2>&1 | \
     grep -E 'nvidia|AUTH|PENDING|ERROR|GATEWAY' | tail -20 | sed 's/^/    /'
 fi
 

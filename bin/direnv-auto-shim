@@ -2,7 +2,7 @@
 # direnv-auto-shim — universally setup direnv across estate & ranch repos
 set -euo pipefail
 
-ESTATE_DIR="/home/toxic/estate"
+ESTATE_DIR="/home/toxic/pens/estate"
 RANCH_DIR="${ESTATE_DIR}/ranch"
 
 echo "⚡ [direnv-shim] Applying universal direnv shims..."

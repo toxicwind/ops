@@ -12,7 +12,7 @@
 #   gitleaks-change --report f     # write JSON to f
 set -uo pipefail
 
-CFG="/home/toxic/estate/ops/git-hooks/gitleaks.toml"
+CFG="/home/toxic/pens/estate/ops/git-hooks/gitleaks.toml"
 REPORT=""
 SRC="."
 MODE="diff"

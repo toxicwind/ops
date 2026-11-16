@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# view-run — View run details and files in /home/toxic/estate/runs/
+# view-run — View run details and files in /home/toxic/pens/estate/runs/
 set -euo pipefail
 
-ESTATE_RUNS="/home/toxic/estate/runs"
+ESTATE_RUNS="/home/toxic/pens/estate/runs"
 
 if [ -n "${1:-}" ]; then
   RUN_DIR="$ESTATE_RUNS/$1"

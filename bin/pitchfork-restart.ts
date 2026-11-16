@@ -6,7 +6,7 @@
  *
  * Pure decision logic (status parsing, lock classification, sweep labels,
  * reap planning) lives in pitchfork-restart-lib.ts and is unit-tested there.
- * This wrapper owns all I/O: spawning the estate pitchfork shim, reading
+ * This wrapper owns all I/O: spawning the Pens pitchfork shim, reading
  * /proc/<pid>/fd, fuser holder discovery, and TERM/KILL signaling.
  */
 import { readdirSync, readlinkSync, existsSync, rmSync } from "node:fs";
@@ -23,9 +23,9 @@ import {
   initialSweepLabel,
 } from "./pitchfork-restart-lib.ts";
 
-/** Default estate dispatch shim; PITCHFORK_BIN overrides it (matches bash). */
+/** Default Pens dispatch shim; PITCHFORK_BIN overrides it (matches bash). */
 function pfBin(env: Record<string, string | undefined>): string {
-  return env.PITCHFORK_BIN?.trim() || "/home/toxic/pens/estate/bin/pitchfork";
+  return env.PITCHFORK_BIN?.trim() || "/home/toxic/pens/Pens/bin/pitchfork";
 }
 
 function log(msg: string): void {

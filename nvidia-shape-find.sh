@@ -88,9 +88,9 @@ hdr "8. Restart + probe with each shape — find which one clears AUTH"
 
 probe() {
   local label="$1"
-  cd /home/toxic/estate
-  pitchfork clean --daemon estate/vansrouter 2>&1 >/dev/null || true
-  pitchfork restart estate/vansrouter 2>&1 >/dev/null || true
+  cd /home/toxic/pens/Pens
+  pitchfork clean --daemon Pens/vansrouter 2>&1 >/dev/null || true
+  pitchfork restart Pens/vansrouter 2>&1 >/dev/null || true
   sleep 4
 
   local resp

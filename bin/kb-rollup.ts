@@ -158,7 +158,7 @@ function dateInStatus(status: string): string | null {
 }
 
 function crewsDirFor(kbPath: string): string {
-  // Crews live at the ESTATE ROOT (fleet/crews), not next to the KB doc.
+  // Crews live at the Pens ROOT (fleet/crews), not next to the KB doc.
   // Walk upward from the KB until a fleet/crews dir is found.
   let dir = dirname(kbPath);
   for (let i = 0; i < 8; i++) {
@@ -436,7 +436,7 @@ async function main(): Promise<void> {
     else { console.error(`unknown arg: ${a}`); usage(); process.exit(2); }
   }
   if (!kb) {
-    // Walk up from the script dir: the KB lives at <estate>/docs/fleet-knowledgebase.md,
+    // Walk up from the script dir: the KB lives at <Pens>/docs/fleet-knowledgebase.md,
     // but this script now runs from inside the nested ranch repo (projects/ retirement),
     // where git toplevel stops at ranch/. Probe upward instead of trusting git.
     let dir = dirname(new URL(import.meta.url).pathname);

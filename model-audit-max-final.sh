@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -uo pipefail
-OUT=/home/toxic/pens/estate/products/estate-ops/model-audit-max.out
+OUT=/home/toxic/pens/Pens/products/Pens-ops/model-audit-max.out
 mkdir -p "$OUT"
 CATALOG="$OUT/catalog.jsonl"; PROBES="$OUT/probes.jsonl"; WORKING="$OUT/working.jsonl"
 : > "$CATALOG"; : > "$PROBES"

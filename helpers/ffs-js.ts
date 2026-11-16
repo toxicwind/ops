@@ -2,14 +2,14 @@
  * ffs-js.ts — JavaScript shim for the ffs (Unified code search/read tool) binary.
  *
  * Exposes ffs commands as async functions that shell out to the compiled
- * ffs binary at /home/toxic/pens/estate/products/estate-ops/ffs.
+ * ffs binary at /home/toxic/pens/Pens/products/Pens-ops/ffs.
  *
  * Usage:
  *   import { grep, glob, find, read, symbol, callers, callees, refs } from "./ffs-js"
  *   const results = await grep("pattern", { root: "/home/toxic/pens" })
  */
 
-const FFS_BIN = "/home/toxic/pens/estate/products/estate-ops/ffs"
+const FFS_BIN = "/home/toxic/pens/Pens/products/Pens-ops/ffs"
 
 interface FfsOptions {
   root?: string

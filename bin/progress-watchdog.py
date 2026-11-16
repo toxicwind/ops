@@ -68,7 +68,7 @@ TRIAGE_WINDOW_S = 900     # an intake_request must get its own
 
 out = {"ts": time.time(), "errors": []}
 channel = Path(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] != "--selftest" \
-    else Path("/home/toxic/pens/estate/hatch/agents/ember/squawk-root/bid-market")
+    else Path("/home/toxic/pens/Pens/hatch/agents/ember/squawk-root/bid-market")
 
 
 def sh(cmd, timeout=15):
@@ -247,7 +247,7 @@ def snapshot(chan_dir, ledger_events):
     # TRIAGE_WINDOW_S of the file's mtime (validated 2026-09-20: 6/6
     # intakes triaged in ~1s with matching `from`). Each decision is
     # consumed by at most one file (earliest mtime first).
-    ostat = pfget("estate/oracle-market")
+    ostat = pfget("Pens/oracle-market")
     oracle_proc = {"running": False, "pid": None, "uptime_s": None}
     for line in sh(["pgrep", "-f",
                     "[o]racle/bin/oracle_loop.py"]).splitlines():
@@ -352,7 +352,7 @@ def snapshot(chan_dir, ledger_events):
     # watchdog restarts only when neither is alive.
     bidders = []
     for name, status in sorted(pf.items()):
-        if not name.startswith("estate/bidder-"):
+        if not name.startswith("Pens/bidder-"):
             continue
         short = name.split("/", 1)[1]
         bid = short.split("-", 1)[1] if "-" in short else short
@@ -367,11 +367,11 @@ def snapshot(chan_dir, ledger_events):
     # --- core daemons ---
     daemons = {}
     for name, port in DAEMONS.items():
-        daemons[name] = {"pitchfork": pfget(f"estate/{name}"),
+        daemons[name] = {"pitchfork": pfget(f"Pens/{name}"),
                          "health": health(port)}
     # bridge daemon expected stopped-clean; holder alive is what matters
     daemons["awrawr-ws-exec"] = {
-        "pitchfork": pfget("estate/awrawr-ws-exec")}
+        "pitchfork": pfget("Pens/awrawr-ws-exec")}
     snap["daemons"] = daemons
 
     # --- bridge holder ---

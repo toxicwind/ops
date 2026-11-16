@@ -2,7 +2,7 @@
 /**
  * pitchfork-drift.ts — anomaly #6 (pitchfork two-truth) drift checker.
  *
- * The estate's live truth is the pitchfork.toml MONOLITH (196 daemons). The
+ * The Pens's live truth is the pitchfork.toml MONOLITH (196 daemons). The
  * pitchfork.d/ fragments (103 files) are dead litter the monolith SHADOWS
  * (pitchfork does not merge them). This detector statically compares the two
  * and reports PER FRAGMENT:
@@ -18,8 +18,8 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const MONO = "/home/toxic/pens/estate/pitchfork.toml";
-const FRAG_DIR = "/home/toxic/pens/estate/pitchfork.d";
+const MONO = "/home/toxic/pens/Pens/pitchfork.toml";
+const FRAG_DIR = "/home/toxic/pens/Pens/pitchfork.d";
 
 /** Collect daemon names under `[daemons.<name>]` / `[daemons.<name>...]`. */
 function daemonsIn(text: string): Set<string> {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * delend.test.ts — coverage drives for the estate delend helper CLIs.
+ * delend.test.ts — coverage drives for the Pens delend helper CLIs.
  *
  * Runs: `bun test bin/delend.test.ts` then `bun test --coverage bin/delend.test.ts`
  *
@@ -23,7 +23,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const BIN = "/home/toxic/pens/estate/bin";
+const BIN = "/home/toxic/pens/Pens/bin";
 const PLUGINS = "/home/toxic/pens/olympus/products/ergasterion/hephaistos/plugins";
 
 // ---- helper: run a CLI as a child process, return {rc, stdout, stderr} ----

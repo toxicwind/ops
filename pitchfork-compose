@@ -25,7 +25,7 @@
  * replace the live file on exit 0 (atomic rename keeps pitchfork's hot-reload safe).
  */
 
-const ROOT_DEFAULT = "/home/toxic/estate";
+const ROOT_DEFAULT = "/home/toxic/pens/estate";
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(name);
@@ -92,7 +92,7 @@ function daemonDiff(oldP: any, newP: any): { changed: string[]; added: string[];
  *
  * The estate keeps deprecated copies of a manifest next to its replacement
  * (ranch/range/pitchfork.d/range-ui.toml says "DEPRECATED: moved to
- * /home/toxic/estate/pitchfork.d/range-ui.toml — kept as an archive; do not
+ * /home/toxic/pens/estate/pitchfork.d/range-ui.toml — kept as an archive; do not
  * edit"). Those archives are not claims. Reading them as claims made a moved
  * daemon look like an OWNERSHIP CONFLICT and the compose failed closed, so
  * the live config could not be regenerated at all. An archive is marked either

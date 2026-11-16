@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// name-fix.ts — Estate name fixer: check availability, generate pairs, rename.
+// name-fix.ts — Pens name fixer: check availability, generate pairs, rename.
 //
 // Chains name-check into rename-roundup so a rebrand is one command:
 //
@@ -19,7 +19,7 @@
 import { $ } from "bun";
 import { checkName } from "./name-check.ts";
 
-const ESTATE = "/home/toxic/pens/estate";
+const Pens = "/home/toxic/pens/Pens";
 const RENAME_TS = "/home/toxic/pens/ranch/products/rename-roundup/rename.ts";
 
 interface CaseVariants {
@@ -70,7 +70,7 @@ function generatePairs(oldName: string, newName: string): string {
 		"",
 		"# Daemon id forms",
 		`substr: daemons.${o.lower} => daemons.${n.lower}`,
-		`substr: estate/${o.lower} => estate/${n.lower}`,
+		`substr: Pens/${o.lower} => Pens/${n.lower}`,
 	];
 	return lines.join("\n") + "\n";
 }
@@ -80,7 +80,7 @@ async function main(): Promise<void> {
 	const oldName = args[0];
 	const newName = args[1];
 	const repoIdx = args.indexOf("--repo");
-	const repo = repoIdx >= 0 ? args[repoIdx + 1] : `${ESTATE}`;
+	const repo = repoIdx >= 0 ? args[repoIdx + 1] : `${Pens}`;
 	const execute = args.includes("--execute");
 	const dryRunOnly = args.includes("--dry-run-only");
 	const force = args.includes("--force");
@@ -112,7 +112,7 @@ async function main(): Promise<void> {
 	console.log(`✅ free (conflicts limited to the target repo: ${check.conflicts.length})`);
 
 	// 2. Generate pairs file.
-	const pairsPath = `${ESTATE}/docs/name-fix-${oldName}-to-${newName}.pairs`;
+	const pairsPath = `${Pens}/docs/name-fix-${oldName}-to-${newName}.pairs`;
 	await Bun.write(pairsPath, generatePairs(oldName, newName));
 	console.log(`── 2/3 pairs generated: ${pairsPath}`);
 

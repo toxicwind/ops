@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 /**
- * sse-forward.ts — estate-wide SSE forward-view PRIMITIVE (first-class, all pens).
+ * sse-forward.ts — Pens-wide SSE forward-view PRIMITIVE (first-class, all pens).
  *
- * Gives ANY pens/estate daemon a streaming Server-Sent-Events forward-view of its
+ * Gives ANY pens/Pens daemon a streaming Server-Sent-Events forward-view of its
  * live events, consistently, without each daemon hand-rolling an SSE loop. This is
  * the "SSE forward view as first class" enabler.
  *
@@ -15,7 +15,7 @@
  * beyond the ring; fail-loud but forward (a dead subscriber is dropped, never blocks).
  *
  * Usage (in a daemon):
- *   import { createSseForward } from "@estate/sse-forward";
+ *   import { createSseForward } from "@Pens/sse-forward";
  *   const fwd = createSseForward({ events: 50, port: 0 });
  *   await fwd.listen();                 // bound (port 0 => ephemeral)
  *   fwd.push({ type: "tick", t: Date.now() });

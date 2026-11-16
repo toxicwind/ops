@@ -41,7 +41,7 @@ find /home/toxic -maxdepth 12 -name 'Cargo.toml' \
   -exec sh -c 'n=$(grep -m1 "^name" "$1" | cut -d\" -f2); case "$n" in pi-*|tau-*|omp-*) echo "$1 :: $n";; esac' _ {} \; | head -40
 
 hdr "8. What bin/tau, bin/omp currently point at"
-for f in /home/toxic/pens/estate/bin/tau /home/toxic/pens/estate/bin/omp; do
+for f in /home/toxic/pens/Pens/bin/tau /home/toxic/pens/Pens/bin/omp; do
   if [ -L "$f" ]; then
     tgt="$(readlink -f "$f" 2>/dev/null || echo BROKEN)"
     [ -e "$tgt" ] && echo -e "  ${G}✓${N} $f -> $tgt" || echo -e "  ${Y}✗${N} $f -> $tgt (BROKEN)"
@@ -57,7 +57,7 @@ for pid in $(pgrep -f 'omp|chute|tau' 2>/dev/null); do
 done | head -20
 
 hdr "10. Pitchfork's tracked tau registration"
-cd /home/toxic/estate 2>/dev/null && \
+cd /home/toxic/pens/Pens 2>/dev/null && \
   pitchfork list --json 2>/dev/null | jq -r '.[] | select(.id|test("tau")) | "  \(.id) status=\(.status) pid=\(.pid) port=\(.port // "none")"' || \
   echo "  (pitchfork not responding)"
 

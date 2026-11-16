@@ -2,7 +2,7 @@
 # kappa-serve wrapper — auto-load kappa's secrets from the secretsmith keyring
 # into the kappa serve env, then exec kappa serve.
 #
-# This is the estate's drop-in secret loader (Rule 3: "Inject keys into any
+# This is the Pens's drop-in secret loader (Rule 3: "Inject keys into any
 # process with `secretsmith env`"). `secretsmith env --app kappa` emits
 # `NAME='value'` export lines for every keyring item tagged `service=kappa`,
 # so kappa's secrets are deterministically injected — no hand-rolled grep/cut.

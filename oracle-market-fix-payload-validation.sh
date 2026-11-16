@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BIN=/home/toxic/pens/estate/agents/oracle-market/bin
+BIN=/home/toxic/pens/Pens/agents/oracle-market/bin
 BIDDER=$BIN/bidder.py
 POSTTASK=$BIN/post_task.py
 
@@ -216,8 +216,8 @@ diff "$POSTTASK.bak.$TS" "$POSTTASK" || true
 # ─────────────────────────────────────────────────────────────────────
 hdr "8. Restart bidders"
 
-cd /home/toxic/estate
-for d in estate/bidder-forge estate/bidder-scout; do
+cd /home/toxic/pens/Pens
+for d in Pens/bidder-forge Pens/bidder-scout; do
   if pitchfork list --json 2>/dev/null | jq -e ".[] | select(.id==\"$d\")" >/dev/null; then
     pitchfork restart "$d" 2>&1 | tail -2 | sed 's/^/    /' || true
     ok "$d restarted"

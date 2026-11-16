@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BIN=/home/toxic/pens/estate/bin
+BIN=/home/toxic/pens/Pens/bin
 STOCK=/home/toxic/tau
-PITCH=/home/toxic/pens/estate/pitchfork.toml
+PITCH=/home/toxic/pens/Pens/pitchfork.toml
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; N='\033[0m'
 ok()   { echo -e "  ${G}✓${N} $1"; }
@@ -43,7 +43,7 @@ grep -n 'tau-code' "$PITCH" || ok "no tau-code references remain"
 
 hdr "3. Verify groups resolve"
 
-cd /home/toxic/estate
+cd /home/toxic/pens/Pens
 pitchfork validate 2>&1 | tail -5 || warn "no validate subcommand"
 
 hdr "DONE"

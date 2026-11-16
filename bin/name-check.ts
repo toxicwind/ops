@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// name-check.ts — Estate name availability checker (comprehensive)
+// name-check.ts — Pens name availability checker (comprehensive)
 // Usable as CLI:  bun run name-check.ts <candidate>
 // Usable as lib:  import { checkName } from "./name-check.ts";
 // Excludes nothing — every real conflict is reported (deps included).
@@ -17,7 +17,7 @@ export interface NameCheckResult {
 	free: boolean;
 }
 
-const ESTATE = "/home/toxic/pens/estate";
+const Pens = "/home/toxic/pens/Pens";
 
 async function grepLines(file: string, pattern: string): Promise<string[]> {
 	try {
@@ -47,31 +47,31 @@ export async function checkName(candidate: string): Promise<NameCheckResult> {
 	};
 
 	// 1. Pitchfork daemons (pitchfork.toml + pitchfork.d/*.toml)
-	const pfToplevel = await grepLines(`${ESTATE}/pitchfork.toml`, `daemons\\.[^]]*${lower}`);
-	const pfDotd = await $`grep -ri ${candidate} ${ESTATE}/pitchfork.d/`.quiet().nothrow();
+	const pfToplevel = await grepLines(`${Pens}/pitchfork.toml`, `daemons\\.[^]]*${lower}`);
+	const pfDotd = await $`grep -ri ${candidate} ${Pens}/pitchfork.d/`.quiet().nothrow();
 	if (pfToplevel.length) collect("Pitchfork daemons (pitchfork.toml)", pfToplevel);
 	if (pfDotd.exitCode === 0 && pfDotd.stdout.toString().trim())
 		collect("Pitchfork daemons (pitchfork.d/)", pfDotd.stdout.toString().trim().split("\n"));
 
 	// 2. Ranch folders (recursive, but as dir basenames — vendor content counts)
-	const ranchProc = await $`find ${ESTATE}/ranch -type d -iname "*${candidate}*"`.quiet().nothrow();
+	const ranchProc = await $`find ${Pens}/ranch -type d -iname "*${candidate}*"`.quiet().nothrow();
 	if (ranchProc.exitCode === 0 && ranchProc.stdout.toString().trim())
 		collect("Ranch dirs", ranchProc.stdout.toString().trim().split("\n").slice(0, 50));
 
 	// 3. Port vars (config/ports.env)
-	const ports = await grepLines(`${ESTATE}/config/ports.env`, `${lower.toUpperCase()}_`);
+	const ports = await grepLines(`${Pens}/config/ports.env`, `${lower.toUpperCase()}_`);
 	if (ports.length) collect("Port vars (ports.env)", ports);
 
 	// 4. Mise tasks
-	const mise = await grepLines(`${ESTATE}/mise.toml`, `\\[tasks\\.[^]]*${lower}[^]]*\\]`);
+	const mise = await grepLines(`${Pens}/mise.toml`, `\\[tasks\\.[^]]*${lower}[^]]*\\]`);
 	if (mise.length) collect("Mise tasks", mise);
 
 	// 5. Service scripts
-	const services = (await listDir(`${ESTATE}/stack/services`)).filter((f) => f.toLowerCase().includes(lower));
+	const services = (await listDir(`${Pens}/stack/services`)).filter((f) => f.toLowerCase().includes(lower));
 	if (services.length) collect("Service scripts", services);
 
-	// 6. Estate config dirs/files
-	const configs = (await listDir(`${ESTATE}/config`)).filter((f) => f.toLowerCase().includes(lower));
+	// 6. Pens config dirs/files
+	const configs = (await listDir(`${Pens}/config`)).filter((f) => f.toLowerCase().includes(lower));
 	if (configs.length) collect("Config entries", configs);
 
 	// 7. Binaries

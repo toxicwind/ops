@@ -107,16 +107,16 @@ describe("normalizeStatusToList", () => {
     expect(normalizeStatusToList(["status"])).toEqual(["list"]);
   });
   test("leaves `status <name>` untouched", () => {
-    expect(normalizeStatusToList(["status", "estate/herd"])).toEqual([
+    expect(normalizeStatusToList(["status", "Pens/herd"])).toEqual([
       "status",
-      "estate/herd",
+      "Pens/herd",
     ]);
   });
   test("leaves unrelated commands untouched", () => {
     expect(normalizeStatusToList(["list"])).toEqual(["list"]);
-    expect(normalizeStatusToList(["start", "estate/herd"])).toEqual([
+    expect(normalizeStatusToList(["start", "Pens/herd"])).toEqual([
       "start",
-      "estate/herd",
+      "Pens/herd",
     ]);
     expect(normalizeStatusToList([])).toEqual([]);
   });
@@ -125,24 +125,24 @@ describe("normalizeStatusToList", () => {
 describe("sovereign helpers", () => {
   test("sovereignShort strips the prefix", () => {
     expect(sovereignShort("sovereign/foo")).toBe("foo");
-    expect(sovereignShort("estate/foo")).toBeNull();
+    expect(sovereignShort("Pens/foo")).toBeNull();
     expect(sovereignShort("foo")).toBeNull();
   });
-  test("sovereignToEstate maps to the estate form", () => {
-    expect(sovereignToEstate("sovereign/foo")).toBe("estate/foo");
-    expect(sovereignToEstate("estate/foo")).toBe("estate/foo");
+  test("sovereignToEstate maps to the Pens form", () => {
+    expect(sovereignToEstate("sovereign/foo")).toBe("Pens/foo");
+    expect(sovereignToEstate("Pens/foo")).toBe("Pens/foo");
   });
 });
 
 describe("extractListIds", () => {
   test("parses the first column of pitchfork list", () => {
-    const out = `estate/agent-display            running
-estate/agent-viewer             stopped
+    const out = `Pens/agent-display            running
+Pens/agent-viewer             stopped
 sovereign/legacy                running
 `;
     const ids = extractListIds(out);
-    expect(ids.has("estate/agent-display")).toBe(true);
-    expect(ids.has("estate/agent-viewer")).toBe(true);
+    expect(ids.has("Pens/agent-display")).toBe(true);
+    expect(ids.has("Pens/agent-viewer")).toBe(true);
     expect(ids.has("sovereign/legacy")).toBe(true);
     expect(ids.size).toBe(3);
   });
@@ -155,16 +155,16 @@ describe("sovereignRefusalLines", () => {
   test("reproduces the exact bash stderr wording", () => {
     expect(sovereignRefusalLines("sovereign/herd", "herd")).toEqual([
       'pitchfork: REFUSED: "sovereign/herd" is not a registered daemon id.',
-      'pitchfork: the live daemon is "estate/herd" — sovereign/ is a deprecated prefix.',
-      'pitchfork: re-run with the estate/ name, or "pitchfork list" to see registered ids.',
+      'pitchfork: the live daemon is "Pens/herd" — sovereign/ is a deprecated prefix.',
+      'pitchfork: re-run with the Pens/ name, or "pitchfork list" to see registered ids.',
     ]);
   });
 });
 
 describe("decideLifecycleArgs", () => {
-  const ids = new Set(["estate/herd", "estate/kitty-mcp", "sovereign/legacy"]);
+  const ids = new Set(["Pens/herd", "Pens/kitty-mcp", "sovereign/legacy"]);
 
-  test("refuses sovereign/x when only estate/x is registered", () => {
+  test("refuses sovereign/x when only Pens/x is registered", () => {
     const d = decideLifecycleArgs(["restart", "sovereign/herd"], ids);
     expect(d.kind).toBe("refused");
     if (d.kind === "refused") {
@@ -179,9 +179,9 @@ describe("decideLifecycleArgs", () => {
     const d = decideLifecycleArgs(["restart", "sovereign/ghost"], ids);
     expect(d.kind).toBe("pass");
   });
-  test("passes through estate/ args", () => {
+  test("passes through Pens/ args", () => {
     const d = decideLifecycleArgs(
-      ["restart", "estate/herd", "estate/kitty-mcp"],
+      ["restart", "Pens/herd", "Pens/kitty-mcp"],
       ids,
     );
     expect(d.kind).toBe("pass");
@@ -271,13 +271,13 @@ describe("decideShim", () => {
   test("status <name> is passed through untouched", () => {
     const { dir, bin } = probeHome();
     const d = decideShim(
-      ["status", "estate/herd"],
+      ["status", "Pens/herd"],
       {},
       { home: dir, listIds: new Set() },
     );
     expect(d.kind).toBe("exec");
     if (d.kind === "exec") {
-      expect(d.argv).toEqual(["status", "estate/herd"]);
+      expect(d.argv).toEqual(["status", "Pens/herd"]);
     }
     rmSync(dir, { recursive: true, force: true });
   });
@@ -287,7 +287,7 @@ describe("decideShim", () => {
     const d = decideShim(
       ["restart", "sovereign/herd"],
       {},
-      { home: dir, listIds: new Set(["estate/herd"]) },
+      { home: dir, listIds: new Set(["Pens/herd"]) },
     );
     expect(d.kind).toBe("refused");
     if (d.kind === "refused") {
@@ -300,14 +300,14 @@ describe("decideShim", () => {
   test("normal lifecycle command -> exec passthrough", () => {
     const { dir, bin } = probeHome();
     const d = decideShim(
-      ["start", "estate/herd"],
+      ["start", "Pens/herd"],
       {},
-      { home: dir, listIds: new Set(["estate/herd"]) },
+      { home: dir, listIds: new Set(["Pens/herd"]) },
     );
     expect(d.kind).toBe("exec");
     if (d.kind === "exec") {
       expect(d.bin).toBe(bin);
-      expect(d.argv).toEqual(["start", "estate/herd"]);
+      expect(d.argv).toEqual(["start", "Pens/herd"]);
     }
     rmSync(dir, { recursive: true, force: true });
   });

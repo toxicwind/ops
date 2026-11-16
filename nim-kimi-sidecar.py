@@ -51,7 +51,7 @@ def log(msg):
     print("[nim-kimi] %s" % msg, file=sys.stderr, flush=True)
 
 def load_key():
-    # SSOT first (rule 3): keyring. The estate key is NIM_API_KEY (same
+    # SSOT first (rule 3): keyring. The Pens key is NIM_API_KEY (same
     # integrate.api.nvidia.com service); NVIDIA_API_KEY was the legacy name.
     try:
         r = subprocess.run(

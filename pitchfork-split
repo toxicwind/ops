@@ -18,7 +18,7 @@
  * same projectKey() the hyper-race validated. Re-run safe: overwrites outputs.
  */
 
-const SOV = "/home/toxic/estate";
+const SOV = "/home/toxic/pens/estate";
 const STALE = new Set(["bidder-forge", "bidder-scout"]);
 
 function arg(name: string): string | undefined {

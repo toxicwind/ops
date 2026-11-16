@@ -30,7 +30,7 @@ describe("constants", () => {
 
 describe("parseStatusPid", () => {
   test("extracts the pid from the real status format", () => {
-    const out = `Name: estate/herd
+    const out = `Name: Pens/herd
 PID: 519143
 Status: running
 Port: 25100 (active)

@@ -1,11 +1,11 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
-# ops — estate operations tooling
+# ops — Pens operations tooling
 
 **Every fix lives in a real file.** The durable, committed home for operations scripts that used to live as `/tmp` scratch, one-off bridge commands, or hand-applied patches. No monkeypatching — if it's doing a production job, it lives here, committed, and it survives a bridge restart and a full yote reboot.
 
@@ -47,11 +47,11 @@ projects/ops/bin/fleet-health.sh         # one-shot fleet health audit (read-onl
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - Auditors here are strictly read-only — they never modify, kill, or restart anything. The kill policy: positive orphan confirmation + a fleet evidence note at kill time; when in doubt, leave it running and flag it.
 
 ## Standing rules (the Architect, 2026-09-20)
 
 **No monkeypatching. Permanence rule.** Every fix lives in real files — code, configs, systemd units — committed in the correct repo, and must survive a full bridge restart and a full yote reboot. The script is the deliverable; running it once is just proof.
 
-See the repo master README for the estate map, and [`docs/fleet-knowledgebase.md`](../../docs/fleet-knowledgebase.md) §2 for the crew registry.
+See the repo master README for the Pens map, and [`docs/fleet-knowledgebase.md`](../../docs/fleet-knowledgebase.md) §2 for the crew registry.

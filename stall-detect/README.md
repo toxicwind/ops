@@ -1,7 +1,7 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
@@ -37,14 +37,14 @@ Run on demand, never as a polling daemon (event-driven fleet reporting only).
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - Diagnosis is hands-off unless the resume path says so. **Never kill anything from forensics alone** — the reaper never escalates, never closes, never diagnoses unknown text.
 
 ## Error-claim runbook (Q8/Q9/Q10) — executable, not prose
 
 An error string is a CLAIM, not a fact. The unreliable-narrator doctrine (AGENTS.md §5) is the law here: what actually happened outranks what the error says happened. A diagnosis that trusts the string can kill healthy work — the 2026-09-20 scars: pip "No space left on device" at 2% disk used, the HF whoami probe 401ing on valid tokens, a 21,050s "stalled" ledger that was a healthy quiet market, a ~3-minute bridge 401 that self-recovered.
 
-The shared catalog (`hatch/bin/error_claims.py`, `ERROR_CLAIM_CATALOG`) holds the estate's known claims. `agent-reaper --classify-errors` applies them; `progress-watchdog`'s `cond()` annotates every alert with the catalog probe. Severity decides the workflow:
+The shared catalog (`hatch/bin/error_claims.py`, `ERROR_CLAIM_CATALOG`) holds the Pens's known claims. `agent-reaper --classify-errors` applies them; `progress-watchdog`'s `cond()` annotates every alert with the catalog probe. Severity decides the workflow:
 
 **mislead — verify BEFORE acting** (the string routinely lies):
 - `disk-full`: run `df -h / && df -i / && df -h /tmp`. Trust df, not the string. Retry on headroom; a full /tmp is not a full /.
@@ -97,7 +97,7 @@ The shared catalog (`hatch/bin/error_claims.py`, `ERROR_CLAIM_CATALOG`) holds th
 - **stall-slayer (this lane):** DB forensics + safe resume paths.
 - **stale-hunter:** live process behavior. Received handoff: yote ralph-dashboard uvicorn PID 1781869 spinning one thread at ~67% CPU inside `os.walk` → `app/projects/discovery.py:32` `discover_project_paths`, zero client traffic on :8420 — suspect overly broad `PROJECT_DIRS` root causing repeated full-tree rescans. Root-caused via py-spy 2026-09-20; live diagnosis + fix is theirs.
 
-Related: `docs/fleet-knowledgebase.md` §2 (Active crews) · `projects/ops/bin/runner-audit.sh` (runner lane, OS-level) · `hatch/bin/error_claims.py` (shared error-claim catalog) · `hatch/bin/agent-reaper --classify-errors` (harvest→classify) · master README `/home/toxic/pens/estate/README.md`.
+Related: `docs/fleet-knowledgebase.md` §2 (Active crews) · `projects/ops/bin/runner-audit.sh` (runner lane, OS-level) · `hatch/bin/error_claims.py` (shared error-claim catalog) · `hatch/bin/agent-reaper --classify-errors` (harvest→classify) · master README `/home/toxic/pens/Pens/README.md`.
 
 ## Contribute
 

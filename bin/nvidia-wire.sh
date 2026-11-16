@@ -107,9 +107,9 @@ done
 echo
 echo "── 5. Restart vansrouter ──"
 
-cd /home/toxic/estate
-pitchfork clean --daemon estate/vansrouter 2>&1 | tail -1 || true
-pitchfork restart estate/vansrouter 2>&1 | tail -5 || true
+cd /home/toxic/pens/Pens
+pitchfork clean --daemon Pens/vansrouter 2>&1 | tail -1 || true
+pitchfork restart Pens/vansrouter 2>&1 | tail -5 || true
 sleep 3
 
 ss -tlnH "( sport = :25237 )" 2>/dev/null | grep -q LISTEN && ok "vansrouter :25237 bound" || bad "vansrouter not bound"
@@ -133,13 +133,13 @@ else
   echo "    $resp" | head -c 300
   echo
   echo "  recent vansrouter log:"
-  pitchfork logs estate/vansrouter --raw -n 30 --no-pager 2>&1 | tail -15 | sed 's/^/    /'
+  pitchfork logs Pens/vansrouter --raw -n 30 --no-pager 2>&1 | tail -15 | sed 's/^/    /'
 fi
 
 # ─────────────────────────────────────────────────────────────────────
 echo
 echo "── 7. Latest vansrouter log (diagnostic) ──"
-pitchfork logs estate/vansrouter --raw -n 20 --no-pager 2>&1 | tail -15 | sed 's/^/  /'
+pitchfork logs Pens/vansrouter --raw -n 20 --no-pager 2>&1 | tail -15 | sed 's/^/  /'
 
 echo
 echo "DONE"

@@ -2,9 +2,9 @@
 """Thin shim: pitchfork and mise point here. All logic is in keypool/.
 
 Edge-case fallback chain (forward, never a rollback):
-  1. Primary: import keypool.__main__ from the estate root derived from
+  1. Primary: import keypool.__main__ from the Pens root derived from
      this file's own location.
-  2. Fallback: retry via /home/toxic/estate and CWD — covers symlinked, copied,
+  2. Fallback: retry via /home/toxic/pens/Pens and CWD — covers symlinked, copied,
      or relocated shim layouts without touching a stale version.
   3. Last resort: a clear, actionable error on stderr + exit 3.
      Never silently runs an old copy, never swallows the root cause.
@@ -17,7 +17,7 @@ ROOT = os.path.dirname(HERE)
 
 _SEARCH = [
     ROOT,
-    os.path.expanduser("/home/toxic/pens/estate"),
+    os.path.expanduser("/home/toxic/pens/Pens"),
     os.getcwd(),
 ]
 
@@ -36,7 +36,7 @@ if main is None:
     sys.stderr.write(
         "herd-keypool: FATAL: cannot import keypool.__main__.main\n"
         + "".join(f"  [{b}] {e}\n" for b, e in _errors)
-        + "Hint: verify /home/toxic/pens/estate/keypool/__main__.py exists and is readable,\n"
+        + "Hint: verify /home/toxic/pens/Pens/keypool/__main__.py exists and is readable,\n"
         + "      Manual intervention required: the warden is alert-only, restores are disabled.\n"
     )
     raise SystemExit(3)

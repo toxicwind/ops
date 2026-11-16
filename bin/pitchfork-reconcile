@@ -39,7 +39,7 @@ from datetime import datetime, timezone
 
 import tomllib
 
-REPO = "/home/toxic/estate"
+REPO = "/home/toxic/pens/estate"
 TOML = os.path.join(REPO, "pitchfork.toml")
 STATE_TOML = "/home/toxic/.local/state/pitchfork/state.toml"
 WRAPPER = os.path.join(REPO, "bin", "pitchfork-restart")

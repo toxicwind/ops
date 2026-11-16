@@ -1,72 +1,72 @@
-# estate/bin → pens Classification Map (Phase 2a — Final)
+# Pens/bin → pens Classification Map (Phase 2a — Final)
 
-**Source**: /home/toxic/pens/estate/products/estate-ops/ (162 entries, 0 remaining after move)
-**Target**: /home/toxic/pens/estate/products/estate-ops/ (161 files + 4 subdirs moved)
+**Source**: /home/toxic/pens/Pens/products/Pens-ops/ (162 entries, 0 remaining after move)
+**Target**: /home/toxic/pens/Pens/products/Pens-ops/ (161 files + 4 subdirs moved)
 **Branch**: reorg/phase-0-1
 
 ## Summary
 
 | Category | Count |
 |---|---|
-| Files moved to estate-ops | 157 |
+| Files moved to Pens-ops | 157 |
 | Directories moved (tests/, tmp-reaper/) | 2 |
-| Archive backups preserved | 0 (all moved then deleted from estate/bin) |
+| Archive backups preserved | 0 (all moved then deleted from Pens/bin) |
 | Directories removed (empty) | 5 (__pycache__, model-audit.out, model-audit-max.out, tests, tmp-reaper) |
-| estate/bin entries remaining | 0 |
+| Pens/bin entries remaining | 0 |
 | ~/.local/bin entries repointed | 13 |
 
 ## Phase 2a Actions Taken
 
-### 1. Created pens/estate/products/estate-ops/ product holding
-- Structure: `estate-ops/` with scratch/, tests/, tmp-reaper/ subdirs
-- All 157 estate/bin files copied here with preserved permissions
+### 1. Created pens/Pens/products/Pens-ops/ product holding
+- Structure: `Pens-ops/` with scratch/, tests/, tmp-reaper/ subdirs
+- All 157 Pens/bin files copied here with preserved permissions
 
-### 2. Removed estate/bin/ contents
-- All files deleted from /home/toxic/pens/estate/products/estate-ops/
+### 2. Removed Pens/bin/ contents
+- All files deleted from /home/toxic/pens/Pens/products/Pens-ops/
 - All subdirectories (tests/, tmp-reaper/, __pycache__, model-audit.out/, model-audit-max.out/) removed
-- /home/toxic/pens/estate/products/estate-ops/ is now an empty directory (ready for deletion in Phase 3)
+- /home/toxic/pens/Pens/products/Pens-ops/ is now an empty directory (ready for deletion in Phase 3)
 
 ### 3. Repointed ~/.local/bin entries (13 total)
 | Entry | Old Target | New Target |
 |---|---|---|
-| audio-probe | estate/bin/audio-probe | pens/estate/products/estate-ops/audio-probe |
-| pitchfork | estate/bin/pitchfork | pens/estate/products/estate-ops/pitchfork |
-| set-audio | estate/bin/set-audio | pens/estate/products/estate-ops/set-audio |
-| ffs | copy (estate/bin) | pens/estate/products/estate-ops/ffs |
-| hashline | copy (estate/bin) | pens/estate/products/estate-ops/hashline |
-| io-rate-reaper | copy (estate/bin) | pens/estate/products/estate-ops/io-rate-reaper |
-| iowait-gate | copy (estate/bin) | pens/estate/products/estate-ops/iowait-gate |
-| isleep | copy (estate/bin) | pens/estate/products/estate-ops/isleep |
-| kappa-config-audit | copy (estate/bin) | pens/estate/products/estate-ops/kappa-config-audit |
-| oracle-judge | copy (estate/bin) | pens/estate/products/estate-ops/oracle-judge |
-| orphan-reaper | copy (estate/bin) | pens/estate/products/estate-ops/orphan-reaper |
-| safe-rg | copy (estate/bin) | pens/estate/products/estate-ops/safe-rg |
-| saturation-watchdog | copy (estate/bin) | pens/estate/products/estate-ops/saturation-watchdog |
+| audio-probe | Pens/bin/audio-probe | pens/Pens/products/Pens-ops/audio-probe |
+| pitchfork | Pens/bin/pitchfork | pens/Pens/products/Pens-ops/pitchfork |
+| set-audio | Pens/bin/set-audio | pens/Pens/products/Pens-ops/set-audio |
+| ffs | copy (Pens/bin) | pens/Pens/products/Pens-ops/ffs |
+| hashline | copy (Pens/bin) | pens/Pens/products/Pens-ops/hashline |
+| io-rate-reaper | copy (Pens/bin) | pens/Pens/products/Pens-ops/io-rate-reaper |
+| iowait-gate | copy (Pens/bin) | pens/Pens/products/Pens-ops/iowait-gate |
+| isleep | copy (Pens/bin) | pens/Pens/products/Pens-ops/isleep |
+| kappa-config-audit | copy (Pens/bin) | pens/Pens/products/Pens-ops/kappa-config-audit |
+| oracle-judge | copy (Pens/bin) | pens/Pens/products/Pens-ops/oracle-judge |
+| orphan-reaper | copy (Pens/bin) | pens/Pens/products/Pens-ops/orphan-reaper |
+| safe-rg | copy (Pens/bin) | pens/Pens/products/Pens-ops/safe-rg |
+| saturation-watchdog | copy (Pens/bin) | pens/Pens/products/Pens-ops/saturation-watchdog |
 
 ### 4. Updated pitchfork.toml
-- 8 `exec /home/toxic/pens/estate/products/estate-ops/...` → `exec /home/toxic/pens/estate/products/estate-ops/...`
+- 8 `exec /home/toxic/pens/Pens/products/Pens-ops/...` → `exec /home/toxic/pens/Pens/products/Pens-ops/...`
 - 1 comment reference updated
-- 0 remaining estate/bin references
+- 0 remaining Pens/bin references
 
 ### 5. Updated manifest.yaml
-- Header updated: estate/bin → pens/estate/products/estate-ops
+- Header updated: Pens/bin → pens/Pens/products/Pens-ops
 - Paths repointed throughout
 
 ## Gate Verification
 
 ```
-estate/bin remaining entries: 0
-estate-ops file count: 161
-pitchfork.toml estate/bin refs: 0
+Pens/bin remaining entries: 0
+Pens-ops file count: 161
+pitchfork.toml Pens/bin refs: 0
 ```
 
 ## Stubs
-No deliberate stubs left at estate/bin paths — all entries moved to estate-ops.
-The empty estate/bin/ directory remains for deletion in Phase 3.
+No deliberate stubs left at Pens/bin paths — all entries moved to Pens-ops.
+The empty Pens/bin/ directory remains for deletion in Phase 3.
 
 ## Dependencies
 - pitchfork.toml daemon `run` directives updated for:
-  - estate-reconcile (line 306)
+  - Pens-reconcile (line 306)
   - bin-contract-audit.sh (line 522)
   - maximal-audit.sh (line 529)
   - kappa-serve.sh (line 564)

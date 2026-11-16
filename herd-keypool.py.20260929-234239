@@ -4,7 +4,7 @@
 Edge-case fallback chain (forward, never a rollback):
   1. Primary: import keypool.__main__ from the estate root derived from
      this file's own location.
-  2. Fallback: retry via /home/toxic/estate and CWD — covers symlinked, copied,
+  2. Fallback: retry via /home/toxic/pens/estate and CWD — covers symlinked, copied,
      or relocated shim layouts without touching a stale version.
   3. Last resort: a clear, actionable error on stderr + exit 3.
      Never silently runs an old copy, never swallows the root cause.
@@ -17,7 +17,7 @@ ROOT = os.path.dirname(HERE)
 
 _SEARCH = [
     ROOT,
-    os.path.expanduser("/home/toxic/estate"),
+    os.path.expanduser("/home/toxic/pens/estate"),
     os.getcwd(),
 ]
 
@@ -36,7 +36,7 @@ if main is None:
     sys.stderr.write(
         "herd-keypool: FATAL: cannot import keypool.__main__.main\n"
         + "".join(f"  [{b}] {e}\n" for b, e in _errors)
-        + "Hint: verify /home/toxic/estate/keypool/__main__.py exists and is readable,\n"
+        + "Hint: verify /home/toxic/pens/estate/keypool/__main__.py exists and is readable,\n"
         + "      or run `estate-reconcile --apply` to restore from a trusted source.\n"
     )
     raise SystemExit(3)

@@ -8,7 +8,7 @@
  *
  * Installed via ~/.gitconfig:
  *   [credential]
- *     helper = !bun /home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts
+ *     helper = !bun /home/toxic/pens/Pens/products/Pens-ops/bin/git-credential.ts
  */
 
 import { readFileSync } from "node:fs"

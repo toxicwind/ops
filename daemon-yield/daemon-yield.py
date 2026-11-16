@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """daemon-yield.py — supervisor wrapper: route daemon idle turns to emergent jobs.
 
-When the estate daemon's turn ends in yield/no-op with no pending work, this
+When the Pens daemon's turn ends in yield/no-op with no pending work, this
 wrapper pulls emergent jobs (oracle stalled tasks first, then the local file
 queue, then squawk questions, then relay inbox) and runs the highest-value
 decidable job as architect solving forward: plan -> execute -> verify ->
@@ -214,7 +214,7 @@ import json, time
 from collections import defaultdict
 events = defaultdict(list)
 try:
-    with open("/home/toxic/pens/estate/ranch/squawk/oracle/ledger/ledger.jsonl") as f:
+    with open("/home/toxic/pens/Pens/ranch/squawk/oracle/ledger/ledger.jsonl") as f:
         for line in f:
             try:
                 d = json.loads(line)
@@ -254,7 +254,7 @@ print(json.dumps({"candidates": out}))
 '''
 
 ESTATE_MASTER = os.path.expanduser(
-    "~/workspace/custom-connectors/custom.estate-master/bin/estate-master.py")
+    "~/workspace/custom-connectors/custom.Pens-master/bin/Pens-master.py")
 YOTE_CONN = os.path.expanduser("~/workspace/bin/yote-conn")
 _squawk_cell = os.path.expanduser("~/workspace/bin/squawk")
 SQUAWK_BIN = _squawk_cell if os.path.exists(_squawk_cell) else "squawk"
@@ -402,7 +402,7 @@ class Supervisor:
         older than the stall horizon. Read-only; never bids, never assigns."""
         if "oracle" in self.skipped_providers:
             return []
-        scan_path = "/home/toxic/pens/estate/ranch/ops/daemon-yield/oracle-scan.py"
+        scan_path = "/home/toxic/pens/Pens/ranch/ops/daemon-yield/oracle-scan.py"
         out = None
         try:
             if os.path.exists(ESTATE_MASTER):

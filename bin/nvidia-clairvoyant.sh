@@ -105,9 +105,9 @@ sqlite3 "$DB" "INSERT INTO providerNodes (id, type, name, data, createdAt, updat
 # ─────────────────────────────────────────────────────────────────
 hdr "10. Restart vansrouter + probe"
 
-cd /home/toxic/estate
-pitchfork clean --daemon estate/vansrouter 2>&1 | tail -1 || true
-pitchfork restart estate/vansrouter 2>&1 | tail -5 || true
+cd /home/toxic/pens/Pens
+pitchfork clean --daemon Pens/vansrouter 2>&1 | tail -1 || true
+pitchfork restart Pens/vansrouter 2>&1 | tail -5 || true
 sleep 4
 
 echo
@@ -126,7 +126,7 @@ else
   echo "    $resp" | head -c 300
   echo
   echo "  log tail:"
-  pitchfork logs estate/vansrouter --raw -n 40 --no-pager 2>&1 | grep -E 'nvidia|AUTH|PENDING|ERROR' | tail -15 | sed 's/^/    /'
+  pitchfork logs Pens/vansrouter --raw -n 40 --no-pager 2>&1 | grep -E 'nvidia|AUTH|PENDING|ERROR' | tail -15 | sed 's/^/    /'
 fi
 
 echo

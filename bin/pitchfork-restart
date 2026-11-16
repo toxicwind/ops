@@ -28,7 +28,7 @@
 #   - the estate `pitchfork` wrapper's estate/ guard applies (we call it).
 set -uo pipefail
 
-PITCHFORK="${PITCHFORK_BIN:-/home/toxic/estate/bin/pitchfork}"
+PITCHFORK="${PITCHFORK_BIN:-/home/toxic/pens/estate/bin/pitchfork}"
 STOP_TIMEOUT=30
 KILL_TIMEOUT=10
 

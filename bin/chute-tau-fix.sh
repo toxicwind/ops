@@ -2,11 +2,11 @@
 set -euo pipefail
 
 CHUTE=/home/toxic/pens/barn/chute
-PITCH=/home/toxic/pens/estate/pitchfork.toml
+PITCH=/home/toxic/pens/Pens/pitchfork.toml
 OMP_NEW=/home/toxic/tau
 PORT=25111
 EXT=/home/toxic/.tau/extensions/vansrouter.ts
-BIN=/home/toxic/pens/estate/bin
+BIN=/home/toxic/pens/Pens/bin
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; R='\033[0;31m'; N='\033[0m'
 ok()   { echo -e "  ${G}✓${N} $1"; }
@@ -128,13 +128,13 @@ const block = [
   `dir = "/home/toxic"`,
   "mise = false",
   "retry = true",
-  `ready_cmd = "${process.env.HOME || "/home/toxic"}/estate/bin/tcp-probe ${PORT}"`,
+  `ready_cmd = "${process.env.HOME || "/home/toxic"}/Pens/bin/tcp-probe ${PORT}"`,
   `depends = ["wrangler"]`,
   // This script REWRITES the [daemons.tau] block, so a stale env line here
   // re-injects the dead vars into pitchfork.toml. PI_AGENT_DIR,
   // PI_REASONING_LEVEL and PI_SUBAGENT_MODEL have 0 readers in the tau
   // monorepo; PI_CODING_AGENT_DIR is the one settings.ts:601 consults.
-  `env = { PI_CONFIG_DIR = "/home/toxic/.tau", PI_CODING_AGENT_DIR = "/home/toxic/.tau/agent", PI_CODING_AGENT = "true", PI_OPENAI_STREAM_IDLE_TIMEOUT_MS = "120000", VANSROUTER_API_KEY = "local-estate" }`,
+  `env = { PI_CONFIG_DIR = "/home/toxic/.tau", PI_CODING_AGENT_DIR = "/home/toxic/.tau/agent", PI_CODING_AGENT = "true", PI_OPENAI_STREAM_IDLE_TIMEOUT_MS = "120000", VANSROUTER_API_KEY = "local-Pens" }`,
   `auto = ["start"]`,
   "",
 ];
@@ -175,7 +175,7 @@ JSEOF
 # ─────────────────────────────────────────────────────────────────────
 hdr "6. Kill stale port holder + restart tau"
 
-cd /home/toxic/estate
+cd /home/toxic/pens/Pens
 
 STALE_PID="$(ss -tlnpH '( sport = :'"$PORT"' )' 2>/dev/null | grep -oP 'pid=\K[0-9]+' | head -1 || true)"
 if [ -n "$STALE_PID" ]; then
@@ -188,12 +188,12 @@ else
   ok "no stale holder on :$PORT"
 fi
 
-pitchfork clean --daemon estate/tau 2>&1 || true
+pitchfork clean --daemon Pens/tau 2>&1 || true
 
 if [ -x "$BIN/pitchfork-restart" ]; then
-  "$BIN/pitchfork-restart" estate/tau 2>&1 | tail -8 || true
+  "$BIN/pitchfork-restart" Pens/tau 2>&1 | tail -8 || true
 else
-  pitchfork restart estate/tau 2>&1 | tail -8 || true
+  pitchfork restart Pens/tau 2>&1 | tail -8 || true
 fi
 
 sleep 3
@@ -206,7 +206,7 @@ ss -tlnp '( sport = :'"$PORT"' )' 2>/dev/null || echo "  NOT LISTENING"
 
 echo
 echo "--- pitchfork status ---"
-pitchfork list --json 2>&1 | jq -r '.[] | select(.id == "estate/tau") | "  \(.id) \(.status) port=\(.port|join(",")) pid=\(.pid)"' 2>&1 || true
+pitchfork list --json 2>&1 | jq -r '.[] | select(.id == "Pens/tau") | "  \(.id) \(.status) port=\(.port|join(",")) pid=\(.pid)"' 2>&1 || true
 
 echo
 echo "--- ACP handshake ---"

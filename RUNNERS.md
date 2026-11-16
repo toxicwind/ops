@@ -35,14 +35,14 @@ mission; don't stomp, coordinate in fleet.)
 
 | runner | box | alive? | claims | reality | verdict |
 |---|---|---|---|---|---|
-| pitchfork supervisor | yote | yes | run ~53 estate-scripts/* daemons | `pitchfork list`: 51/51 `running` | HEALTHY |
+| pitchfork supervisor | yote | yes | run ~53 Pens-scripts/* daemons | `pitchfork list`: 51/51 `running` | HEALTHY |
 | `fleet-watchdog-sweepd.service` | yote (systemd user) | yes | fleet presence + rollover sweeper, 60s loop, lane-7 | running; distinct from Hearth's progress-watchdog (presence heartbeat vs supervisor) — NOT a dupe | HEALTHY |
 | `squawk-watchdog.timer` | yote (60s) | yes | squawk-ws + squawk-feed liveness | fired 15:18:07 (9s before check) | HEALTHY |
 | `depend-refire.timer` | yote (60s) | yes | restart pitchfork-stopped daemons when deps healthy | fired 15:18:07 | HEALTHY |
 | `awrawr-mcp` (awrawr-ws-exec) | yote (systemd user) | yes | the MCP exec bridge on :8379 | running | HEALTHY |
 | `phone-lane-keeper`, `phone-vitals` | yote (systemd user) | yes | Pixel ADB self-healing + telemetry | running | HEALTHY |
 | `ralph-dashboard` | yote (systemd user) | yes | uvicorn :8420 | running | HEALTHY |
-| `quickshell-ii` | yote (systemd user) | yes | desktop shell (estate-scripts/projects/shell) | running | HEALTHY |
+| `quickshell-ii` | yote (systemd user) | yes | desktop shell (Pens-scripts/projects/shell) | running | HEALTHY |
 | `awrawr-mcp-audit-export.timer` | yote (daily 00:00) | yes | nightly audit export | last fired 15h ago | HEALTHY |
 | `refusal-hunt-nightly.timer` | yote (daily 03:00) | yes | nightly refusal hunt | last fired 12h ago | HEALTHY |
 | `gemini-sdk-refresh.timer` | yote (2× daily) | yes | SDK refresh | last fired 11h ago | HEALTHY |
@@ -58,7 +58,7 @@ with its owner.
 **NOT duplicates (verified, keep both):** progress-watchdog (hatch, 3m,
 market/ledger/daemon supervision + fleet social) vs fleet-watchdog-sweepd
 (yote, 60s, presence heartbeat); bridge-watchdog vs yote-connector-watch;
-progress-watchdog vs estate-scripts/market-watchdog (latter is inotify-driven,
+progress-watchdog vs Pens-scripts/market-watchdog (latter is inotify-driven,
 bidder-only).
 
 **Kills:** none — no two runners do the same job, nothing was wedged.

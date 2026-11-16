@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * exa-mcp-server — Native Estate Exa MCP Server with Agentic JSON/Markdown Repair
+ * exa-mcp-server — Native Pens Exa MCP Server with Agentic JSON/Markdown Repair
  *
  * Exposes:
  *   - exa_search: Neural & keyword search with text contents
@@ -37,7 +37,7 @@ async function callExa(endpoint: string, body: Record<string, unknown>) {
 }
 
 const server = new Server(
-  { name: "estate-exa-mcp", version: "1.0.0" },
+  { name: "Pens-exa-mcp", version: "1.0.0" },
   { capabilities: { tools: {} } }
 );
 

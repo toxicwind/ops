@@ -1,5 +1,5 @@
 /**
- * pitchfork-lib.ts — pure, typed core of the estate pitchfork dispatch shim
+ * pitchfork-lib.ts — pure, typed core of the Pens pitchfork dispatch shim
  * (bin/pitchfork.ts). No side effects at import time; all decision logic is
  * unit-tested in pitchfork-lib.test.ts.
  *
@@ -10,10 +10,10 @@
  *      deprecated `sovereign/` prefix on lifecycle subcommands.
  *
  * The `sovereign/` guard mirrors the bash exactly: when a lifecycle arg is
- * `sovereign/<x>` and the live registry has `estate/<x>` but NOT
+ * `sovereign/<x>` and the live registry has `Pens/<x>` but NOT
  * `sovereign/<x>`, the shim REFUSES on stderr with exit 1 (guiding the
- * operator to the estate/ name). It does NOT silently rewrite argv, so callers
- * that depend on the refusal keep their behavior. The estate/<x> form is
+ * operator to the Pens/ name). It does NOT silently rewrite argv, so callers
+ * that depend on the refusal keep their behavior. The Pens/<x> form is
  * the sole registered namespace today (see state.toml + the runbook), hence
  * the deprecation.
  */
@@ -23,7 +23,7 @@ import { join } from "node:path";
 /**
  * Candidate pitchfork binary paths, in priority order.
  *
- * pitchfork is a mise-managed tool in this estate (declared in
+ * pitchfork is a mise-managed tool in this Pens (declared in
  * ~/.config/mise/conf.d/00-toolchain.toml), so the source of truth is MISE,
  * not a hardcoded version. The first candidate is mise's maintained "global"
  * marshaller (a symlink mise keeps pointing at the active version) and then a
@@ -133,15 +133,15 @@ export function sovereignShort(arg: string): string | null {
   return arg.startsWith("sovereign/") ? arg.slice("sovereign/".length) : null;
 }
 
-/** Map a `sovereign/<x>` arg to its modern `estate/<x>` spelling. */
+/** Map a `sovereign/<x>` arg to its modern `Pens/<x>` spelling. */
 export function sovereignToEstate(arg: string): string {
   const short = sovereignShort(arg);
-  return short === null ? arg : `estate/${short}`;
+  return short === null ? arg : `Pens/${short}`;
 }
 
 /**
  * Extract the set of registered daemon ids from `pitchfork list` output.
- * list lines look like `estate/<name>  <status> ...`; the id is the first
+ * list lines look like `Pens/<name>  <status> ...`; the id is the first
  * whitespace token (mirrors `awk '{print $1}'` in the bash).
  */
 export function extractListIds(listOutput: string): Set<string> {
@@ -159,8 +159,8 @@ export function extractListIds(listOutput: string): Set<string> {
 export function sovereignRefusalLines(arg: string, short: string): string[] {
   return [
     `pitchfork: REFUSED: "${arg}" is not a registered daemon id.`,
-    `pitchfork: the live daemon is "estate/${short}" — sovereign/ is a deprecated prefix.`,
-    `pitchfork: re-run with the estate/ name, or "pitchfork list" to see registered ids.`,
+    `pitchfork: the live daemon is "Pens/${short}" — sovereign/ is a deprecated prefix.`,
+    `pitchfork: re-run with the Pens/ name, or "pitchfork list" to see registered ids.`,
   ];
 }
 
@@ -176,7 +176,7 @@ export type LifecycleDecision =
  * Guard the deprecated `sovereign/` prefix on lifecycle args.
  *
  * Mirrors the bash exactly: for each arg (after the subcommand) that is
- * `sovereign/<x>`, if the registry has `estate/<x>` but NOT `sovereign/<x>`,
+ * `sovereign/<x>`, if the registry has `Pens/<x>` but NOT `sovereign/<x>`,
  * refuse. If neither string is registered, or `sovereign/<x>` IS registered,
  * pass. Resolution of `ids` is lazy in the bash (only on first sovereign arg);
  * here the caller resolves the list id set once when needed.
@@ -189,7 +189,7 @@ export function decideLifecycleArgs(
     const short = sovereignShort(arg);
     if (short === null) continue;
     if (ids.has(arg)) continue; // sovereign/<x> registered itself -> pass through.
-    if (ids.has(`estate/${short}`)) {
+    if (ids.has(`Pens/${short}`)) {
       return { kind: "refused", stderr: sovereignRefusalLines(arg, short) };
     }
     // Neither registered -> pass through untouched (bash does not refuse).

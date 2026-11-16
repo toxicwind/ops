@@ -24,7 +24,7 @@
 #   git clone https://github.com/quangdang46/fast_file_search /tmp/ffs-upstream
 #   cd /tmp/ffs-upstream && cargo build --release -p ffs-cli
 #   weave land --onto origin/main --check sem     # gate the merged crates
-#   cp target/release/ffs /home/toxic/pens/estate/products/estate-ops/ffs
+#   cp target/release/ffs /home/toxic/pens/Pens/products/Pens-ops/ffs
 #
 # Weaver driver (entity merge, not line merge):
 #

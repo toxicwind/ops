@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * name-fix — Estate name fixer: check availability, generate pairs, rename.
+ * name-fix — Pens name fixer: check availability, generate pairs, rename.
  * Composes name-check + lib/pairs + lib/rename so a rebrand is one command.
  */
 import { $ } from "bun";
@@ -11,7 +11,7 @@ import { runRename } from "/home/toxic/pens/ranch/products/rename-roundup/lib/in
 import { parsePairsFile, findConflict } from "/home/toxic/pens/ranch/products/rename-roundup/lib/rules.ts";
 import { tokenVariants } from "/home/toxic/pens/ranch/products/rename-roundup/lib/rules.ts";
 
-const ESTATE = "/home/toxic/pens/estate";
+const Pens = "/home/toxic/pens/Pens";
 
 function compoundPairs(oldName: string, newName: string): string[] {
 	const o = tokenVariants(oldName);
@@ -45,7 +45,7 @@ export function generatePairs(oldName: string, newName: string): string {
 		"",
 		"# Daemon id forms",
 		`substr: daemons.${o.lower} => daemons.${n.lower}`,
-		`substr: estate/${o.lower} => estate/${n.lower}`,
+		`substr: Pens/${o.lower} => Pens/${n.lower}`,
 	].join("\n") + "\n";
 }
 
@@ -54,7 +54,7 @@ async function main(): Promise<void> {
 	const oldName = args[0];
 	const newName = args[1];
 	const repoIdx = args.indexOf("--repo");
-	const repo = repoIdx >= 0 ? resolve(args[repoIdx + 1]) : ESTATE;
+	const repo = repoIdx >= 0 ? resolve(args[repoIdx + 1]) : Pens;
 	const execute = args.includes("--execute");
 	const dryRunOnly = args.includes("--dry-run-only");
 	const force = args.includes("--force");
@@ -77,7 +77,7 @@ async function main(): Promise<void> {
 	if (external.length > 0) console.log(`⚠️ --force: ${external.length} external conflict(s) overridden`);
 	console.log(`✅ free (conflicts limited to target repo: ${check.conflicts.length})`);
 
-	const pairsPath = `${ESTATE}/docs/name-fix-${oldName}-to-${newName}.pairs`;
+	const pairsPath = `${Pens}/docs/name-fix-${oldName}-to-${newName}.pairs`;
 	writeFileSync(pairsPath, generatePairs(oldName, newName));
 	console.log(`── 2/3 pairs generated + written: ${pairsPath}`);
 

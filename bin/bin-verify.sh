@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# bin-verify.sh — verify the estate bin manifest.
+# bin-verify.sh — verify the Pens bin manifest.
 # Usage: bin-verify.sh [manifest.yaml]
 # Exits 0 when everything checks out, 1 with a clear FAIL list otherwise.
 # Lines: 'ok   <id>' / 'FAIL <id>: <reason>' / 'WARN <id>: <reason>'.
 set -uo pipefail
-SOV="${SOV:-/home/toxic/estate}"
+SOV="${SOV:-/home/toxic/pens/Pens}"
 MANIFEST="${1:-$SOV/bin/manifest.yaml}"
 exec python3 - "$MANIFEST" "$SOV" <<'PYEOF'
 import hashlib, os, shutil, subprocess, sys

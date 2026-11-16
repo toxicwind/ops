@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """pitchfork-binding-sentinel -- detect + heal pitchfork tracking loss.
 
-THE FAILURE (observed twice on 2026-10-19, estate/oracle-market):
+THE FAILURE (observed twice on 2026-10-19, Pens/oracle-market):
 a daemon's process is started outside the supervisor (or the
 supervisor restarts and loses the child), so the supervisor's
 state.toml entry decays: pid cleared, status becomes the errored
@@ -62,9 +62,9 @@ HEAL_MIN_INTERVAL_S = 1800
 TERM_WAIT_S = int(os.environ.get("PFB_TERM_WAIT_S", "300"))
 
 WATCHED = {
-    "estate/oracle-market": {
+    "Pens/oracle-market": {
         "signature": "oracle_loop.py",
-        "lock": "/home/toxic/pens/estate/ranch/squawk/oracle/oracle.lock",
+        "lock": "/home/toxic/pens/Pens/ranch/squawk/oracle/oracle.lock",
     },
 }
 # Test-only override: a fabricated WATCHED map (JSON) so a test can

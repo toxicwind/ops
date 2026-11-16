@@ -3,9 +3,9 @@ set -euo pipefail
 
 STOCK=/home/toxic/tau
 OLD=/home/toxic/tau
-EDGE=/home/toxic/edge-work/estate-projects/projects/tau
+EDGE=/home/toxic/edge-work/Pens-projects/projects/tau
 ORACLE=/home/toxic/oracle-hardening-wt/projects/tau
-BIN=/home/toxic/pens/estate/bin
+BIN=/home/toxic/pens/Pens/bin
 
 G='\033[0;32m'; C='\033[0;36m'; Y='\033[1;33m'; R='\033[0;31m'; N='\033[0m'
 ok()   { echo -e "  ${G}✓${N} $1"; }

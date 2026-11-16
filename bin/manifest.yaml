@@ -5,10 +5,10 @@
 # Verified by bin-verify.sh (exit != 0 on any FAIL)
 # =============================================================================
 
-schema: estate-bin-manifest/1
+schema: Pens-bin-manifest/1
 
 stale_paths:
-  - "estate-merge-stash-20260914"
+  - "Pens-merge-stash-20260914"
   - "/home/toxic/projects/ik_llama.cpp-main"
   - "/home/toxic/workspace/tau-launcher-build"
   - /home/toxic/projects/tau
@@ -16,42 +16,42 @@ stale_paths:
 
 links:
   - name: ~/.local/bin/_secrets_auto_git
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/_secrets_auto_git"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/_secrets_auto_git"
     pens_proximity: true
   - name: "~/.local/bin/ast-grep-mcp"
     target: "/home/toxic/.local/lib/node_modules/ast-grep-mcp/dist/index.js"
     pens_proximity: false
   - name: "~/.local/bin/audio-probe"
-    target: "/home/toxic/pens/estate/products/estate-ops/audio-probe"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/audio-probe"
     pens_proximity: true
   - name: "~/.local/bin/auto-close-syntax"
-    target: "/home/toxic/pens/estate/products/estate-ops/auto-close-syntax"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/auto-close-syntax"
     pens_proximity: true
   - name: ~/.local/bin/bm25
     target: "/home/toxic/pens/ranch/dualspace-ast-bm25-hybrid/bin/bm25.js"
     broken: true
     pens_proximity: true
   - name: ~/.local/bin/chat
-    target: "/home/toxic/pens/estate/products/estate-ops/chat"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/chat"
     pens_proximity: true
   - name: ~/.local/bin/chute
     target: /home/toxic/pens/barn/products/chute/chute.mjs
     pens_proximity: true
   - name: "~/.local/bin/claim-port"
-    target: "/home/toxic/pens/estate/products/estate-ops/claim-port"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/claim-port"
     pens_proximity: true
   - name: ~/.local/bin/cmdlog
-    target: "/home/toxic/pens/estate/products/estate-ops/cmdlog.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/cmdlog.ts"
     pens_proximity: true
   - name: ~/.local/bin/corral
     target: /home/toxic/pens/ranch/corral/src/cli/index.ts
     broken: true
     pens_proximity: true
   - name: "~/.local/bin/delend-branch-audit-for-main"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-branch-audit-for-main"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-branch-audit-for-main"
     pens_proximity: true
   - name: "~/.local/bin/delend-code-race"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-code-race"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-code-race"
     pens_proximity: true
   - name: "~/.local/bin/delend-code-race-line"
     target: "/home/toxic/pens/ergasterion/hephaistos/plugins/code-race/bin/race-line.ts"
@@ -60,101 +60,101 @@ links:
     target: "/home/toxic/pens/ergasterion/hephaistos/plugins/code-race/crates/code-race/target/release/delend-code-race"
     pens_proximity: true
   - name: "~/.local/bin/delend-experimental"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-experimental"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-experimental"
     pens_proximity: true
   - name: "~/.local/bin/delend-forge-audit"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-forge-audit"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-forge-audit"
     pens_proximity: true
   - name: "~/.local/bin/delend-gh"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-gh"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-gh"
     pens_proximity: true
   - name: "~/.local/bin/delend-iterate"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-iterate"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-iterate"
     pens_proximity: true
   - name: "~/.local/bin/delend-model-race"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-model-race"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-model-race"
     pens_proximity: true
   - name: "~/.local/bin/delend-oracle"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-oracle"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-oracle"
     pens_proximity: true
   - name: "~/.local/bin/delend-quick"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-quick"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-quick"
     pens_proximity: true
   - name: "~/.local/bin/delend-rig-c2"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-rig-c2"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-rig-c2"
     pens_proximity: true
   - name: "~/.local/bin/delend-route"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-route"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-route"
     pens_proximity: true
   - name: "~/.local/bin/delend-stash-optimize"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-stash-optimize"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-stash-optimize"
     pens_proximity: true
   - name: "~/.local/bin/delend-working-dirty"
-    target: "/home/toxic/pens/estate/products/estate-ops/delend-working-dirty"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/delend-working-dirty"
     pens_proximity: true
   - name: ~/.local/bin/delendai
     target: /home/toxic/pens/ergasterion/hephaistos/packages/cli/dist/index.js
     pens_proximity: true
   - name: "~/.local/bin/docs-mcp"
-    target: "/home/toxic/pens/estate/products/docs-mcp/docs_mcp.ts"
+    target: "/home/toxic/pens/Pens/products/docs-mcp/docs_mcp.ts"
     pens_proximity: true
   - name: "~/.local/bin/ego-browser"
     target: "/home/toxic/pens/ranch/ego-lite/package/ego-browser/dist/out/index.js"
     broken: true
     pens_proximity: true
   - name: ~/.local/bin/esbuild
-    target: "/home/toxic/pens/ranch/vendored/bun-estate-patch/node_modules/esbuild/bin/esbuild"
+    target: "/home/toxic/pens/ranch/vendored/bun-Pens-patch/node_modules/esbuild/bin/esbuild"
     broken: true
     pens_proximity: true
-  - name: "~/.local/bin/estate-do"
-    target: "/home/toxic/pens/estate/products/estate-ops/estate-do"
+  - name: "~/.local/bin/Pens-do"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/Pens-do"
     pens_proximity: true
-  - name: "~/.local/bin/estate-master-shim"
-    target: "/home/toxic/pens/estate/products/estate-ops/estate-master-shim"
+  - name: "~/.local/bin/Pens-master-shim"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/Pens-master-shim"
     pens_proximity: true
-  - name: "~/.local/bin/estate-probe"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/estate-probe"
+  - name: "~/.local/bin/Pens-probe"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/Pens-probe"
     pens_proximity: true
-  - name: "~/.local/bin/estate-reconcile"
-    target: "/home/toxic/pens/estate/products/estate-ops/estate-reconcile"
+  - name: "~/.local/bin/Pens-reconcile"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/Pens-reconcile"
     pens_proximity: true
-  - name: "~/.local/bin/estate-scan"
-    target: "/home/toxic/pens/estate/products/estate-ops/estate-scan"
+  - name: "~/.local/bin/Pens-scan"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/Pens-scan"
     pens_proximity: true
   - name: "~/.local/bin/eval-shim"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/eval-shim.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/eval-shim.ts"
     pens_proximity: true
   - name: ~/.local/bin/eza
     target: /home/toxic/.local/share/mise/installs/eza/latest/eza
     pens_proximity: true
   - name: ~/.local/bin/fanout
-    target: "/home/toxic/pens/estate/products/estate-ops/fanout"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/fanout"
     pens_proximity: true
   - name: ~/.local/bin/fd
     target: "/home/toxic/.local/share/mise/installs/fd/10.5.0/fd-v10.5.0-x86_64-unknown-linux-gnu/fd"
     pens_proximity: true
   - name: ~/.local/bin/ffs
-    target: "/home/toxic/pens/estate/products/estate-ops/ffs"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/ffs"
     pens_proximity: true
   - name: "~/.local/bin/ffs-diff"
-    target: "/home/toxic/pens/estate/products/estate-ops/ffs-diff"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/ffs-diff"
     pens_proximity: true
   - name: "~/.local/bin/ffs-diff.js"
     target: "/home/toxic/pens/ranch/ffs-diff/bin/ffs-diff.js"
     broken: true
     pens_proximity: true
   - name: "~/.local/bin/fleet-audit-mcp"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/fleet-audit-mcp"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/fleet-audit-mcp"
     pens_proximity: true
   - name: "~/.local/bin/fleet-tui"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/fleet-tui"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/fleet-tui"
     pens_proximity: true
   - name: ~/.local/bin/forge
     target: /home/toxic/pens/barn/products/forge/bin/forge.ts
     broken: true
     pens_proximity: true
-  - name: "~/.local/bin/git-credential-estate"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/git-credential.ts"
+  - name: "~/.local/bin/git-credential-Pens"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/git-credential.ts"
     pens_proximity: true
   - name: "~/.local/bin/github-mcp-cli"
     target: "/home/toxic/pens/geode/products/azurite/skills/02_research_intel/github-mcp/bin/github-mcp-cli"
@@ -163,10 +163,10 @@ links:
     target: "/home/toxic/.venv-guidellm/bin/guidellm"
     pens_proximity: true
   - name: ~/.local/bin/hashline
-    target: "/home/toxic/pens/estate/products/estate-ops/hashline"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/hashline"
     pens_proximity: true
   - name: "~/.local/bin/heredoc-fix"
-    target: "/home/toxic/pens/estate/products/estate-ops/heredoc-fix.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/heredoc-fix.ts"
     pens_proximity: true
   - name: "~/.local/bin/hero-gen"
     target: "/home/toxic/pens/ranch/hatch/kite-cli/scripts/hero_gen.py"
@@ -186,31 +186,31 @@ links:
     target: /home/toxic/.local/share/uv/tools/hypruse/bin/hypruse
     pens_proximity: true
   - name: "~/.local/bin/io-rate-reaper"
-    target: "/home/toxic/pens/estate/products/estate-ops/io-rate-reaper"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/io-rate-reaper"
     pens_proximity: true
   - name: "~/.local/bin/iowait-gate"
-    target: "/home/toxic/pens/estate/products/estate-ops/iowait-gate"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/iowait-gate"
     pens_proximity: true
   - name: ~/.local/bin/isleep
-    target: "/home/toxic/pens/estate/products/estate-ops/isleep"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/isleep"
     pens_proximity: true
   - name: ~/.local/bin/jless
     target: /home/toxic/.local/share/mise/installs/jless/latest/jless
     pens_proximity: true
   - name: ~/.local/bin/kairos
-    target: "/home/toxic/pens/estate/products/estate-ops/kairos"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/kairos"
     pens_proximity: true
   - name: ~/.local/bin/kappa
     target: "/home/toxic/pens/olympus/products/kappa/kappa-code/packages/cli/dist/@kappacode/cli-linux-x64/bin/kappa"
     pens_proximity: true
   - name: "~/.local/bin/kappa-config-audit"
-    target: "/home/toxic/pens/estate/products/estate-ops/kappa-config-audit"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/kappa-config-audit"
     pens_proximity: true
   - name: "~/.local/bin/kappa-hindsight"
     target: "/home/toxic/.config/kappa/skills/kappa-hindsight/bin/kappa-hindsight"
     pens_proximity: false
   - name: ~/.local/bin/kf
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/kf"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/kf"
     pens_proximity: true
   - name: "~/.local/bin/kite-cli"
     target: "/home/toxic/.local/share/uv/tools/kite-cli/bin/kite-cli"
@@ -225,19 +225,19 @@ links:
     target: /home/toxic/pens/geode/products/malachite/bin/malachite.ts
     pens_proximity: true
   - name: ~/.local/bin/morphe
-    target: /home/toxic/pens/estate/bridge/morphe.py
+    target: /home/toxic/pens/Pens/bridge/morphe.py
     pens_proximity: true
   - name: ~/.local/bin/omp
     target: /home/toxic/.local/bin/tau
     pens_proximity: false
   - name: "~/.local/bin/oracle-judge"
-    target: "/home/toxic/pens/estate/products/estate-ops/oracle-judge"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/oracle-judge"
     pens_proximity: true
   - name: "~/.local/bin/orphan-reaper"
-    target: "/home/toxic/pens/estate/products/estate-ops/orphan-reaper"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/orphan-reaper"
     pens_proximity: true
   - name: "~/.local/bin/pairs-gen"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/pairs-gen.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/pairs-gen.ts"
     pens_proximity: true
   - name: ~/.local/bin/pandoc
     target: /home/toxic/.local/share/mise/installs/pandoc/3.12.1/bin/pandoc
@@ -250,22 +250,22 @@ links:
     target: /home/toxic/.local/bin/tau
     pens_proximity: false
   - name: ~/.local/bin/pitchfork
-    target: "/home/toxic/pens/estate/products/estate-ops/pitchfork"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/pitchfork"
     pens_proximity: true
   - name: "~/.local/bin/pitchfork-compose"
-    target: "/home/toxic/pens/estate/products/estate-ops/pitchfork-compose"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/pitchfork-compose"
     pens_proximity: true
   - name: "~/.local/bin/pitchfork-reconcile"
-    target: "/home/toxic/pens/estate/products/estate-ops/pitchfork-reconcile"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/pitchfork-reconcile"
     pens_proximity: true
   - name: "~/.local/bin/pitchfork-restart"
-    target: "/home/toxic/pens/estate/products/estate-ops/pitchfork-restart"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/pitchfork-restart"
     pens_proximity: true
   - name: "~/.local/bin/pitchfork-split"
-    target: "/home/toxic/pens/estate/products/estate-ops/pitchfork-split"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/pitchfork-split"
     pens_proximity: true
   - name: ~/.local/bin/pixel
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/pixel"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/pixel"
     pens_proximity: true
   - name: ~/.local/bin/pnpm
     target: /usr/lib/node_modules/corepack/dist/pnpm.js
@@ -280,7 +280,7 @@ links:
     target: "/home/toxic/.npm-global/bin/rclone-mcp"
     pens_proximity: false
   - name: "~/.local/bin/reconcile-agents"
-    target: "/home/toxic/pens/estate/products/estate-ops/reconcile-agents.md.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/reconcile-agents.md.ts"
     pens_proximity: true
   - name: ~/.local/bin/resect
     target: "/home/toxic/.bun/install/global/node_modules/@mherod/resect/bin/resect.js"
@@ -292,22 +292,22 @@ links:
     target: "/home/toxic/.local/share/mise/installs/rg/15.2.0/ripgrep-15.2.0-x86_64-unknown-linux-musl/rg"
     pens_proximity: true
   - name: "~/.local/bin/run-fast"
-    target: "/home/toxic/pens/estate/products/estate-ops/run-fast"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/run-fast"
     pens_proximity: true
   - name: "~/.local/bin/safe-rg"
-    target: "/home/toxic/pens/estate/products/estate-ops/safe-rg"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/safe-rg"
     pens_proximity: true
   - name: "~/.local/bin/saturation-watchdog"
-    target: "/home/toxic/pens/estate/products/estate-ops/saturation-watchdog"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/saturation-watchdog"
     pens_proximity: true
   - name: ~/.local/bin/secretsmith
     target: /home/toxic/pens/olympus/products/kryptos/bin/secretsmith
     pens_proximity: true
   - name: "~/.local/bin/session-audit"
-    target: /home/toxic/pens/estate/products/estate-ops/bin/session-audit
+    target: /home/toxic/pens/Pens/products/Pens-ops/bin/session-audit
     pens_proximity: true
   - name: "~/.local/bin/set-audio"
-    target: "/home/toxic/pens/estate/products/estate-ops/set-audio"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/set-audio"
     pens_proximity: true
   - name: ~/.local/bin/sigma
     target: /home/toxic/pens/olympus/products/sigma/dist/index.js
@@ -326,7 +326,7 @@ links:
     target: "/home/toxic/pens/olympus/products/tau/scripts/tau-pin"
     pens_proximity: true
   - name: "~/.local/bin/tau-todo"
-    target: "/home/toxic/pens/estate/products/estate-ops/bin/tau-todo.ts"
+    target: "/home/toxic/pens/Pens/products/Pens-ops/bin/tau-todo.ts"
     pens_proximity: true
   - name: "~/.local/bin/thresher-client.py"
     target: "/home/toxic/.local/bin/gatehouse-client.py"
@@ -342,10 +342,10 @@ links:
     broken: true
     pens_proximity: true
   - name: ~/.local/bin/vansrouter
-    target: /home/toxic/pens/estate/stack/services/vansrouter.sh
+    target: /home/toxic/pens/Pens/stack/services/vansrouter.sh
     pens_proximity: true
   - name: "~/.local/bin/vansrouter-bridged"
-    target: /home/toxic/pens/estate/stack/services/vansrouter.sh
+    target: /home/toxic/pens/Pens/stack/services/vansrouter.sh
     pens_proximity: true
   - name: "~/.local/bin/vram-mcp"
     target: "/home/toxic/.local/share/uv/tools/vram-mcp/bin/vram-mcp"
@@ -696,7 +696,7 @@ bins:
     size: 3001
     notes: script (bash); executable
     pens_proximity: false
-  - name: "estate-thresher-status"
+  - name: "Pens-thresher-status"
     dir: .local/bin
     kind: script
     shebang: "#!/usr/bin/env bash"
@@ -1494,21 +1494,21 @@ bins:
     notes: binary; executable; 24MB
     pens_proximity: false
   - name: README.md
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 4409bfbe1e67ed884844b018c5e06ee8
     size: 4221
     notes: data file
     pens_proximity: true
   - name: README.md.bak.1792130571
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 61b8982674025f634f1a5b8e22d83aa0
     size: 4199
     notes: data file
     pens_proximity: true
   - name: _secrets_auto_git
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1517,14 +1517,14 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "agent-checkpoint.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 5eae3065384a684c9c57c5e5daa77e8a
     size: 13636
     notes: data file
     pens_proximity: true
   - name: "agent-checkpoint.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1533,7 +1533,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "auto-close-syntax"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1542,14 +1542,14 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "auto-close-syntax.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: e651b8e36efd41b24be0e561a25eea11
     size: 74
     notes: data file
     pens_proximity: true
   - name: "bg-audit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1558,7 +1558,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "bg-heartbeat"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1567,7 +1567,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "bg-kill"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1576,7 +1576,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "bg-launch"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1585,7 +1585,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "bg-register"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1594,7 +1594,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "bin-contract-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1603,7 +1603,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "bin-verify.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1612,7 +1612,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "bun-auto-trust"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1621,7 +1621,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "bun-project-detect"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1630,7 +1630,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "chute-tau-fix.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1639,7 +1639,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "claim-port"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1648,7 +1648,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "corral-autodetect.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1657,7 +1657,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "corral-diag.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1666,7 +1666,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "cron-trust-monitor"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1675,7 +1675,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "delend-branch-audit-for-main"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1684,7 +1684,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-code-race"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1693,7 +1693,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-experimental"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1702,7 +1702,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-forge-audit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1711,7 +1711,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-gh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1720,7 +1720,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-iterate"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1729,7 +1729,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-model-race"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1738,7 +1738,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-oracle"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1747,7 +1747,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-quick"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1756,7 +1756,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-rig-c2"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1765,7 +1765,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-route"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1774,7 +1774,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-stash-optimize"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1783,7 +1783,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "delend-working-dirty"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1792,7 +1792,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: delend.test.ts
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1801,7 +1801,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "direnv-auto-shim"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1809,8 +1809,8 @@ bins:
     size: 918
     notes: script (bash); executable
     pens_proximity: true
-  - name: "estate-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-audit.sh"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1818,8 +1818,8 @@ bins:
     size: 2101
     notes: script (bash); executable
     pens_proximity: true
-  - name: "estate-map.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-map.ts"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1827,8 +1827,8 @@ bins:
     size: 22505
     notes: script (bun); executable
     pens_proximity: true
-  - name: "estate-master-shim"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-master-shim"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1836,8 +1836,8 @@ bins:
     size: 3160
     notes: script (bun); executable
     pens_proximity: true
-  - name: "estate-probe"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-probe"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1845,8 +1845,8 @@ bins:
     size: 10031
     notes: script (python); executable
     pens_proximity: true
-  - name: "estate-reconcile"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-reconcile"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1854,8 +1854,8 @@ bins:
     size: 16958
     notes: script (bash); executable
     pens_proximity: true
-  - name: "estate-scan"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "Pens-scan"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1864,7 +1864,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "eval-shim.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1873,7 +1873,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "exa-mcp-server.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1882,7 +1882,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "ffs-bun.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1891,7 +1891,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "ffs-diff"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env node"
     syntax: node
@@ -1900,7 +1900,7 @@ bins:
     notes: script (node); executable
     pens_proximity: true
   - name: "find-tau.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1909,7 +1909,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "fleet-audit-mcp"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1918,7 +1918,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "fleet-health.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1927,7 +1927,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "fleet-join.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1936,7 +1936,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "fleet-tui"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1945,7 +1945,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: fork.sh
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/bash"
     syntax: bash
@@ -1954,7 +1954,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "git-credential.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -1963,7 +1963,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "herd-keypool.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1972,7 +1972,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "herd-model-guard.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -1981,7 +1981,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "hesitance-scan.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1990,7 +1990,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "hesitance-scan.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -1999,7 +1999,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: hotfix
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2008,7 +2008,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "install-hook.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/sh"
     syntax: sh
@@ -2017,7 +2017,7 @@ bins:
     notes: script (sh); executable
     pens_proximity: true
   - name: "io-rate-reaper"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2026,7 +2026,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "iowait-gate"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2035,7 +2035,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "kappa-config-audit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2044,7 +2044,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "kappa-serve.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2053,14 +2053,14 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "kb-rollup.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 0b5eb7abdd95eb3bcc2f7f4abcee3f97
     size: 9333
     notes: data file
     pens_proximity: true
   - name: "kb-rollup.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2069,7 +2069,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "keyring-verify"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2078,7 +2078,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: kf
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2087,7 +2087,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "kitty-mcp-instance.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/sh"
     syntax: sh
@@ -2096,7 +2096,7 @@ bins:
     notes: script (sh); executable
     pens_proximity: true
   - name: "lane-resume"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2105,21 +2105,21 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "lane-resume.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 89ec40587020e3e8ded5ac077c4e1cc3
     size: 5147
     notes: data file
     pens_proximity: true
   - name: manifest.yaml
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 18f4a6db52eefb05d347895135a3d932
     size: 90721
     notes: data file
     pens_proximity: true
   - name: "maximal-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2128,7 +2128,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "missing-files.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2137,7 +2137,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "missing-files.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2146,7 +2146,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "model-audit-max-final.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2155,7 +2155,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "model-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2164,7 +2164,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "monkeypatch-detect.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2173,7 +2173,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "name-check.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2182,7 +2182,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "name-fix.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2191,7 +2191,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "nim-key-test.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2200,7 +2200,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nim-kimi-sidecar.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2209,7 +2209,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "nim-sweep-all.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2218,7 +2218,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-clairvoyant.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2227,7 +2227,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-db-wire.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2236,7 +2236,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-fan-curve.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2245,7 +2245,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "nvidia-fix-final.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2254,7 +2254,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-model-sweep.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2263,7 +2263,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-nim.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2272,7 +2272,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "nvidia-shape-find.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2281,7 +2281,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "nvidia-wire.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2290,7 +2290,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "omniroute-secrets.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/bash"
     syntax: bash
@@ -2299,7 +2299,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "openfang-join"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2308,7 +2308,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "or-free-grade.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2317,7 +2317,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "or-free-sweep2.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2326,7 +2326,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "or-free-sweep3.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2335,7 +2335,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "or-rejudge.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2344,7 +2344,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "oracle-judge"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2353,7 +2353,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "oracle-market-fix-payload-validation.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2362,7 +2362,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "oracle-market-verify-fix.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2371,7 +2371,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "orphan-hunt.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2380,7 +2380,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "orphan-hunt.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2389,7 +2389,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "orphan-reaper"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2398,7 +2398,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "pairs-gen.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2407,7 +2407,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: pf
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2416,7 +2416,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: pitchfork
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2425,7 +2425,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "pitchfork-binding-sentinel.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2434,7 +2434,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "pitchfork-binding-watch.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2443,7 +2443,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "pitchfork-compose"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2452,42 +2452,42 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "pitchfork-keepalive-lib.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: dd27a264bceedecf4e467c2dd486fe59
     size: 2561
     notes: data file
     pens_proximity: true
   - name: "pitchfork-keepalive-lib.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 9047b64bb036b0741d9454b0cb4457cb
     size: 1938
     notes: data file
     pens_proximity: true
   - name: "pitchfork-keepalive.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: a347bd2e6ad7c7f0f1aba679b64530f5
     size: 3437
     notes: data file
     pens_proximity: true
   - name: "pitchfork-lib.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 60dc29812c1e3f0b516aaaf5d673d597
     size: 11076
     notes: data file
     pens_proximity: true
   - name: "pitchfork-lib.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: a208e44398bf2e0b184731d593b8e180
     size: 9166
     notes: data file
     pens_proximity: true
   - name: "pitchfork-orphan-watch"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2496,7 +2496,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "pitchfork-reconcile"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2505,7 +2505,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "pitchfork-restart"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2514,21 +2514,21 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "pitchfork-restart-lib.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 21b271dd797462ad4819aee6e93925c2
     size: 3983
     notes: data file
     pens_proximity: true
   - name: "pitchfork-restart-lib.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: bff04ca0220b5f9fc5175a3db04676c0
     size: 4503
     notes: data file
     pens_proximity: true
   - name: "pitchfork-restart.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2537,7 +2537,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "pitchfork-split"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2546,7 +2546,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: pitchfork.ts
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2555,7 +2555,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: pixel
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2564,7 +2564,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "pixel-adb-keepalive.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2573,7 +2573,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "port-audit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/sh"
     syntax: sh
@@ -2582,7 +2582,7 @@ bins:
     notes: script (sh); executable
     pens_proximity: true
   - name: "port-audit.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2591,7 +2591,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "port-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2600,7 +2600,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "port-audit.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2609,7 +2609,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "progress-watchdog.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2618,7 +2618,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "push-guard.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/sh"
     syntax: sh
@@ -2627,7 +2627,7 @@ bins:
     notes: script (sh); executable
     pens_proximity: true
   - name: "ranch-commit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/sh"
     syntax: sh
@@ -2636,7 +2636,7 @@ bins:
     notes: script (sh); executable
     pens_proximity: true
   - name: "ranch-first-push.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2645,7 +2645,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "readme-linkcheck.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2654,7 +2654,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "rg-scope"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2663,7 +2663,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "rig-create"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2672,7 +2672,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "rig-join"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2681,7 +2681,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "run-fast"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2690,7 +2690,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "runner-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2699,7 +2699,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "runner-audit.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2708,7 +2708,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "safe-rg"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2717,7 +2717,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "saturation-watchdog"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2726,7 +2726,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "secretsmith-env"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2735,7 +2735,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "shim-drift-sentinel.py"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2744,7 +2744,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "shim-drift-watch.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2753,7 +2753,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: show.sh
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2762,7 +2762,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "squawk-alert"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/bash"
     syntax: bash
@@ -2771,7 +2771,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "stale-hunter.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2780,7 +2780,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "stale-hunter.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2789,7 +2789,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "stall-detect.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2798,7 +2798,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "stall-detect.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2807,7 +2807,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "sudo-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2816,7 +2816,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "sudo-audit.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2824,8 +2824,8 @@ bins:
     size: 4838
     notes: script (bash); executable
     pens_proximity: true
-  - name: "sync-estate-ns.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+  - name: "sync-Pens-ns.sh"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2834,7 +2834,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "sync-stack.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2843,7 +2843,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "tau-post-cleanup.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2852,7 +2852,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "tau-start.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2861,7 +2861,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "tau-todo.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2870,7 +2870,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "tcp-probe"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2879,7 +2879,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: termstream.py
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2888,7 +2888,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "think-audit"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env python3"
     syntax: python
@@ -2897,7 +2897,7 @@ bins:
     notes: script (python); executable
     pens_proximity: true
   - name: "tunnel-monitor.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/bin/bash"
     syntax: bash
@@ -2906,7 +2906,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "vansrouter-final-fix.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2915,7 +2915,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "vansrouter-route-fix.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2924,7 +2924,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "watchdog-audit.sh"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2933,7 +2933,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "watchdog-audit.sh.bak.1792130571"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2942,7 +2942,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "worker-queue"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2951,7 +2951,7 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "worker-queue-dispatch"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2960,14 +2960,14 @@ bins:
     notes: script (bash); executable
     pens_proximity: true
   - name: "worker-queue-watch.test.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: data
     md5: 80b1a4fcac4fae808b4b774113edd054
     size: 3683
     notes: data file
     pens_proximity: true
   - name: "worker-queue-watch.ts"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bun"
     syntax: bun
@@ -2976,7 +2976,7 @@ bins:
     notes: script (bun); executable
     pens_proximity: true
   - name: "yote-batch"
-    dir: "pens/estate/products/estate-ops/bin"
+    dir: "pens/Pens/products/Pens-ops/bin"
     kind: script
     shebang: "#!/usr/bin/env bash"
     syntax: bash
@@ -2987,13 +2987,13 @@ bins:
 
 archived:
   - name: "tau-old"
-    to: "pens/estate/products/estate-ops/archived/tau-old"
+    to: "pens/Pens/products/Pens-ops/archived/tau-old"
     kept: false
   - name: "omp-old"
-    to: "pens/estate/products/estate-ops/archived/omp-old"
+    to: "pens/Pens/products/Pens-ops/archived/omp-old"
     kept: false
   - name: "pi-old"
-    to: "pens/estate/products/estate-ops/archived/pi-old"
+    to: "pens/Pens/products/Pens-ops/archived/pi-old"
     kept: false
 
 dirs:

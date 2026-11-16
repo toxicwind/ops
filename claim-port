@@ -37,7 +37,7 @@ PORT="${1:?usage: claim-port <port> <command...>}"; shift
 [[ "$PORT" =~ ^[0-9]+$ ]] || { echo "[claim-port] invalid port: $PORT" >&2; exit 2; }
 (( $# >= 1 )) || { echo "[claim-port] no command given" >&2; exit 2; }
 
-SSOT="/home/toxic/estate/config/ports.env"
+SSOT="/home/toxic/pens/estate/config/ports.env"
 
 is_protected_port() {
   case "$1" in

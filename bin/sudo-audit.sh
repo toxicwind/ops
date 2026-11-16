@@ -4,12 +4,12 @@
 # Checks, in order:
 #   1. passwordless sudo scope for the invoking user (sudo -n true, sudo -n -l)
 #   2. key paths and their permissions (~/.ssh, sudoers.d)
-#   3. shared-tree ownership/permissions (/home/toxic/estate, /home/toxic/.tau)
+#   3. shared-tree ownership/permissions (/home/toxic/pens/Pens, /home/toxic/.tau)
 #   4. pitchfork/systemd daemon management without interactive auth
 #
 # Usage: sudo-audit.sh [--json]
 # Exit 0 = no blockers, 1 = one or more blockers found.
-# Part of estate-scripts/projects/ops/bin/ (toxicwind/estate-scripts-projects).
+# Part of Pens-scripts/projects/ops/bin/ (toxicwind/Pens-scripts-projects).
 set -u
 JSON=0
 [ "${1:-}" = "--json" ] && JSON=1
@@ -73,7 +73,7 @@ if [ -d /etc/sudoers.d ]; then
 fi
 
 # --- 3. shared-tree ownership ----------------------------------------------
-for tree in /home/toxic/estate /home/toxic/.tau; do
+for tree in /home/toxic/pens/Pens /home/toxic/.tau; do
   if [ -d "$tree" ]; then
     bad="$(find "$tree" -maxdepth 3 \( ! -user toxic -o ! -group toxic \) 2>/dev/null | head -5)"
     [ -n "$bad" ] && block "ownership drift under $tree: $(printf '%s' "$bad" | tr '\n' ' ')"

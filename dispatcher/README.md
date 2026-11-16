@@ -1,7 +1,7 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
@@ -53,7 +53,7 @@ bin/dispatch result --id w-w-001 --success true --summary "done" --commit <sha>
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - Precedence is enforced in code, not convention: lower-precedence origins cannot preempt higher ones, and the ledger rejects writes outside the four canonical lanes. State lives in files under `state/` (gitignored runtime state); the code and tests are committed.
 
 ## The four audit lanes
@@ -120,7 +120,7 @@ Exit codes: 0 ok · 3 duplicate-admission · 4 unknown-entity · 5 illegal-trans
 
 ## Boundaries (borrowed, not duplicated)
 
-- `tools/estate-scripts-chat/dispatch.ts` — estate-scripts-chat's **internal** lease queue (bun:sqlite, wedge semantics). Task-level, inside the chat process. This dispatcher is fleet-mission level, above it.
+- `tools/Pens-scripts-chat/dispatch.ts` — Pens-scripts-chat's **internal** lease queue (bun:sqlite, wedge semantics). Task-level, inside the chat process. This dispatcher is fleet-mission level, above it.
 - `fleet/dispatch_fallback.py` — client-side fallback that queues dispatch frames to the directives file when the chat server is unreachable. Complementary transport, not a ledger.
 - `agents/oracle-market/` — the oracle market loop: task bidding, intake triage, bidder workers. Its `bin/oracle_loop.py` tracks market tasks; this dispatcher tracks fleet missions/coordinators/workers and their relays. The intake hook above is the seam between them.
 

@@ -41,7 +41,7 @@ killed with the wrapper).
 - **oracle**: scan ran clean (no provider failure logged), zero stalled
   candidates. The 9 possibly-open tasks from a crude ledger scan are
   assigned/in-flight or under the 24h stall horizon, so none is
-  pickup-eligible. The scan runs via the estate-master yote route, with
+  pickup-eligible. The scan runs via the Pens-master yote route, with
   the embedded base64 scan as fallback until `oracle-scan.py` is deployed
   on yote (this commit deploys it).
 - **file-queue**: listed the seeded job with id/source/title.

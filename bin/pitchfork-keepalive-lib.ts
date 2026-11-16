@@ -1,5 +1,5 @@
 /**
- * pitchfork-keepalive-lib.ts — pure, typed core of the estate supervisor
+ * pitchfork-keepalive-lib.ts — pure, typed core of the Pens supervisor
  * keepalive (pitchfork-keepalive.ts). No side effects at import time; all
  * decision logic is unit-tested in pitchfork-keepalive-lib.test.ts.
  */

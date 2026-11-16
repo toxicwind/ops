@@ -1,7 +1,7 @@
 <div align="right">
 
-[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects#license)
-[![estate-scripts-projects](https://img.shields.io/badge/estate-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/estate-scripts-projects)
+[![license](https://img.shields.io/badge/license-MIT%20%2B%20upstream-blue?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects#license)
+[![Pens-scripts-projects](https://img.shields.io/badge/Pens-scripts--projects-part%20of-blueviolet?style=for-the-badge)](https://github.com/toxicwind/Pens-scripts-projects)
 
 </div>
 
@@ -53,7 +53,7 @@ BG_OWNER=bg-tracker ../bin/bg-launch --name my-task \
 
 ## License & security
 
-- [MIT](https://github.com/toxicwind/estate-scripts-projects#license).
+- [MIT](https://github.com/toxicwind/Pens-scripts-projects#license).
 - Kill policy (standing): a kill needs positive orphan confirmation — no heartbeat, no parent task, no fleet registration — plus a fleet note with the evidence at kill time. When in doubt, leave it running and flag it. `bg-kill` refuses on PID reuse so a recycled pid can never be killed by mistake.
 
 ## Seeding
@@ -74,7 +74,7 @@ No polling daemon ships with this. If you want push-on-change, add a systemd pat
 ```ini
 # /etc/systemd/system/bg-tracker.path
 [Path]
-PathChanged=/home/toxic/pens/estate/ranch/ops/bg-tracker/state
+PathChanged=/home/toxic/pens/Pens/ranch/ops/bg-tracker/state
 [Install]
 WantedBy=multi-user.target
 ```
@@ -86,7 +86,7 @@ WantedBy=multi-user.target
 
 ## Deep links
 
-- Estate ops conventions: [`../README.md`](../README.md)
+- Pens ops conventions: [`../README.md`](../README.md)
 - Fleet knowledgebase: `docs/fleet-knowledgebase.md`
 - Standing rules: no monkeypatching, permanence, durability across bridge restart + yote power-cycle. The script is the deliverable.
 

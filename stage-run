@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# stage-run — Stage run files and manifest into /home/toxic/estate/runs/<run_id>/
+# stage-run — Stage run files and manifest into /home/toxic/pens/estate/runs/<run_id>/
 set -euo pipefail
 
-ESTATE_RUNS="/home/toxic/estate/runs"
+ESTATE_RUNS="/home/toxic/pens/estate/runs"
 RUN_ID="${1:-$(date -u +%Y%m%d-%H%M%S)}"
 RUN_DIR="$ESTATE_RUNS/$RUN_ID"
 

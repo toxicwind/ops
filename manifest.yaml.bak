@@ -11,7 +11,7 @@
 #   /home/toxic/.local/bin/tau  installed tau — collapse level 2, md5-pinned
 #                               to the repo copy (verifier fails on drift).
 #   (tau entries moved to archived: below)
-# NOTE: /home/toxic/estate/tau/bin does NOT exist; `tau` is a symlink
+# NOTE: /home/toxic/pens/estate/tau/bin does NOT exist; `tau` is a symlink
 #       -> projects/tau. There is no [[bin]] in tau's Cargo.toml files —
 #       the engine ships as a dist artifact (omp), not a cargo bin target.
 # =============================================================================

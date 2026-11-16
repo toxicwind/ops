@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# readme-linkcheck.sh — permanent, re-runnable README link checker for the estate.
+# readme-linkcheck.sh — permanent, re-runnable README link checker for the Pens.
 #
 # Scans every README (and the fleet knowledgebase) in a repo for Markdown links
 # and verifies each one:
 #   - relative paths resolve from the linking file (with #anchor checks in .md targets)
 #   - #anchors exist as headings in the same file (GitHub slug rules)
-#   - absolute /home/toxic/* and /home/hatch/* estate paths exist on this box
+#   - absolute /home/toxic/* and /home/hatch/* Pens paths exist on this box
 #     (set README_LINKCHECK_BOX=hatch|yote to skip the other box's paths)
-#   - github.com/toxicwind/estate-scripts-projects blob/tree links resolve via
+#   - github.com/toxicwind/Pens-scripts-projects blob/tree links resolve via
 #     `git cat-file` against the local clone (no network needed); #L12-L31
 #     line anchors are verified against the real line count
 #   - other http(s) URLs are checked only with --check-external (warnings unless
@@ -17,7 +17,7 @@
 # its own repo root, so relative links resolve correctly per repo.
 #
 # Paths containing /vendor/, /scratch/, or /archive/ are excluded by default (third-party
-# vendored docs, transient staging, and historical snapshots — not maintained estate docs); add more
+# vendored docs, transient staging, and historical snapshots — not maintained Pens docs); add more
 # with --exclude SUBSTR (repeatable).
 #
 # Usage:
@@ -26,7 +26,7 @@
 #
 # Run it against the LIVE working tree (default: the git toplevel of your cwd),
 # not a fresh `git worktree add` checkout: live untracked project directories
-# (guidellm/, nim-repos/, ...) are part of the estate and only exist in the
+# (guidellm/, nim-repos/, ...) are part of the Pens and only exist in the
 # live tree. A bare worktree produces false "missing dir" failures for them.
 #
 # Exit 0 when every checkable link resolves; exit 1 with a per-link report
@@ -46,7 +46,7 @@ import urllib.request
 ROOT_ARG = None
 EXTRA = ["docs/fleet-knowledgebase.md"]
 # Default-excluded: third-party vendored trees, transient scratch dirs, and
-# historical archive snapshots are not maintained estate docs; their links rot
+# historical archive snapshots are not maintained Pens docs; their links rot
 # upstream or are frozen history, and are not ours to fix.
 DEFAULT_EXCLUDES = ["/vendor/", "/scratch/", "/archive/"]
 EXCLUDES = []
@@ -206,9 +206,9 @@ class Checker:
         return None
 
     def check_github_sp(self, target, root):
-        # github.com/toxicwind/estate-scripts-projects/(blob|tree)/<ref>/<path>[#frag]
+        # github.com/toxicwind/Pens-scripts-projects/(blob|tree)/<ref>/<path>[#frag]
         m = re.match(
-            r"https://github\.com/toxicwind/estate-scripts-projects/(blob|tree)/([^/]+)/([^#]+)(?:#(.+))?$",
+            r"https://github\.com/toxicwind/Pens-scripts-projects/(blob|tree)/([^/]+)/([^#]+)(?:#(.+))?$",
             target)
         if not m:
             return "EXTERNAL"

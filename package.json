@@ -1,14 +1,14 @@
 {
-  "name": "estate-ops",
+  "name": "Pens-ops",
   "version": "1.0.0",
   "description": "Durable operations tooling for fleet management, audit, and maintenance.",
   "main": "pitchfork.ts",
   "type": "module",
   "bin": {
     "pitchfork": "./pitchfork.ts",
-    "estate-do": "./estate-do",
-    "estate-reconcile": "./estate-reconcile",
-    "estate-scan": "./estate-scan",
+    "Pens-do": "./Pens-do",
+    "Pens-reconcile": "./Pens-reconcile",
+    "Pens-scan": "./Pens-scan",
     "daemon-yield": "./daemon-yield",
     "audio-probe": "./audio-probe",
     "auto-close-syntax": "./auto-close-syntax.ts",

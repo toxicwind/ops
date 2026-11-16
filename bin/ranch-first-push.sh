@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# ranch-first — push the ranch peers, then the estate control plane.
+# ranch-first — push the ranch peers, then the Pens control plane.
 #
-# Estate doctrine: "Git push everything" — but the ranch (214+ peers, meta-managed)
-# must go first so no peer is left local-only before the estate index moves.
+# Pens doctrine: "Git push everything" — but the ranch (214+ peers, meta-managed)
+# must go first so no peer is left local-only before the Pens index moves.
 #
 # Usage:
-#   bin/ranch-first-push.sh            # push ranch (parallel) then estate
+#   bin/ranch-first-push.sh            # push ranch (parallel) then Pens
 #   bin/ranch-first-push.sh --dry-run  # show what would run, change nothing
 #   bin/ranch-first-push.sh --ranch    # ranch peers only
-#   bin/ranch-first-push.sh --estate   # estate control-plane only
+#   bin/ranch-first-push.sh --Pens   # Pens control-plane only
 #
 # Options feed through to `meta exec` for ranch pushes. Never force-pushes.
 
@@ -24,7 +24,7 @@ for a in "$@"; do
   case "$a" in
     --dry-run) DRY="--dry-run" ;;
     --ranch)   MODE="ranch" ;;
-    --estate)  MODE="estate" ;;
+    --Pens)  MODE="Pens" ;;
   esac
 done
 
@@ -35,7 +35,7 @@ push_ranch() {
 }
 
 push_estate() {
-  echo "== estate control-plane push =="
+  echo "== Pens control-plane push =="
   if [ -n "$DRY" ]; then
     echo "(dry-run) would push $ESTATE_ROOT"
     return 0
@@ -45,6 +45,6 @@ push_estate() {
 
 case "$MODE" in
   ranch)  push_ranch ;;
-  estate) push_estate ;;
+  Pens) push_estate ;;
   both)   push_ranch && push_estate ;;
 esac

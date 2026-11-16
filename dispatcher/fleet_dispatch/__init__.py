@@ -10,7 +10,7 @@ survives process restarts and full box reboots with zero in-memory state.
 No daemons, no timers: the CLI is invoked on events (admission, transition,
 completion); heartbeats are caller-driven.
 
-Canonical home: projects/ops/dispatcher/ in toxicwind/estate-scripts-projects.
+Canonical home: projects/ops/dispatcher/ in toxicwind/Pens-scripts-projects.
 """
 __version__ = "1.0.0"
 

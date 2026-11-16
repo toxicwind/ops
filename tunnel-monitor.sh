@@ -2,7 +2,7 @@
 # tunnel-monitor.sh — yote-side circuit breaker for the cell reverse tunnel.
 # Checks that yote's squawk server can reach cell-primary through the tunnel.
 # If the tunnel is down, restarts the tunnel client on the cell via yote-conn.
-# Runs as a pitchfork daemon on yote (estate/squawk-tunnel-monitor).
+# Runs as a pitchfork daemon on yote (Pens/squawk-tunnel-monitor).
 
 HEALTH_URL="http://127.0.0.1:25136/fleet/health"
 YOTE_CONN="/home/hatch/workspace/bin/yote-conn"

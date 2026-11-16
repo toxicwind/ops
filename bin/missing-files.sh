@@ -6,7 +6,7 @@
 #      EnvironmentFile/WorkingDirectory/ReadWritePaths
 #   2. live configs: herd.yaml, pitchfork.toml, ports.env, keypools.yaml,
 #      model_constraints.yaml, herd.yaml
-#   3. docs (*.md) under /home/toxic/estate: /home/toxic/... paths ending in
+#   3. docs (*.md) under /home/toxic/pens/Pens: /home/toxic/... paths ending in
 #      .sh .py .toml .yaml .yml .service .timer .env .json (skips JSONL-substring
 #      artifacts, prose fragments, and example patterns)
 #
@@ -19,7 +19,7 @@
 #   --quiet    print only MISSING blocks (no progress chatter)
 #   --docs     scan docs only; --units units only; --configs configs only
 # Exit 0 = nothing missing, 1 = one or more missing references.
-# Part of estate-scripts/projects/ops/bin/ (toxicwind/estate-scripts-projects).
+# Part of Pens-scripts/projects/ops/bin/ (toxicwind/Pens-scripts-projects).
 set -u
 QUIET=0; DO_UNITS=1; DO_CONFIGS=1; DO_DOCS=1
 for a in "$@"; do
@@ -97,12 +97,12 @@ fi
 # --- 2. live configs ----------------------------------------------------------
 if [ "$DO_CONFIGS" = "1" ]; then
   log "scanning live configs..."
-  for c in /home/toxic/pens/estate/config/herd.yaml \
-           /home/toxic/pens/estate/pitchfork.toml \
-           /home/toxic/pens/estate/config/ports.env \
-           /home/toxic/pens/estate/config/keypools.yaml \
-           /home/toxic/pens/estate/config/model_constraints.yaml \
-           /home/toxic/pens/estate/config/herd.yaml; do
+  for c in /home/toxic/pens/Pens/config/herd.yaml \
+           /home/toxic/pens/Pens/pitchfork.toml \
+           /home/toxic/pens/Pens/config/ports.env \
+           /home/toxic/pens/Pens/config/keypools.yaml \
+           /home/toxic/pens/Pens/config/model_constraints.yaml \
+           /home/toxic/pens/Pens/config/herd.yaml; do
     [ -f "$c" ] || { log "  (config not present: $c)"; continue; }
     while IFS=: read -r lineno raw; do
       rline="$(sed -n "${lineno}p" "$c")"
@@ -121,7 +121,7 @@ if [ "$DO_DOCS" = "1" ]; then
         case "$rline" in *"$raw"l*) continue ;; esac
         check_path "$raw" "$md" "$lineno" "$rline"
       done < <(grep -nEo '/home/toxic/[A-Za-z0-9_./-]*\.(sh|py|toml|yaml|yml|service|timer|env|json)' "$md" 2>/dev/null)
-  done < <(find /home/toxic/estate -name '*.md' -not -path '*/node_modules/*' 2>/dev/null)
+  done < <(find /home/toxic/pens/Pens -name '*.md' -not -path '*/node_modules/*' 2>/dev/null)
 fi
 
 log "done: $missing missing reference(s)"

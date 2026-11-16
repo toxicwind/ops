@@ -1,5 +1,5 @@
 /**
- * pitchfork-restart-lib.ts — pure, typed core of the estate daemon restart tool
+ * pitchfork-restart-lib.ts — pure, typed core of the Pens daemon restart tool
  * (bin/pitchfork-restart.ts). No side effects at import time; the decision
  * logic is unit-tested in pitchfork-restart-lib.test.ts.
  *

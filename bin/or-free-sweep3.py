@@ -19,7 +19,7 @@ import sys
 import time
 
 SECRETS = "/home/toxic/.secrets"
-VAR = "/home/toxic/pens/estate/var"
+VAR = "/home/toxic/pens/Pens/var"
 OUT_JSONL = f"{VAR}/or-free-sweep3.jsonl"
 OUT_JSON = f"{VAR}/or-free-sweep3-results.json"
 OUT_MD = f"{VAR}/or-free-ranking.md"
@@ -81,7 +81,7 @@ BASE = "https://openrouter.ai/api/v1"
 HDR = {
     "Authorization": "Bearer " + KEY,
     "Content-Type": "application/json",
-    "HTTP-Referer": "https://github.com/toxicwind/estate-projects",
+    "HTTP-Referer": "https://github.com/toxicwind/Pens-projects",
     "X-Title": "or-census-sweep3",
 }
 

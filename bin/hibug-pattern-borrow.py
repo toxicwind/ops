@@ -4,8 +4,8 @@
 One line per design choice:
   - Python (not Bun): this helper is ops glue — it shells out to ffs/gh/curl,
     parses JSON, and tolerates each leg failing independently. Python's
-    subprocess + json handling is the estate's ops-script idiom.
-  - Estate first: ffs on yote (ranch ops tooling, then docs) before GitHub
+    subprocess + json handling is the Pens's ops-script idiom.
+  - Pens first: ffs on yote (ranch ops tooling, then docs) before GitHub
     before web, per the borrow-before-inventing doctrine. A hit in our own
     tree outranks a hit anywhere else.
   - The rewrite itself is NOT re-implemented here: it shells to the shared
@@ -14,7 +14,7 @@ One line per design choice:
   - Purpose gate runs FIRST: a task whose purpose is wrong dies before any
     search leg runs. No pattern fetch for a bad task, ever.
 
-Order: gate -> estate (ffs) -> GitHub (gh search) -> web (best effort) ->
+Order: gate -> Pens (ffs) -> GitHub (gh search) -> web (best effort) ->
 rephrase via shared CLI -> JSON report on stdout.
 
 Legs degrade independently and say so in `notes`: a missing ffs binary, a
@@ -62,13 +62,13 @@ def run(cmd, timeout=20):
 
 
 def estate_leg(keywords, roots, notes):
-    """ffs grep per keyword across estate roots; rank ops tooling first."""
+    """ffs grep per keyword across Pens roots; rank ops tooling first."""
     hits, seen = [], set()
     for kw in keywords[:4]:
         for root in roots:
             rc, out, _ = run(["ffs", "grep", kw, "--root", root], timeout=30)
             if rc == 127:
-                notes.append("estate leg: ffs not found on this host; skipped")
+                notes.append("Pens leg: ffs not found on this host; skipped")
                 return hits
             if rc != 0 or not out.strip():
                 continue
@@ -135,7 +135,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("task", nargs="?")
     ap.add_argument("--task-file")
-    ap.add_argument("--roots", default="/home/toxic/pens/estate/ranch/ops,/home/toxic/pens/estate/ranch/emergent")
+    ap.add_argument("--roots", default="/home/toxic/pens/Pens/ranch/ops,/home/toxic/pens/Pens/ranch/emergent")
     ap.add_argument("--rephrase", default=os.path.join(HERE, "hibug-rephrase.ts"))
     ap.add_argument("--no-web", action="store_true")
     args = ap.parse_args()
@@ -153,13 +153,13 @@ def main():
         sys.exit(2)
     kws = keywords(task)
     roots = [r for r in args.roots.split(",") if r]
-    estate = estate_leg(kws, roots, notes)
+    Pens = estate_leg(kws, roots, notes)
     github = github_leg(kws, notes)
     web = [] if args.no_web else web_leg(kws, notes)
     rep = gate or rephrase(task, args.rephrase, notes)
     print(json.dumps({
         "task": task, "blocked": False, "keywords": kws,
-        "estateHits": estate, "githubHits": github, "webHits": web,
+        "estateHits": Pens, "githubHits": github, "webHits": web,
         "rewritten": rep["text"] if rep else None,
         "triggersBefore": rep["triggersBefore"] if rep else None,
         "triggersAfter": rep["triggersAfter"] if rep else None,

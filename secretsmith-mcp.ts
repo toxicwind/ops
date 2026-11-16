@@ -2,7 +2,7 @@
 /**
  * secretsmith-mcp.ts — first-class MCP surface over the secretsmith keyring.
  *
- * Exposes the estate's secretsmith SSOT as a full MCP server (stdio) so any
+ * Exposes the Pens's secretsmith SSOT as a full MCP server (stdio) so any
  * daemon/agent can read/write keys through the keyring primitive instead of
  * holding its own copy. Tools:
  *   secretsmith_add  (name, value, service?, app?, replace?) -> {ok, name}
@@ -82,7 +82,7 @@ const doAdd = (
   if (!/^[A-Z][A-Z0-9_]{1,64}$/.test(name)) return Err("invalid secret name");
   const tmp = `/tmp/secretsmith-mcp-${process.pid}-${name}`;
   require("node:fs").writeFileSync(tmp, value, { mode: 0o600 });
-  const attrs = [`service=${service ?? "estate"}`, `app=${app ?? "mcp"}`];
+  const attrs = [`service=${service ?? "Pens"}`, `app=${app ?? "mcp"}`];
   const r = spawnSync(
     SS,
     [

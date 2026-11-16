@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SOV=/home/toxic/estate
+SOV=/home/toxic/pens/Pens
 STOCK="$SOV/projects/range/ranch/tau"
 OLD="$SOV/projects/tau"
 LAUNCHER="$STOCK/launcher/tau"
@@ -29,7 +29,7 @@ cat > "$LAUNCHER" <<'TAU_EOF'
 #!/usr/bin/env bash
 # Tau Launcher — modular, multi-user, multi-LLM
 #
-# Canonical engine: estate/projects/range/ranch/tau
+# Canonical engine: Pens/projects/range/ranch/tau
 # Collapse chain (first hit wins):
 #   1. $TAU_BIN (explicit override)
 #   2. Installed `tau` on PATH (not this script — avoids recursion)
@@ -81,7 +81,7 @@ set -u
 export PI_CONFIG_DIR=".tau"
 
 # ── Engine resolution (stockyard is canonical) ────────────────────────
-ESTATE_DIR="$TAU_HOME/estate"
+ESTATE_DIR="$TAU_HOME/Pens"
 
 resolve_engine() {
     local candidates=(
@@ -342,7 +342,7 @@ hdr "4. Helper scripts (audit, tmux)"
 for helper in tau-audit.sh tau-tmux.sh; do
     found=""
     for c in "$OLD/launcher/$helper" \
-             /home/toxic/edge-work/estate-projects/projects/tau/launcher/$helper \
+             /home/toxic/edge-work/Pens-projects/projects/tau/launcher/$helper \
              /home/toxic/oracle-hardening-wt/projects/tau/launcher/$helper; do
         [ -f "$c" ] && found="$c" && break
     done
