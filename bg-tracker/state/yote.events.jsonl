@@ -1,0 +1,5 @@
+{"box": "yote", "cmd": ["sleep", "60"], "id": "9bf985f75524", "name": "bgt-selftest", "pid": 2033627, "ts": 1789940930.9995964, "type": "launch"}
+{"box": "yote", "id": "9bf985f75524", "name": "bgt-selftest", "ts": 1789941023.9487066, "type": "heartbeat"}
+{"box": "yote", "cmd": ["sleep", "300"], "id": "a4f949e96042", "name": "bgt-killtest", "pid": 2046149, "ts": 1789941073.108377, "type": "launch"}
+{"box": "yote", "force": false, "id": "a4f949e96042", "name": "bgt-killtest", "pid": 2046149, "ts": 1789941132.681937, "type": "kill"}
+{"box": "yote", "cmdline": "cloudflared tunnel --url http://localhost:8379", "id": "47888fbd8f3a", "name": "cloudflared-exec-tunnel", "pid": 2960494, "ts": 1789941166.7166374, "type": "register"}

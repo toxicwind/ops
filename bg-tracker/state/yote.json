@@ -1,0 +1,70 @@
+{
+ "tasks": {
+  "47888fbd8f3a": {
+   "box": "yote",
+   "cmd": [
+    "cloudflared",
+    "tunnel",
+    "--url",
+    "http://localhost:8379"
+   ],
+   "cmd0": "cloudflared",
+   "cmdline": "cloudflared tunnel --url http://localhost:8379",
+   "heartbeat_at": 1789941166.715546,
+   "id": "47888fbd8f3a",
+   "log": "",
+   "name": "cloudflared-exec-tunnel",
+   "owner": "bg-tracker",
+   "pid": 2960494,
+   "purpose": "Cloudflare quick tunnel exposing bridge exec backend localhost:8379 (manually started, ~14.7h old)",
+   "registered_after_start": true,
+   "sid": 2957157,
+   "started_at": 1789941166.715546,
+   "status": "active",
+   "ttl_sec": null,
+   "workdir": ""
+  },
+  "9bf985f75524": {
+   "box": "yote",
+   "cmd": [
+    "sleep",
+    "60"
+   ],
+   "cmd0": "sleep",
+   "heartbeat_at": 1789941023.9476252,
+   "id": "9bf985f75524",
+   "log": "/home/toxic/pens/Pens/ranch/ops/bg-tracker/state/bgt-selftest.log",
+   "name": "bgt-selftest",
+   "owner": "bg-tracker",
+   "pid": 2033627,
+   "purpose": "bg-tracker end-to-end selftest",
+   "sid": 2033627,
+   "started_at": 1789940930.99822,
+   "status": "active",
+   "ttl_sec": 300,
+   "workdir": "/tmp"
+  },
+  "a4f949e96042": {
+   "box": "yote",
+   "cmd": [
+    "sleep",
+    "300"
+   ],
+   "cmd0": "sleep",
+   "heartbeat_at": 1789941073.1067939,
+   "id": "a4f949e96042",
+   "log": "/home/toxic/pens/Pens/ranch/ops/bg-tracker/state/bgt-killtest.log",
+   "name": "bgt-killtest",
+   "owner": "bg-tracker",
+   "pid": 2046149,
+   "purpose": "bg-kill path test",
+   "retire_reason": "bg-kill",
+   "retired_at": 1789941132.6805723,
+   "sid": 2046149,
+   "started_at": 1789941073.1067939,
+   "status": "retired",
+   "ttl_sec": null,
+   "workdir": "/tmp"
+  }
+ }
+}
